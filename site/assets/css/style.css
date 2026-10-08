@@ -1604,3 +1604,92 @@ html { -webkit-tap-highlight-color: transparent; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
   .hero-top > div, .hero-visual, .hero-chips, .hero-note, .page-hero .container > * { animation: none; }
 }
+
+/* =====================================================================
+   v11 — animated JokiBlox characters (full body, role actions)
+   ===================================================================== */
+.jbc { display: inline-block; width: 44px; line-height: 0; flex: 0 0 auto; }
+.jbc svg { display: block; width: 100%; height: auto; overflow: visible; }
+.jbc:not(.live), .jbc:not(.live) * { animation-play-state: paused !important; }
+.ch-body { animation: chbob 2.4s ease-in-out infinite; }
+.ch-eyes { transform-box: fill-box; transform-origin: center; animation: chblink 4.6s infinite; }
+.ch-arm.l { transform-origin: 9.75px 33px; } .ch-arm.r { transform-origin: 38.25px 33px; }
+.ch-leg.l { transform-origin: 19.25px 46px; } .ch-leg.r { transform-origin: 28.75px 46px; }
+@keyframes chbob { 50% { transform: translateY(-1.5px); } }
+@keyframes chblink { 0%, 94%, 100% { transform: none; } 96% { transform: scaleY(.12); } }
+/* role actions */
+.act-wave .ch-arm.r { animation: chwave 1.1s ease-in-out infinite; }
+@keyframes chwave { 0%, 100% { transform: rotate(-150deg); } 50% { transform: rotate(-118deg); } }
+.act-hammer .ch-arm.r { animation: chhammer .75s cubic-bezier(.5,0,.4,1) infinite; }
+@keyframes chhammer { 0%, 100% { transform: rotate(-75deg); } 50% { transform: rotate(12deg); } }
+.act-hammer .ch-body { animation: chbob .75s ease-in-out infinite; }
+.act-type .ch-arm.l { animation: chtypeL .32s ease-in-out infinite alternate; }
+.act-type .ch-arm.r { animation: chtypeR .32s ease-in-out infinite alternate-reverse; }
+@keyframes chtypeL { from { transform: rotate(-24deg); } to { transform: rotate(-34deg); } }
+@keyframes chtypeR { from { transform: rotate(24deg); } to { transform: rotate(34deg); } }
+.act-scan .ch-arm.r { animation: chscan 2.2s ease-in-out infinite; }
+.act-scan .ch-head { transform-origin: 24px 30px; animation: chlook 2.2s ease-in-out infinite; }
+@keyframes chscan { 0%, 100% { transform: rotate(-35deg); } 50% { transform: rotate(-85deg); } }
+@keyframes chlook { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(4deg); } }
+.act-point .ch-arm.r { animation: chpoint 1.8s ease-in-out infinite; }
+@keyframes chpoint { 0%, 100% { transform: rotate(-112deg); } 50% { transform: rotate(-100deg); } }
+.act-paint .ch-arm.r { animation: chpaint 1.5s ease-in-out infinite; }
+.act-paint .ch-arm.l { transform: rotate(-30deg); }
+@keyframes chpaint { 0%, 100% { transform: rotate(-58deg); } 25% { transform: rotate(-78deg); } 50% { transform: rotate(-52deg); } 75% { transform: rotate(-72deg); } }
+.act-block .ch-arm.l { animation: chblock 2.6s cubic-bezier(.4,0,.2,1) infinite; }
+@keyframes chblock { 0%, 35%, 100% { transform: rotate(-8deg); } 45%, 80% { transform: rotate(-62deg); } }
+.act-walk .ch-leg.l, .act-walk .ch-arm.r { animation: chswingA .45s ease-in-out infinite alternate; }
+.act-walk .ch-leg.r, .act-walk .ch-arm.l { animation: chswingB .45s ease-in-out infinite alternate; }
+.act-walk .ch-body { animation: chbob .45s ease-in-out infinite; }
+@keyframes chswingA { from { transform: rotate(20deg); } to { transform: rotate(-20deg); } }
+@keyframes chswingB { from { transform: rotate(-20deg); } to { transform: rotate(20deg); } }
+.act-cheer .ch-body { animation: chjump .8s cubic-bezier(.3,0,.3,1) infinite; }
+.act-cheer .ch-arm.l { animation: chcheerL .4s ease-in-out infinite alternate; }
+.act-cheer .ch-arm.r { animation: chcheerR .4s ease-in-out infinite alternate; }
+.act-cheer .ch-shadow { animation: chshadow .8s cubic-bezier(.3,0,.3,1) infinite; transform-origin: 24px 65.5px; }
+@keyframes chjump { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-9px); } }
+@keyframes chcheerL { from { transform: rotate(140deg); } to { transform: rotate(165deg); } }
+@keyframes chcheerR { from { transform: rotate(-140deg); } to { transform: rotate(-165deg); } }
+@keyframes chshadow { 40% { transform: scale(.6); opacity: .15; } }
+/* a one-off hop when a character is called up (hero chips) */
+.jbc.hop svg { animation: chhop .55s cubic-bezier(.3,1.6,.5,1); }
+@keyframes chhop { 40% { transform: translateY(-12px) rotate(-6deg); } }
+
+/* hero: the crew stands on the Studio window */
+.hero-crew { position: relative; z-index: 2; max-width: 980px; margin: 0 auto -5px; padding-left: 22px; display: flex; align-items: flex-end; gap: 4px; animation: enter .6s cubic-bezier(.2,.7,.2,1) .1s both; }
+.hero-crew .jbc { width: 38px; transition: opacity .3s ease, filter .3s ease; }
+.hero-crew .jbc:not(.called) { opacity: .55; filter: saturate(.6); }
+.hero-top { margin-bottom: 14px; }
+
+/* section mascots peek over section headers without taking space */
+.section > .container { position: relative; }
+.mascot { position: absolute; top: -30px; right: 8px; width: 46px; z-index: 2; }
+.mascot.left { right: auto; left: 8px; }
+.cta-crew { position: absolute; top: -50px; right: 48px; z-index: 2; display: flex; gap: 2px; }
+.cta-crew .jbc { width: 40px; }
+.cta-crew .jbc:nth-child(2) svg { animation-delay: .2s; }
+.page-crew { display: flex; justify-content: center; gap: 6px; margin: 0 0 6px; }
+.page-crew .jbc { width: 40px; }
+.jbc.inline { width: 26px; margin: -14px 6px -6px 0; vertical-align: bottom; }
+.crew .jbc { width: 40px; margin-bottom: 2px; }
+.wl-cheer { display: flex; justify-content: center; gap: 4px; margin-bottom: 8px; }
+.wl-cheer .jbc { width: 36px; }
+.wl-cheer .jbc:nth-child(2) .ch-body { animation-delay: .15s; } .wl-cheer .jbc:nth-child(3) .ch-body { animation-delay: .3s; }
+.lost { position: relative; height: 70px; max-width: 360px; margin: 0 auto 10px; }
+.lost .jbc { position: absolute; left: 0; bottom: 0; width: 44px; animation: wander 7s linear infinite; }
+@keyframes wander { 0% { left: 0; transform: none; } 48% { left: calc(100% - 44px); transform: none; } 50% { left: calc(100% - 44px); transform: scaleX(-1); } 98% { left: 0; transform: scaleX(-1); } 100% { left: 0; transform: none; } }
+
+/* loading bar runner */
+.jb-runner { position: absolute; right: -10px; top: 2px; width: 16px; transition: opacity .2s ease; }
+.jb-bar.done .jb-runner { opacity: 0; }
+
+@media (max-width: 640px) {
+  .hero-crew { order: 2; margin: 14px 0 -5px; padding-left: 14px; }
+  .hero-crew .jbc { width: 32px; }
+  .hero-visual { margin-top: 0; }
+  .mascot { width: 36px; top: -26px; right: 0; }
+  .cta-crew { top: -42px; right: 16px; }
+  .cta-crew .jbc { width: 34px; }
+}
+@media (prefers-reduced-motion: reduce) { .jbc *, .jbc svg, .lost .jbc { animation: none !important; } }
+.eyebrow:has(.jbc)::before { display: none; }

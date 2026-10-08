@@ -60,6 +60,7 @@
   // Thin top bar: finishes when the page has loaded, starts again the moment an internal link is tapped.
   var bar = document.createElement("div");
   bar.className = "jb-bar";
+  bar.innerHTML = '<span class="jb-runner" data-char="builder" data-act="walk"></span>';
   document.body.appendChild(bar);
   function barGo() { bar.className = "jb-bar"; void bar.offsetWidth; bar.className = "jb-bar go"; }
   function barDone() { bar.className = "jb-bar go done"; }
@@ -346,6 +347,12 @@
     function mark(i) {
       cur = i;
       chips.forEach(function (b, k) { b.classList.toggle("on", k === i); b.setAttribute("aria-pressed", String(k === i)); });
+      var key = chips[i].dataset.clip;
+      $$(".hero-crew [data-for]").forEach(function (ch) {
+        var on = (" " + ch.dataset.for + " ").indexOf(" " + key + " ") !== -1;
+        ch.classList.toggle("called", on);
+        if (on) { ch.classList.remove("hop"); void ch.offsetWidth; ch.classList.add("hop"); }
+      });
       if (box.scrollWidth > box.clientWidth) box.scrollTo({ left: chips[i].offsetLeft - (box.clientWidth - chips[i].offsetWidth) / 2, behavior: "smooth" });
     }
     var o = { next: function () { mark((cur + 1) % chips.length); return JB.clipInfo(chips[cur].dataset.clip); } };
@@ -425,11 +432,13 @@
       hat: '<path d="M12 14a12 9 0 0 1 24 0z" fill="#1b1c1e"' + K + '2"/><rect x="22" y="11.5" width="17" height="3.5" rx="1.7" fill="#1b1c1e"' + K + '1.5"/>',
       prop: '' }
   };
-  function avatar(kind) {
-    var o = OUTFIT[kind] || { shirt: "#8a8c8e", over: "", hat: "", prop: "" };
-    var eyes = o.eyes === "shades" ? '<rect x="16" y="15.5" width="16" height="5.5" rx="2" fill="#0b0c0d"/><rect x="18" y="16.5" width="4" height="1.5" rx=".7" fill="#5b5e62"/>'
+  function eyesOf(o) {
+    return o.eyes === "shades" ? '<rect x="16" y="15.5" width="16" height="5.5" rx="2" fill="#0b0c0d"/><rect x="18" y="16.5" width="4" height="1.5" rx=".7" fill="#5b5e62"/>'
       : o.eyes === "glasses" ? '<rect x="15.5" y="15" width="8" height="7" rx="2" fill="none" stroke="#0b0c0d" stroke-width="2"/><rect x="24.5" y="15" width="8" height="7" rx="2" fill="none" stroke="#0b0c0d" stroke-width="2"/><rect x="18.5" y="17" width="2" height="3" rx="1" fill="#0b0c0d"/><rect x="27.5" y="17" width="2" height="3" rx="1" fill="#0b0c0d"/>'
       : '<rect x="18" y="16" width="3" height="5" rx="1.5" fill="#0b0c0d"/><rect x="27" y="16" width="3" height="5" rx="1.5" fill="#0b0c0d"/>';
+  }
+  function avatar(kind) {
+    var o = OUTFIT[kind] || { shirt: "#8a8c8e", over: "", hat: "", prop: "" }, eyes = eyesOf(o);
     return '<svg viewBox="0 0 48 48" aria-hidden="true">' +
       '<rect x="13" y="31" width="22" height="15" rx="3" fill="' + o.shirt + '"/>' + o.over +
       '<rect x="13" y="31" width="22" height="15" rx="3" fill="none"' + K + '2"/>' +
@@ -438,6 +447,47 @@
       o.hat + o.prop + "</svg>";
   }
   $$("[data-avatar]").forEach(function (el) { el.innerHTML = avatar(el.dataset.avatar); });
+
+  // Full-body JokiBlox characters (same outfits) with jointed arms/legs so CSS can animate them:
+  // <span class="jbc" data-char="builder" data-act="hammer"></span>  acts: idle wave hammer type scan point paint block walk cheer
+  var PANTS = { architect: "#1b2238", scripter: "#3a3d42", builder: "#2f5d9e", ui: "#2b2d31", qa: "#5b5e62", guard: "#1b1c1e" };
+  var HELD = {
+    architect: { r: '<g transform="rotate(-18 38.5 46)"><rect x="35.5" y="37" width="6" height="16" rx="3" fill="#9cc9ff"' + K + '1.8"/><ellipse cx="38.5" cy="37.6" rx="3" ry="1.4" fill="#fff"' + K + '1"/></g>' },
+    builder: { r: '<rect x="37.2" y="35" width="2.4" height="15" rx="1" fill="#a0652e"' + K + '1"/><rect x="32.6" y="32" width="11.6" height="4.8" rx="1" fill="#c9cacc"' + K + '1.2"/>' },
+    scripter: { front: '<rect x="14" y="36.5" width="20" height="12.5" rx="1.5" fill="#c9cacc"' + K + '1.5"/><circle cx="24" cy="42.7" r="1.6" fill="#3fe0a4"/><rect x="12" y="48.5" width="24" height="2.6" rx="1.2" fill="#0b0c0d"/>' },
+    ui: { r: '<rect x="37.7" y="33" width="2" height="13" fill="#a0652e"/><path d="M37.2 33.4h3l-1.5-4.6z" fill="#e5484d"' + K + '.8"/>',
+          l: '<ellipse cx="7" cy="46" rx="6.5" ry="4.2" fill="#f2d7a0"' + K + '1.4"/><circle cx="4.6" cy="45.2" r="1.1" fill="#e5484d"/><circle cx="7.4" cy="44.2" r="1.1" fill="#2f6fed"/><circle cx="9.6" cy="46.4" r="1.1" fill="#00b06f"/>' },
+    qa: { r: '<path d="m39.6 41.6-1.6 3.6" stroke="#0b0c0d" stroke-width="2.4" stroke-linecap="round"/><circle cx="42" cy="37" r="4.6" fill="#bfe6ff" fill-opacity=".75"' + K + '2"/>' },
+    guard: { l: '<path d="m7 34.6 6 2.2v4.3c0 3.6-2.8 5.8-6 6.8-3.2-1-6-3.2-6-6.8v-4.3z" fill="#e5484d"' + K + '1.4"/><path d="m4.4 41.2 1.9 1.9 3.6-3.8" fill="none" stroke="#fff" stroke-width="1.5"/>' }
+  };
+  function character(kind) {
+    var o = OUTFIT[kind] || { shirt: "#8a8c8e", over: "", hat: "" }, h = HELD[kind] || {}, pants = PANTS[kind] || "#3a3d42";
+    var leg = function (x, side) {
+      return '<g class="ch-leg ' + side + '"><rect x="' + x + '" y="44" width="8.5" height="17" rx="2" fill="' + pants + '"' + K + '2"/><rect x="' + (x - .5) + '" y="59.5" width="9.5" height="5" rx="2" fill="#0b0c0d"/></g>';
+    };
+    var arm = function (x, side, held) {
+      return '<g class="ch-arm ' + side + '"><rect x="' + x + '" y="31.5" width="7.5" height="13" rx="3" fill="' + o.shirt + '"' + K + '2"/>' + (held || "") +
+        '<rect x="' + (x + .5) + '" y="42" width="6.5" height="5" rx="2.2" fill="#fff"' + K + '1.5"/></g>';
+    };
+    var torso = '<rect x="13" y="31" width="22" height="15" rx="3" fill="' + o.shirt + '"/>' + o.over + '<rect x="13" y="31" width="22" height="15" rx="3" fill="none"' + K + '2"/>';
+    var head = '<g class="ch-head"><rect x="12" y="8" width="24" height="22" rx="5" fill="#fff"' + K + '2"/><g class="ch-eyes">' + eyesOf(o) + "</g>" +
+      '<path d="M19 25q5 3.5 10 0" fill="none" stroke="#0b0c0d" stroke-width="2" stroke-linecap="round"/>' + o.hat + "</g>";
+    return '<svg viewBox="0 0 48 68" aria-hidden="true"><ellipse class="ch-shadow" cx="24" cy="65.5" rx="12" ry="2" fill="#000" opacity=".28"/><g class="ch-body">' +
+      leg(15, "l") + leg(24.5, "r") + arm(6, "l", h.l) + torso + arm(34.5, "r", h.r) + (h.front || "") + head + "</g></svg>";
+  }
+  JB.character = character;
+  var charIO = "IntersectionObserver" in window && new IntersectionObserver(function (es) {
+    es.forEach(function (e) { e.target.classList.toggle("live", e.isIntersecting); });
+  });
+  JB.mountChars = function (scope) {
+    $$("[data-char]", scope).forEach(function (el) {
+      if (el.firstChild) return;
+      el.innerHTML = character(el.dataset.char);
+      el.classList.add("jbc", "act-" + (el.dataset.act || "idle"));
+      if (charIO) charIO.observe(el); else el.classList.add("live");
+    });
+  };
+  JB.mountChars(document);
   window.JB.placeBlocks = placeBlocks;
   window.JB.avatar = avatar;
   window.JB.typeInto = typeInto;

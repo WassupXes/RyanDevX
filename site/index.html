@@ -22,10 +22,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=d4f93714">
+<link rel="stylesheet" href="assets/css/style.css?v=ac2f11ae">
 <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 <script src="assets/js/config.js?v=52c677b8" defer></script>
-<script src="assets/js/main.js?v=9b1baa1f" defer></script>
+<script src="assets/js/main.js?v=5a0cf915" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -79,6 +79,7 @@
       </div>
     </div>
 
+    <div class="hero-crew" aria-hidden="true"><span data-char="architect" data-act="point" data-for="hero usp-approve"></span><span data-char="builder" data-act="hammer" data-for="hero usp-inside"></span><span data-char="scripter" data-act="type" data-for="hero usp-squad"></span><span data-char="ui" data-act="paint" data-for="hero usp-squad"></span><span data-char="qa" data-act="scan" data-for="usp-qa usp-inside"></span><span data-char="guard" data-act="block" data-for="usp-antiexploit"></span></div>
     <div class="hero-visual slot slot-free" data-slot="hero">
       <!-- same layout as the hero player, so nothing jumps when the script swaps it in -->
       <div class="pp pp-hero ready" data-state="idle">
@@ -111,6 +112,7 @@
 <!-- ============ USP: pain → answer (clip slots) ============ -->
 <section class="section black" id="features">
   <div class="container">
+    <span class="mascot" aria-hidden="true" data-char="qa" data-act="scan"></span>
     <div class="center reveal">
       <span class="eyebrow"><span lang="en">Why JokiBlox</span><span lang="id">Kenapa JokiBlox</span></span>
       <h2><span lang="en">Built for what creators complain about.</span><span lang="id">Dibuat dari keluhan nyata kreator.</span></h2>
@@ -218,6 +220,7 @@
 <!-- ============ HOW IT WORKS (user POV, clip slots) ============ -->
 <section class="section" id="how">
   <div class="container">
+    <span class="mascot left" aria-hidden="true" data-char="builder" data-act="hammer"></span>
     <div class="center reveal">
       <span class="eyebrow"><span lang="en">How it works</span><span lang="id">Cara kerja</span></span>
       <h2><span lang="en">What you do. What you get.</span><span lang="id">Yang kamu lakukan. Yang kamu dapat.</span></h2>
@@ -279,12 +282,12 @@
         <h2><span lang="en">A squad you can steer. Not a one-shot.</span><span lang="id">Squad yang bisa kamu arahkan. Bukan sekali jadi.</span></h2>
         <p class="lead"><span lang="en">Message any agent, any time. Every revision is a version.</span><span lang="id">Chat agent mana saja, kapan saja. Tiap revisi jadi versi.</span></p>
         <ul class="crew">
-          <li><span data-avatar="architect"></span><b>Architect</b><small><span lang="en">plans & routes</span><span lang="id">rencana & bagi tugas</span></small></li>
-          <li><span data-avatar="builder"></span><b>Builder</b><small><span lang="en">map & parts</span><span lang="id">map & part</span></small></li>
-          <li><span data-avatar="scripter"></span><b>Scripter</b><small><span lang="en">Luau & remotes</span><span lang="id">Luau & remote</span></small></li>
-          <li><span data-avatar="ui"></span><b>UI/UX</b><small><span lang="en">HUD & menus</span><span lang="id">HUD & menu</span></small></li>
-          <li><span data-avatar="qa"></span><b>QA</b><small><span lang="en">plays & breaks it</span><span lang="id">main & cari bug</span></small></li>
-          <li><span data-avatar="guard"></span><b>Guard</b><small><span lang="en">anti-exploit</span><span lang="id">anti-exploit</span></small></li>
+          <li><span data-char="architect" data-act="point"></span><b>Architect</b><small><span lang="en">plans & routes</span><span lang="id">rencana & bagi tugas</span></small></li>
+          <li><span data-char="builder" data-act="hammer"></span><b>Builder</b><small><span lang="en">map & parts</span><span lang="id">map & part</span></small></li>
+          <li><span data-char="scripter" data-act="type"></span><b>Scripter</b><small><span lang="en">Luau & remotes</span><span lang="id">Luau & remote</span></small></li>
+          <li><span data-char="ui" data-act="paint"></span><b>UI/UX</b><small><span lang="en">HUD & menus</span><span lang="id">HUD & menu</span></small></li>
+          <li><span data-char="qa" data-act="scan"></span><b>QA</b><small><span lang="en">plays & breaks it</span><span lang="id">main & cari bug</span></small></li>
+          <li><span data-char="guard" data-act="block"></span><b>Guard</b><small><span lang="en">anti-exploit</span><span lang="id">anti-exploit</span></small></li>
         </ul>
       </div>
       <div class="board reveal" data-board>
@@ -307,6 +310,7 @@
 <!-- ============ DISCORD + ALERTS ============ -->
 <section class="section black" id="alerts">
   <div class="container">
+    <span class="mascot" aria-hidden="true" data-char="architect" data-act="wave"></span>
     <div class="alerts">
       <div class="reveal">
         <span class="eyebrow"><span lang="en">Discord &amp; alerts</span><span lang="id">Discord &amp; notifikasi</span></span>
@@ -334,6 +338,7 @@
 <!-- ============ STATS ============ -->
 <section class="section tight" id="timeline">
   <div class="container">
+    <span class="mascot left" aria-hidden="true" data-char="scripter" data-act="type"></span>
     <div class="center reveal">
       <span class="eyebrow"><span lang="en">Real test · Sniper Arena</span><span lang="id">Tes asli · Sniper Arena</span></span>
       <h2><span lang="en">One prompt. The real clock.</span><span lang="id">Satu prompt. Jam aslinya.</span></h2>
@@ -353,6 +358,7 @@
 <!-- ============ PRICING TEASER ============ -->
 <section class="section light">
   <div class="container">
+    <span class="mascot left" aria-hidden="true" data-char="ui" data-act="paint"></span>
     <div class="center reveal"><span class="eyebrow"><span lang="en">Pricing</span><span lang="id">Harga</span></span><h2><span lang="en">Simple plans. 20% off for the waitlist.</span><span lang="id">Paket simpel. Diskon 20% untuk waitlist.</span></h2></div>
     <div class="grid g3 teaser" style="margin-top:36px">
       <a class="card reveal" href="pricing.html" style="text-decoration:none"><span class="tag">Starter</span><div class="price"><span class="now">$9.60</span><span class="was">$12</span><span class="per"><span lang="en">/mo</span><span lang="id">/bln</span></span></div><p><span lang="en">Solo creators · 2 agents</span><span lang="id">Kreator solo · 2 agent</span></p></a>
@@ -365,6 +371,7 @@
 <!-- ============ FAQ ============ -->
 <section class="section" id="faq">
   <div class="container" style="max-width:860px">
+    <span class="mascot" aria-hidden="true" data-char="guard" data-act="block"></span>
     <div class="center reveal" style="margin-bottom:30px"><span class="eyebrow">FAQ</span><h2><span lang="en">Quick answers</span><span lang="id">Jawaban singkat</span></h2></div>
     <div class="faq">
       <details><summary><span lang="en">When does it launch?</span><span lang="id">Kapan rilis?</span></summary><p><span lang="en">November 2026. Waitlist members get beta invites earlier and 20% off for 12 months.</span><span lang="id">November 2026. Anggota waitlist dapat undangan beta lebih awal dan diskon 20% selama 12 bulan.</span></p></details>
@@ -378,6 +385,7 @@
 <!-- ============ CTA ============ -->
 <section class="section black">
   <div class="container">
+    <div class="cta-crew" aria-hidden="true"><span data-char="builder" data-act="cheer"></span><span data-char="qa" data-act="cheer"></span><span data-char="scripter" data-act="cheer"></span></div>
     <div class="cta-band reveal">
       <div>
         <h2><span lang="en">Lock 20% off before November.</span><span lang="id">Kunci diskon 20% sebelum November.</span></h2>
