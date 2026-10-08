@@ -11,7 +11,7 @@
     steps: $$("[data-step]"), caption: $("[data-caption]"), prev: $("[data-prev]"), next: $("[data-next]"), play: $("[data-play]"),
     tool: $("[data-jb-tool]"), pill: $("[data-conn]"), tree: $("[data-tree]"), iso: $(".iso"), overlay: $("[data-overlay]"),
     log: $("[data-log]"), dockBody: $("[data-dock-body]"), tabs: $$("[data-tab]"), tokens: $("[data-tokens]"), meter: $("[data-meter] b"),
-    place: $("[data-place]"),
+    place: $("[data-place]"), props: $("[data-props]"),
   };
 
   var TOKENS = 10000, SPEND = 258;
@@ -51,6 +51,11 @@
       text: ["Multiplayer Mode: four specialist agents work <b>at the same time</b> on separate parts of the DataModel, so they never overwrite each other. Parts, scripts and UI appear live in your Studio.",
              "Mode Multiplayer: empat agent spesialis bekerja <b>bersamaan</b> di bagian DataModel yang berbeda, jadi tidak saling menimpa. Part, script, dan UI muncul langsung di Studio kamu."],
       you: ["Grab a snack", "Ngemil dulu"], jb: ["Builds in parallel, playtests", "Membangun paralel, playtest"] },
+    { key: "assets",
+      title: ["Generate & insert assets", "Generate & masukkan aset"],
+      text: ["Need props? Describe them, pick the variants you like and click Insert. They’re uploaded through Open Cloud and placed straight into your Workspace.",
+             "Butuh properti? Deskripsikan, pilih varian yang kamu suka, lalu klik Insert. Aset diunggah lewat Open Cloud dan langsung ditaruh di Workspace."],
+      you: ["Pick and insert", "Pilih dan masukkan"], jb: ["Generates, uploads, places", "Generate, unggah, taruh"] },
     { key: "review",
       title: ["Review & publish", "Review & publish"],
       text: ["Every change arrives as a diff with QA results. Accept, tweak or undo with one click — snapshots make everything reversible. Publish when you’re happy.",
@@ -58,6 +63,13 @@
       you: ["Accept & publish", "Terima & publish"], jb: ["Applies changes, keeps a snapshot", "Menerapkan perubahan, menyimpan snapshot"] },
   ];
 
+  function egg(fill, spot) {
+    return '<svg viewBox="0 0 60 74" aria-hidden="true"><ellipse cx="30" cy="70" rx="18" ry="4" fill="rgba(0,0,0,.25)"/><path d="M30 4C16 4 6 26 6 44c0 14 11 24 24 24s24-10 24-24C54 26 44 4 30 4z" fill="' + fill + '" stroke="#0b0c0d" stroke-width="3"/><circle cx="22" cy="30" r="5" fill="' + spot + '"/><circle cx="38" cy="44" r="6" fill="' + spot + '"/><circle cx="24" cy="52" r="3.5" fill="' + spot + '"/></svg>';
+  }
+  var EGGS = [egg("#f2f4f5", "#bdbebe"), egg("#2fe0a0", "#00895a"), egg("#ffd84d", "#c79a00")];
+  function placeEggs(animate) {
+    el.props.innerHTML = EGGS.map(function (e, i) { return '<span class="egg' + (animate ? " drop" : "") + '" style="--i:' + i + '">' + e + "</span>"; }).join("");
+  }
   var state = { step: 0, run: 0, playing: true, started: false };
   var L = function (pair) { return JB.lang() === "id" ? pair[1] : pair[0]; };
   var sleepRaw = function (ms) { return new Promise(function (r) { setTimeout(r, JB.reduced ? 0 : ms); }); };
@@ -96,7 +108,9 @@
     renderTree(i >= 5);
     var blocks = JB.placeBlocks(el.iso, CELLS, 130, 26);
     if (i >= 5) blocks.forEach(function (b) { b.classList.add("on"); });
-    setTokens(i >= 5 ? TOKENS - SPEND : TOKENS);
+    setTokens(i >= 6 ? TOKENS - SPEND - 42 : i >= 5 ? TOKENS - SPEND : TOKENS);
+    el.props.innerHTML = "";
+    if (i >= 6) placeEggs(false);
     root.classList.toggle("dock-open", i >= 1);
     return blocks;
   }
@@ -233,6 +247,33 @@
       newItems.forEach(function (n) { n.classList.add("on"); });
       log(t("[Squad] Done in 5m 52s · 258 tokens", "[Squad] Selesai 5m 52d · 258 token"), "ok");
     },
+    assets: async function (nap) {
+      setTab("assets");
+      el.dockBody.innerHTML =
+        '<div class="dk-input as-p"><span data-typed></span></div>' +
+        '<div class="dk-eggs">' + EGGS.map(function (e, i) { return '<div class="dk-egg" data-i="' + i + '"><span class="shimmer"></span><small>' + ["Common", "Rare", "Legendary"][i] + "</small></div>"; }).join("") + "</div>" +
+        '<div class="dk-actions"><button type="button" class="ghost">' + t("Regenerate", "Generate ulang") + '</button><button type="button" class="primary" data-insert>' + t("Insert 3", "Masukkan 3") + "</button></div>" +
+        '<p class="dk-hint">' + t("Uploads via Open Cloud to your account or group.", "Diunggah lewat Open Cloud ke akun atau grup kamu.") + "</p>";
+      await JB.typeInto($("[data-typed]", el.dockBody), t("Pet eggs: common, rare and legendary", "Telur pet: common, rare dan legendary"), 18);
+      var tiles = $$(".dk-egg", el.dockBody);
+      for (var i = 0; i < tiles.length; i++) {
+        await nap(450);
+        tiles[i].insertAdjacentHTML("afterbegin", EGGS[i]);
+        tiles[i].classList.add("ready", "pick");
+      }
+      log(t("[Art] 3 egg meshes generated", "[Art] 3 mesh telur dibuat"), "ok");
+      await nap(700);
+      var ins = $("[data-insert]", el.dockBody);
+      ins.classList.add("pulse");
+      await nap(900);
+      ins.classList.remove("pulse");
+      ins.textContent = t("Inserted ✓", "Masuk ✓");
+      ins.disabled = true;
+      placeEggs(true);
+      log(t("Open Cloud: 3 assets uploaded", "Open Cloud: 3 aset diunggah"), "ok");
+      log("+ Workspace/Eggs/Common, Rare, Legendary", "ok");
+      setTokens(TOKENS - SPEND - 42);
+    },
     review: async function (nap) {
       setTab("changes");
       var files = [
@@ -262,6 +303,9 @@
       acc.disabled = true;
       el.overlay.innerHTML = '<div class="toast">✓ ' + t("Published to Roblox · Version 1", "Terbit di Roblox · Versi 1") + "</div>";
       log(t("Published PetSim · version 1", "PetSim terbit · versi 1"), "ok");
+      await nap(1200);
+      el.overlay.innerHTML = '<div class="toast dc">💬 ' + t("Sent to Discord #my-petsim", "Dikirim ke Discord #my-petsim") + "</div>";
+      log(t("Discord: notified #my-petsim", "Discord: notifikasi ke #my-petsim"), "ok");
     },
   };
 

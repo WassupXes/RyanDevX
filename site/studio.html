@@ -56,7 +56,7 @@
   <div class="container center">
     <span class="eyebrow"><span lang="en">Interactive tour</span><span lang="id">Tur interaktif</span></span>
     <h1><span lang="en">This is JokiBlox<br>inside Roblox Studio.</span><span lang="id">Ini JokiBlox<br>di dalam Roblox Studio.</span></h1>
-    <p class="lead"><span lang="en">No new editor to learn. JokiBlox docks into the Studio you already use — click through the six steps, or let it play.</span><span lang="id">Tidak perlu belajar editor baru. JokiBlox menempel di Studio yang sudah kamu pakai — klik enam langkahnya, atau biarkan berjalan sendiri.</span></p>
+    <p class="lead"><span lang="en">No new editor to learn. JokiBlox docks into the Studio you already use — click through the seven steps, or let it play.</span><span lang="id">Tidak perlu belajar editor baru. JokiBlox menempel di Studio yang sudah kamu pakai — klik tujuh langkahnya, atau biarkan berjalan sendiri.</span></p>
   </div>
 </section>
 
@@ -68,7 +68,8 @@
       <li><button type="button" data-step><i class="n">3</i><span lang="en">Describe</span><span lang="id">Ceritakan</span></button></li>
       <li><button type="button" data-step><i class="n">4</i><span lang="en">Plan</span><span lang="id">Rencana</span></button></li>
       <li><button type="button" data-step><i class="n">5</i><span lang="en">Build</span><span lang="id">Bangun</span></button></li>
-      <li><button type="button" data-step><i class="n">6</i><span lang="en">Review &amp; publish</span><span lang="id">Review &amp; publish</span></button></li>
+      <li><button type="button" data-step><i class="n">6</i><span lang="en">Assets</span><span lang="id">Aset</span></button></li>
+      <li><button type="button" data-step><i class="n">7</i><span lang="en">Review &amp; publish</span><span lang="id">Review &amp; publish</span></button></li>
     </ol>
 
     <div class="tour-grid">
@@ -78,33 +79,35 @@
           <span class="sx-name">Roblox Studio — <b data-place>Baseplate.rbxl</b></span>
           <span class="sx-conn" data-conn><span lang="en">Not connected</span><span lang="id">Belum terhubung</span></span>
         </div>
-        <div class="sx-ribbon">
-          <div class="sx-tabs"><span>Home</span><span>Model</span><span>Avatar</span><span>Test</span><span>View</span><span class="on">Plugins</span></div>
-          <div class="sx-tools">
-            <span class="sx-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17.5 14v7M14 17.5h7"/></svg><span lang="en">Manage</span><span lang="id">Kelola</span></span>
-            <span class="sx-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span lang="en">Snapshots</span><span lang="id">Snapshot</span></span>
-            <span class="sx-tool jb" data-jb-tool><img src="assets/img/logo.svg" alt="">JokiBlox</span>
-          </div>
+        <div class="sx-mezz">
+          <div class="mz-play" aria-hidden="true"><span>▶</span><span>❚❚</span><span>■</span></div>
+          <div class="sx-tabs"><span>Home</span><span>Model</span><span>Avatar</span><span>UI</span><span>Script</span><span class="on">Plugins</span></div>
+          <div class="mz-right" aria-hidden="true"><span>Share</span><span>✦ Assistant</span><span>🔔</span><i class="mz-av"></i></div>
+        </div>
+        <div class="sx-tools">
+          <span class="sx-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17.5 14v7M14 17.5h7"/></svg><span lang="en">Manage</span><span lang="id">Kelola</span></span>
+          <span class="sx-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span lang="en">Snapshots</span><span lang="id">Snapshot</span></span>
+          <span class="sx-tool jb" data-jb-tool><img src="assets/img/logo.svg" alt="">JokiBlox</span>
         </div>
         <div class="sx-body">
-          <aside class="sx-left">
-            <div class="sx-panel grow"><h6>Explorer</h6><ul class="sx-tree" data-tree></ul></div>
-            <div class="sx-panel"><h6>Properties</h6>
-              <dl class="sx-props"><dt>Name</dt><dd>Workspace</dd><dt>Gravity</dt><dd>196.2</dd><dt>StreamingEnabled</dt><dd>true</dd></dl>
-            </div>
-          </aside>
-          <section class="sx-center">
-            <div class="sx-viewport"><div class="iso"></div><div class="sx-overlay" data-overlay></div></div>
-            <div class="sx-output"><h6>Output</h6><div class="sx-log" data-log></div></div>
-          </section>
           <aside class="sx-dock">
             <div class="dk-head">
               <span class="dk-brand"><img src="assets/img/logo.svg" alt="">JokiBlox Agent</span>
               <span class="dk-model">Smart Router ▾</span>
             </div>
             <div class="dk-tokens"><span><span lang="en">Tokens</span><span lang="id">Token</span></span><b data-tokens>10,000</b><div class="dk-meter" data-meter><b></b></div></div>
-            <div class="dk-tabs"><span data-tab="chat">Chat</span><span data-tab="plan"><span lang="en">Plan</span><span lang="id">Rencana</span></span><span data-tab="squad">Squad</span><span data-tab="changes"><span lang="en">Changes</span><span lang="id">Perubahan</span></span></div>
+            <div class="dk-tabs"><span data-tab="chat">Chat</span><span data-tab="plan"><span lang="en">Plan</span><span lang="id">Rencana</span></span><span data-tab="squad">Squad</span><span data-tab="assets"><span lang="en">Assets</span><span lang="id">Aset</span></span><span data-tab="changes"><span lang="en">Changes</span><span lang="id">Ubah</span></span></div>
             <div class="dk-body" data-dock-body></div>
+          </aside>
+          <section class="sx-center">
+            <div class="sx-viewport"><div class="iso"></div><div class="sx-props-layer" data-props></div><div class="sx-overlay" data-overlay></div></div>
+            <div class="sx-output"><h6>Output</h6><div class="sx-log" data-log></div></div>
+          </section>
+          <aside class="sx-left sx-right">
+            <div class="sx-panel grow"><h6>Explorer</h6><ul class="sx-tree" data-tree></ul></div>
+            <div class="sx-panel"><h6>Properties</h6>
+              <dl class="sx-props"><dt>Name</dt><dd>Workspace</dd><dt>Gravity</dt><dd>196.2</dd><dt>Streaming</dt><dd>true</dd></dl>
+            </div>
           </aside>
         </div>
       </div>
@@ -174,9 +177,10 @@
         <ul>
           <li><a href="products.html#create"><span lang="en">Create games</span><span lang="id">Bikin game</span></a></li>
           <li><a href="products.html#migrate"><span lang="en">Migrate &amp; fix</span><span lang="id">Migrasi &amp; perbaiki</span></a></li>
-          <li><a href="products.html#remix"><span lang="en">Remix &amp; upgrade</span><span lang="id">Remix &amp; upgrade</span></a></li>
+          <li><a href="products.html#clone"><span lang="en">Clone &amp; upgrade</span><span lang="id">Clone &amp; upgrade</span></a></li>
           <li><a href="products.html#assets"><span lang="en">Game assets</span><span lang="id">Aset game</span></a></li>
           <li><a href="products.html#ugc"><span lang="en">Clothing &amp; UGC</span><span lang="id">Baju &amp; UGC</span></a></li>
+          <li><a href="products.html#discord">Discord</a></li>
         </ul>
       </div>
       <div>

@@ -48,11 +48,13 @@ def main():
         html = head + header + body + footer
         for key, val in {**meta, "url": SITE_URL + meta["path"]}.items():
             html = html.replace(f"%%{key}%%", val)
+        if meta.get("noindex"):  # reachable by link, kept out of search and the sitemap
+            html = html.replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1)
         if f.stem == "404":  # served from any path, so resolve relative links from the root
             html = html.replace("<head>", '<head>\n<base href="/">', 1)
         out = OUT / f.name
         out.write_text(i18n(html))
-        if f.stem != "404":
+        if f.stem != "404" and not meta.get("noindex"):
             pages.append(meta["path"])
         print("built", out.relative_to(ROOT))
     leftover = [p for p in OUT.glob("*.html") if "[[" in p.read_text() or "]]" in p.read_text()]

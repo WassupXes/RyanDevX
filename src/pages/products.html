@@ -1,186 +1,78 @@
 ---
 title_en: Products — JokiBlox Agent
 title_id: Produk — JokiBlox Agent
-desc: Create Roblox games from a prompt, migrate broken games in minutes, remix and upgrade your places, and generate assets and clothing — with JokiBlox Agent's parallel AI squad.
+desc: Create, clone and upgrade, migrate, AI assets, clothing, Discord control and a QA agent — see each JokiBlox Agent feature in action.
 path: /products.html
 ---
-<section class="page-hero">
-  <div class="container">
+<section class="page-hero compact">
+  <div class="container center">
     <span class="eyebrow">[[Products||Produk]]</span>
-    <h1>[[Five tools. One squad.||Lima tool. Satu squad.]]</h1>
-    <p class="lead">[[Everything JokiBlox Agent does runs inside Roblox Studio and draws from the same token balance. Pick what you need today — the rest is there when you grow.||Semua yang dikerjakan JokiBlox Agent berjalan di dalam Roblox Studio dan memakai saldo token yang sama. Pakai yang kamu butuhkan hari ini — sisanya siap saat kamu berkembang.]]</p>
-    <div class="btn-row" style="margin-top:22px">
+    <h1>[[Seven tools. One squad.||Tujuh tool. Satu squad.]]</h1>
+    <p class="lead">[[Every demo below is live. Scroll and watch.||Semua demo di bawah berjalan langsung. Scroll dan lihat.]]</p>
+    <div class="btn-row" style="justify-content:center;margin-top:22px">
       <a class="btn btn-primary" href="waitlist.html">[[Join waitlist — 20% off||Gabung waitlist — diskon 20%]]</a>
       <a class="btn btn-ghost" href="studio.html">🎬 [[Studio tour||Tur Studio]]</a>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section black">
   <div class="container">
-
-    <!-- CREATE -->
-    <div class="feature-row" id="create">
+    <div class="feature-row lite" id="create">
       <div class="reveal">
-        <span class="eyebrow">01 · [[Create||Bikin]]</span>
-        <h2>[[New game from a single prompt||Game baru dari satu prompt]]</h2>
-        <p class="lead">[[The Architect agent turns your idea into a game design doc, then the squad builds the systems in parallel and wires them together.||Agent Architect mengubah idemu menjadi dokumen desain game, lalu squad membangun sistem-sistemnya secara paralel dan menyambungkannya.]]</p>
-        <ul>
-          <li>[[Genre starters: tycoon, obby, simulator, tower defense, RPG, horror, racing||Starter genre: tycoon, obby, simulator, tower defense, RPG, horor, balap]]</li>
-          <li>[[Core systems: DataStore saves, leaderstats, inventory, shop, quests, daily rewards||Sistem inti: simpan DataStore, leaderstats, inventori, toko, quest, daily reward]]</li>
-          <li>[[Monetization: gamepasses, developer products, premium payouts — wired and tested||Monetisasi: gamepass, developer product, premium payout — tersambung dan dites]]</li>
-          <li>[[Mobile-first UI that scales on phones, tablets and console||UI mobile-first yang pas di HP, tablet, dan konsol]]</li>
-        </ul>
-        <div class="kpis"><div><b>~5×</b><span>[[faster with 4 agents (modeled)||lebih cepat dengan 4 agent (model)]]</span></div><div><b>150–400</b><span>[[tokens for a playable prototype||token untuk prototipe yang bisa dimainkan]]</span></div></div>
+        <span class="eyebrow">01 · [[Create||Bikin game]]</span>
+        <h2>[[A playable game from one prompt.||Game siap main dari satu prompt.]]</h2>
+        <ul class="pill-list"><li>[[Tycoon · obby · simulator · RPG · horror||Tycoon · obby · simulator · RPG · horor]]</li><li>[[DataStore, shop, gamepasses||DataStore, toko, gamepass]]</li><li>[[Mobile-ready UI||UI siap mobile]]</li></ul>
       </div>
-      <div class="window reveal">
-        <div class="window-bar"><i></i><i></i><i></i><span class="title">[[Game design doc — Pet Simulator||Dokumen desain — Pet Simulator]]</span><span class="live">Architect</span></div>
-        <div class="code">
-<span class="ln"><span class="n">1</span><span class="k">## Core loop</span></span>
-<span class="ln"><span class="n">2</span>collect coins → hatch eggs → equip pets → bigger zones</span>
-<span class="ln"><span class="n">3</span><span class="k">## Systems</span>                     <span class="c">agent</span></span>
-<span class="ln add"><span class="n">4</span>[✓] CurrencyService + DataStore  <span class="c">Scripter</span></span>
-<span class="ln add"><span class="n">5</span>[✓] EggHatch + rarity table      <span class="c">Scripter</span></span>
-<span class="ln add"><span class="n">6</span>[✓] 4 zones + portals           <span class="c">Builder</span></span>
-<span class="ln add"><span class="n">7</span>[✓] Pet inventory UI (mobile)   <span class="c">UI/UX</span></span>
-<span class="ln"><span class="n">8</span>[~] Gamepass: 2× luck            <span class="c">Monetize</span></span>
-<span class="ln"><span class="n">9</span>[ ] Playtest 8 players          <span class="c">QA</span></span>
-        </div>
-      </div>
+      <div class="reveal" data-fx-mount="create"></div>
     </div>
-
-    <!-- MIGRATE -->
-    <div class="feature-row flip" id="migrate">
+    <div class="feature-row lite flip" id="clone">
       <div class="reveal">
-        <span class="eyebrow">02 · [[Migrate &amp; fix||Migrasi &amp; perbaiki]]</span>
-        <h2>[[Bring broken games back to life||Hidupkan lagi game yang rusak]]</h2>
-        <p class="lead">[[Roblox keeps evolving — and old games break. JokiBlox scans every script and asset, explains what’s wrong in plain language, and fixes it in one pass.||Roblox terus berkembang — dan game lama jadi rusak. JokiBlox memindai semua script dan aset, menjelaskan masalahnya dengan bahasa sederhana, lalu memperbaikinya sekaligus.]]</p>
-        <ul>
-          <li>[[Legacy chat → TextChatService (legacy support ended 30 April 2025)||Legacy chat → TextChatService (dukungan legacy berakhir 30 April 2025)]]</li>
-          <li>[[BodyVelocity / BodyGyro / BodyPosition → LinearVelocity / AlignOrientation / AlignPosition||BodyVelocity / BodyGyro / BodyPosition → LinearVelocity / AlignOrientation / AlignPosition]]</li>
-          <li>[[wait / spawn / delay → task library; deprecated APIs and FilteringEnabled leftovers||wait / spawn / delay → library task; API usang dan sisa FilteringEnabled]]</li>
-          <li>[[Private or missing audio and decals: find, replace or re-upload via Open Cloud||Audio dan decal private/hilang: cari, ganti, atau unggah ulang lewat Open Cloud]]</li>
-          <li>[[Account or group transfers: re-map asset IDs, gamepasses and permissions||Pindah akun atau grup: petakan ulang ID aset, gamepass, dan izin]]</li>
-          <li>[[StreamingEnabled readiness and memory fixes for low-end phones||Kesiapan StreamingEnabled dan perbaikan memori untuk HP low-end]]</li>
-        </ul>
-        <div class="kpis"><div><b>15–30 min</b><span>[[mid-size game (target)||game menengah (target)]]</span></div><div><b>1–3 [[days||hari]]</b><span>[[same job by hand (est.)||pekerjaan sama secara manual (est.)]]</span></div></div>
+        <span class="eyebrow">02 · [[Clone &amp; upgrade||Clone &amp; upgrade]]</span>
+        <h2>[[Copy your place. Upgrade the copy. Keep the original safe.||Salin place kamu. Upgrade salinannya. Yang asli tetap aman.]]</h2>
+        <ul class="pill-list"><li>[[Lighting &amp; visuals||Pencahayaan &amp; visual]]</li><li>[[FPS on low-end phones||FPS di HP low-end]]</li><li>[[Anti-exploit remotes||Remote anti-exploit]]</li><li>[[Retention: rewards, quests||Retensi: reward, quest]]</li></ul>
       </div>
-      <div class="window reveal" data-demo="migrate">
-        <div class="window-bar"><i></i><i></i><i></i><span class="title">[[Migration scan report||Laporan scan migrasi]]</span><span class="live">[[Fixing||Memperbaiki]]</span></div>
-        <div class="progress"><b></b></div>
-        <div class="code">
-<span class="ln" data-new="[✓] TextChatService enabled"><span class="n">1</span>[✗] Legacy chat in 3 scripts</span>
-<span class="ln" data-new="[✓] 14 body movers → constraints"><span class="n">2</span>[✗] 14 deprecated body movers</span>
-<span class="ln" data-new="[✓] 212 calls → task.*"><span class="n">3</span>[✗] 212 wait()/spawn() calls</span>
-<span class="ln" data-new="[✓] 9 sounds re-uploaded"><span class="n">4</span>[✗] 9 private audio assets</span>
-<span class="ln" data-new="[✓] 6 remotes rate-limited"><span class="n">5</span>[✗] 6 unsecured RemoteEvents</span>
-<span class="ln" data-new="[✓] Playtest: 0 errors"><span class="n">6</span>[✗] 31 runtime errors</span>
-        </div>
-        <div class="mig-foot"><span>[[AI time||Waktu AI]] <span class="timer">00:00</span></span><span class="fixed">0/6</span></div>
-      </div>
+      <div class="reveal" data-fx-mount="clone"></div>
     </div>
-
-    <!-- REMIX -->
-    <div class="feature-row" id="remix">
+    <div class="feature-row lite" id="migrate">
       <div class="reveal">
-        <span class="eyebrow">03 · [[Remix &amp; upgrade||Remix &amp; upgrade]]</span>
-        <h2>[[Clone your game. Ship a better version.||Clone game kamu. Rilis versi yang lebih bagus.]]</h2>
-        <p class="lead">[[Fork a place you own (or a licensed template), let the squad profile it, and get an upgrade plan you can approve item by item.||Fork place milikmu (atau template berlisensi), biarkan squad memprofilkannya, dan dapatkan rencana upgrade yang bisa kamu setujui satu per satu.]]</p>
-        <ul>
-          <li>[[Performance: part count, unions, scripts per frame, memory — FPS on low-end phones||Performa: jumlah part, union, script per frame, memori — FPS di HP low-end]]</li>
-          <li>[[Security: server-authoritative remotes, sanity checks, anti-exploit basics||Keamanan: remote server-authoritative, sanity check, dasar anti-exploit]]</li>
-          <li>[[Retention: onboarding, daily rewards, quests and social features||Retensi: onboarding, daily reward, quest, dan fitur sosial]]</li>
-          <li>[[Reskin: new theme, map variants and seasonal events from one prompt||Reskin: tema baru, varian map, dan event musiman dari satu prompt]]</li>
-        </ul>
+        <span class="eyebrow">03 · [[Migrate &amp; fix||Migrasi &amp; perbaiki]]</span>
+        <h2>[[Broken by a Roblox update? Fixed in one pass.||Rusak karena update Roblox? Beres sekaligus.]]</h2>
+        <ul class="pill-list"><li>[[Legacy chat → TextChatService||Legacy chat → TextChatService]]</li><li>[[Body movers → constraints||Body mover → constraint]]</li><li>[[Private audio re-uploads||Upload ulang audio private]]</li><li>[[Group / account transfers||Pindah grup / akun]]</li></ul>
       </div>
-      <div class="window reveal" data-demo="meters">
-        <div class="window-bar"><i></i><i></i><i></i><span class="title">[[Upgrade plan||Rencana upgrade]]</span></div>
-        <div class="ba">
-          <div class="before">
-            <h4>[[Before||Sebelum]]</h4>
-            <div class="meter"><div class="top"><span>FPS</span><b>28</b></div><div class="bar"><b data-w="47%"></b></div></div>
-            <div class="meter"><div class="top"><span>[[Day-1 retention||Retensi hari-1]]</span><b>12%</b></div><div class="bar"><b data-w="24%"></b></div></div>
-            <div class="meter"><div class="top"><span>[[Memory (MB)||Memori (MB)]]</span><b>1,240</b></div><div class="bar"><b data-w="88%"></b></div></div>
-          </div>
-          <div class="after">
-            <h4>[[Target||Target]]</h4>
-            <div class="meter"><div class="top"><span>FPS</span><b>58</b></div><div class="bar"><b data-w="97%"></b></div></div>
-            <div class="meter"><div class="top"><span>[[Day-1 retention||Retensi hari-1]]</span><b>20%</b></div><div class="bar"><b data-w="40%"></b></div></div>
-            <div class="meter"><div class="top"><span>[[Memory (MB)||Memori (MB)]]</span><b>690</b></div><div class="bar"><b data-w="49%"></b></div></div>
-          </div>
-        </div>
-      </div>
+      <div class="reveal" data-fx-mount="migrate"></div>
     </div>
-
-    <!-- ASSETS -->
-    <div class="feature-row flip" id="assets">
+    <div class="feature-row lite flip" id="assets">
       <div class="reveal">
-        <span class="eyebrow">04 · [[Game assets||Aset game]]</span>
-        <h2>[[Assets that match your game’s style||Aset yang sesuai gaya game kamu]]</h2>
-        <p class="lead">[[Generate props, textures, icons and UI kits, then upload them straight to your account or group with Roblox Open Cloud.||Generate properti, tekstur, ikon, dan UI kit, lalu unggah langsung ke akun atau grup kamu dengan Roblox Open Cloud.]]</p>
-        <ul>
-          <li>[[Low-poly props and meshes (FBX/GLB) with collision and LOD settings||Properti dan mesh low-poly (FBX/GLB) dengan pengaturan collision dan LOD]]</li>
-          <li>[[Seamless textures, decals, icons, badges and game thumbnails||Tekstur seamless, decal, ikon, badge, dan thumbnail game]]</li>
-          <li>[[UI kits: buttons, frames, shop and inventory screens||UI kit: tombol, frame, layar toko dan inventori]]</li>
-          <li>[[Style lock: every asset follows your palette and art direction||Style lock: semua aset mengikuti palet dan arah seni kamu]]</li>
-        </ul>
+        <span class="eyebrow">04 · [[AI assets||Aset AI]]</span>
+        <h2>[[Generate it. Pick it. It lands in your Studio.||Generate. Pilih. Langsung masuk ke Studio.]]</h2>
+        <ul class="pill-list"><li>[[Props &amp; meshes||Properti &amp; mesh]]</li><li>[[Textures, icons, thumbnails||Tekstur, ikon, thumbnail]]</li><li>[[Open Cloud upload||Upload Open Cloud]]</li></ul>
       </div>
-      <div class="window reveal">
-        <div class="window-bar"><i></i><i></i><i></i><span class="title">[[Asset queue||Antrian aset]]</span><span class="live">Open Cloud</span></div>
-        <div class="code">
-<span class="ln add"><span class="n">1</span>[✓] sword_lowpoly.glb        <span class="c">model · uploaded</span></span>
-<span class="ln add"><span class="n">2</span>[✓] lava_tile_seamless.png   <span class="c">decal · uploaded</span></span>
-<span class="ln add"><span class="n">3</span>[✓] shop_ui_kit (12 parts)   <span class="c">ui · inserted</span></span>
-<span class="ln add"><span class="n">4</span>[✓] badge_first_rebirth.png  <span class="c">badge · ready</span></span>
-<span class="ln"><span class="n">5</span>[~] thumbnail_1920x1080.png  <span class="c">rendering…</span></span>
-        </div>
-      </div>
+      <div class="reveal" data-fx-mount="assets"></div>
     </div>
-
-    <!-- UGC -->
-    <div class="feature-row" id="ugc">
+    <div class="feature-row lite" id="ugc">
       <div class="reveal">
         <span class="eyebrow">05 · [[Clothing &amp; UGC||Baju &amp; UGC]]</span>
-        <h2>[[Clothing and UGC concepts, upload-ready||Konsep baju dan UGC, siap upload]]</h2>
-        <p class="lead">[[Describe a look and get a classic shirt/pants template (585×559) or a 3D accessory concept — checked against the rules before you spend Robux on upload fees.||Deskripsikan gaya dan dapatkan template classic shirt/pants (585×559) atau konsep aksesori 3D — dicek terhadap aturan sebelum kamu menghabiskan Robux untuk biaya upload.]]</p>
-        <ul>
-          <li>[[Shirts, pants and T-shirts mapped to the official templates||Shirt, pants, dan T-shirt dipetakan ke template resmi]]</li>
-          <li>[[Accessory and layered-clothing concepts with mesh starter files||Konsep aksesori dan layered clothing dengan file mesh awal]]</li>
-          <li>[[Moderation pre-check: banned symbols, text, IP and brand risks||Pre-check moderasi: simbol terlarang, teks, risiko IP dan merek]]</li>
-          <li>[[Group-store batches: 20 colourways from one design||Batch untuk toko grup: 20 varian warna dari satu desain]]</li>
-        </ul>
+        <h2>[[See it on an avatar before you upload.||Lihat di avatar sebelum upload.]]</h2>
+        <ul class="pill-list"><li>[[585×559 templates||Template 585×559]]</li><li>[[Moderation pre-check||Pre-check moderasi]]</li><li>[[Batch colourways||Varian warna massal]]</li></ul>
       </div>
-      <div class="window reveal" data-demo="ugc">
-        <div class="window-bar"><i></i><i></i><i></i><span class="title">JokiBlox · UGC Studio</span></div>
-        <div class="ugc">
-          <div class="ugc-preview">
-            <div class="scan"></div>
-            <svg viewBox="0 0 200 200" aria-hidden="true">
-              <defs>
-                <pattern id="p-stripe" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="16" height="16" fill="#2c2f31"/><rect width="7" height="16" fill="#e3e5e7"/></pattern>
-                <pattern id="p-batik" width="28" height="28" patternUnits="userSpaceOnUse"><rect width="28" height="28" fill="#191b1d"/><path d="M14 2 26 14 14 26 2 14Z" fill="none" stroke="#bdbebe" stroke-width="2"/><circle cx="14" cy="14" r="4" fill="#fff"/><circle cx="0" cy="0" r="3" fill="#9a9c9e"/><circle cx="28" cy="28" r="3" fill="#9a9c9e"/></pattern>
-                <pattern id="p-grid" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#0b0c0d"/><path d="M14 0H0V14" fill="none" stroke="#00b06f" stroke-width="1.5"/></pattern>
-                <pattern id="p-dots" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#f2f4f5"/><circle cx="6" cy="6" r="2.6" fill="#45484b"/></pattern>
-              </defs>
-              <path class="shirt-fill" fill="#45484b" stroke="#fff" stroke-width="3" stroke-linejoin="round" d="M70 30 30 52l14 34 18-8v92h76V78l18 8 14-34-40-22c-4 14-16 22-30 22s-26-8-30-22z"/>
-            </svg>
-          </div>
-          <div class="ugc-side">
-            <div class="prompt-box"></div>
-            <div class="chips">
-              <button type="button" class="chip" data-pattern="p-batik" data-p-en="Batik streetwear tee, monochrome, kawung motif" data-p-id="Kaos streetwear batik, monokrom, motif kawung">Batik</button>
-              <button type="button" class="chip" data-pattern="p-grid" data-p-en="Cyberpunk jacket with neon grid lines" data-p-id="Jaket cyberpunk dengan garis grid neon">Cyberpunk</button>
-              <button type="button" class="chip" data-pattern="p-stripe" data-p-en="Sporty jersey with bold diagonal stripes" data-p-id="Jersey sporty dengan garis diagonal tebal">Jersey</button>
-              <button type="button" class="chip" data-pattern="p-dots" data-p-en="Cute polka-dot school uniform" data-p-id="Seragam sekolah polkadot yang lucu">Polka</button>
-            </div>
-            <div class="checks">
-              <div>[[585×559 template mapped||Template 585×559 terpetakan]]</div>
-              <div>[[Moderation pre-check passed||Pre-check moderasi lolos]]</div>
-              <div>[[Ready to upload||Siap diunggah]]</div>
-            </div>
-          </div>
-        </div>
+      <div class="reveal" data-fx-mount="clothing"></div>
+    </div>
+    <div class="feature-row lite flip" id="discord">
+      <div class="reveal">
+        <span class="eyebrow">06 · [[Discord||Discord]]</span>
+        <h2>[[Run your squad from Discord. Get pinged when it matters.||Jalankan squad dari Discord. Dapat notifikasi saat penting.]]</h2>
+        <ul class="pill-list"><li>[[/jb commands||Perintah /jb]]</li><li>[[Task &amp; QA alerts||Notifikasi tugas &amp; QA]]</li><li>[[Traffic milestones (CCU)||Target trafik (CCU)]]</li><li>[[Error spike alerts||Alert lonjakan error]]</li></ul>
       </div>
+      <div class="reveal" data-fx-mount="discord"></div>
+    </div>
+    <div class="feature-row lite" id="qa">
+      <div class="reveal">
+        <span class="eyebrow">07 · [[QA agent||Agent QA]]</span>
+        <h2>[[Bots playtest every change. Bugs go back to the right agent.||Bot playtest setiap perubahan. Bug dikirim ke agent yang tepat.]]</h2>
+        <ul class="pill-list"><li>[[Rechecks after every task||Recheck setiap tugas]]</li><li>[[Purchases &amp; DataStore||Pembelian &amp; DataStore]]</li><li>[[Mobile layout||Tampilan mobile]]</li></ul>
+      </div>
+      <div class="reveal" data-fx-mount="qa"></div>
     </div>
   </div>
 </section>
@@ -234,12 +126,6 @@ path: /products.html
         </g>
       </svg>
     </div>
-    <div class="grid g4" style="margin-top:28px">
-      <div class="card reveal"><span class="tag">Claude · Anthropic</span><h3>[[Architect &amp; debugger||Architect &amp; debugger]]</h3><p>[[Plans systems, refactors large codebases and hunts tricky bugs. Called via the Anthropic Messages API with tool use.||Merencanakan sistem, refactor kode besar, dan memburu bug rumit. Dipanggil lewat Anthropic Messages API dengan tool use.]]</p></div>
-      <div class="card reveal"><span class="tag">ChatGPT · OpenAI</span><h3>[[Images &amp; writing||Gambar &amp; penulisan]]</h3><p>[[Clothing textures, icons and thumbnails via image generation; dialogue, quests and store copy via text models.||Tekstur baju, ikon, dan thumbnail lewat image generation; dialog, quest, dan copy toko lewat model teks.]]</p></div>
-      <div class="card reveal"><span class="tag">DeepSeek</span><h3>[[Bulk workhorse||Pekerja massal]]</h3><p>[[Low-cost model for scans, bulk migrations and repetitive edits. OpenAI-compatible API, so it slots into the same router.||Model hemat untuk scan, migrasi massal, dan edit berulang. API kompatibel OpenAI, jadi masuk ke router yang sama.]]</p></div>
-      <div class="card reveal"><span class="tag">Kimi · Moonshot AI</span><h3>[[Whole-game reader||Pembaca seluruh game]]</h3><p>[[Long-context model that reads an entire place at once to map dependencies before agents start working.||Model konteks panjang yang membaca seluruh place sekaligus untuk memetakan dependensi sebelum agent mulai bekerja.]]</p></div>
-    </div>
     <p style="color:var(--muted);font-size:.85rem;margin-top:22px">[[Model line-ups change fast; the router is model-agnostic, so we swap in better models without changing your workflow. Pro and Studio plans can bring their own API keys (BYOK) — BYOK requests only use tokens for orchestration.||Daftar model berubah cepat; router kami tidak terikat model, jadi kami bisa mengganti ke model yang lebih baik tanpa mengubah alur kerjamu. Paket Pro dan Studio bisa memakai API key sendiri (BYOK) — permintaan BYOK hanya memakai token untuk orkestrasi.]]</p>
   </div>
 </section>
@@ -247,8 +133,9 @@ path: /products.html
 <section class="section black" style="padding-top:0">
   <div class="container">
     <div class="cta-band reveal">
-      <div><h2>[[Ready when you are — November 2026.||Siap saat kamu siap — November 2026.]]</h2><p class="lead">[[Join the waitlist and tell us which tool you need first.||Gabung waitlist dan beri tahu kami tool mana yang paling kamu butuhkan.]]</p></div>
+      <div><h2>[[Ready in November 2026.||Siap November 2026.]]</h2><p class="lead">[[Tell us which tool you need first.||Beri tahu kami tool mana yang paling kamu butuhkan.]]</p></div>
       <div class="btn-row" style="justify-content:flex-end"><a class="btn btn-primary" href="waitlist.html">[[Join the waitlist||Gabung waitlist]] →</a></div>
     </div>
   </div>
 </section>
+<script src="assets/js/features.js" defer></script>

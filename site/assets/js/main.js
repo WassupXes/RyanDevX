@@ -253,7 +253,7 @@
   }
 
   /* ---------------- multiplayer race ---------------- */
-  $$("[data-demo=race]").forEach(function (race) {
+  $$("[data-demo=race], [data-demo=race2]").forEach(function (race) {
     onVisible(race, function () {
       race.classList.add("run");
       $$("[data-count]", race).forEach(function (el) {
@@ -266,6 +266,17 @@
         })(start);
       });
     });
+  });
+
+  /* ---------------- phone notifications ---------------- */
+  $$("[data-notifs]").forEach(function (phone) {
+    var items = $$(".notif", phone), i = 0;
+    function step() {
+      if (i === items.length) { items.forEach(function (n) { n.classList.remove("in"); }); i = 0; setTimeout(step, 900); return; }
+      items[i++].classList.add("in");
+      setTimeout(step, i === items.length ? 3200 : 1300);
+    }
+    onVisible(phone, function () { if (reduced) items.forEach(function (n) { n.classList.add("in"); }); else step(); });
   });
 
   /* ---------------- migration demo ---------------- */

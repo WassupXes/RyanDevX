@@ -22,8 +22,7 @@ Internal doc (English). Last updated 8 Oct 2026.
 |---|---|---|
 | **2.3× faster** with one AI assistant | GitHub/Microsoft controlled study: 95 devs, 1h11m vs 2h41m (55% faster) — [GitHub blog](https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/) | Sourced. Single task, vendor-run study, wide CI (21–89%). |
 | **+31% publishes** for Roblox creators using AI | Roblox estimate, creators who used Assistant/AI tools at least once — [PocketGamer.biz](https://www.pocketgamer.biz/roblox-studio-chief-on-how-ai-will-revolutionise-ugc/) | Sourced, Roblox's own estimate. |
-| **~5× faster** with Multiplayer Mode | 2.3× × Amdahl speed-up for 4 agents with 70% parallelisable work (1 / (0.3 + 0.7/4) = 2.1×) ≈ 4.9× | **Modeled, not measured.** Labeled on site. Replace with beta data. |
-| **12 weeks → 2.4 weeks** (race demo) | Mid-size game 3–6 months ([Juego Studios](https://www.juegostudio.com/blog/hire-roblox-game-developer)); 12 weeks used as low end | Illustrative, labeled. |
+| **~25 min to first playable tycoon** (race: by hand ~6 h → one AI ~2.6 h → JokiBlox ~25 min) | By hand 4–8 h for a simple tycoon ([Playgama](https://playgama.com/blog/2025/07/10/how-much-time-is-needed-to-create-a-roblox-game/)); ÷2.3 for one assistant; 25 min = 4 parallel agents | **Target, not measured.** Labeled on site. Replace with beta data. |
 | **15–30 min migration** vs 1–3 days by hand | Internal target for a mid-size game (≈200 scripts) | **Assumption / target.** Labeled. Measure in beta. |
 
 Action: during beta, log wall-clock time per task (prompt → accepted diff) and publish real numbers before launch. Keep the "modeled/target" labels until then — consumer-protection risk otherwise.
@@ -48,6 +47,9 @@ Roblox Studio ──(Studio MCP server + JokiBlox plugin)──► JokiBlox Brid
   - Kimi (Moonshot) → long-context "read the whole place" pass. OpenAI-compatible API (`https://api.moonshot.ai/v1`).
   - Base URLs are from memory — confirm in each provider's docs. DeepSeek and Kimi being OpenAI-compatible means one client library covers three of the four providers.
 - **Data**: turn off provider training on API data where offered; site promises we don't train on private game files.
+- **Discord bot**: `/jb` commands start tasks; the bot posts progress, QA results and Review/Publish/Undo buttons. Same orchestrator as the Studio plugin.
+- **Traffic alerts**: poll `games.roblox.com/v1/games?universeIds=` (`playing` = live CCU, `visits` = lifetime) every few minutes per subscribed game; fire a Discord/email alert when a threshold is crossed. Error-spike alerts need an in-game logger (HttpService → our endpoint) installed by the plugin.
+- **QA agent**: runs a multi-client playtest (Studio MCP `start_stop_play` / `run_script_in_play_mode`) after every merged task; failures are routed back to the agent that made the change.
 - **Competitive note**: Roblox Assistant now supports BYOK for Claude/OpenAI/Gemini and the MCP server is free. Our edge must be Multiplayer Mode, the migration/remix specialisation, clothing pipeline, Bahasa Indonesia, and local payments — not "AI in Studio" alone.
 
 ## 4. Pricing logic (USD)
