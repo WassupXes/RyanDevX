@@ -6,6 +6,7 @@ Marketing site + waitlist for **JokiBlox Agent**, the AI game-dev squad for Robl
 | File | What |
 |---|---|
 | `index.html` | Home: hero Studio demo, stats with sources, products, Multiplayer Mode race, migration demo, UGC demo, upgrade report, model router, FAQ |
+| `studio.html` | Interactive Roblox Studio tour: install → connect → describe → plan → squad build → review & publish |
 | `products.html` | Create · Migrate & fix · Remix & upgrade · Assets · Clothing/UGC · AI integration diagram |
 | `pricing.html` | Free / Starter $12 / Pro $29 / Studio $79, monthly/yearly toggle, 20% early-bird, token cost table, top-ups |
 | `waitlist.html` | Form: email, Roblox username, role, experience, goals, problem, expectations, plan, model, country, source |
@@ -30,6 +31,8 @@ docs/STRATEGY.md  USP data & sources, AI integration, pricing logic, open assump
 Language: auto-detected from the browser (`id-*` → Indonesian), switchable with EN/ID, remembered in localStorage, or forced with `?lang=id`.
 
 ## Go-live checklist
+**Step-by-step (Cloudflare Pages + DomaiNesia + email): see [`docs/GO-LIVE.md`](docs/GO-LIVE.md).**
+
 1. **Waitlist backend** — follow `apps-script/README.md`, paste the `/exec` URL into `site/assets/js/config.js` → `WAITLIST_ENDPOINT`. Until then the form shows "not connected yet".
 2. **Deploy** (pick one):
    - **VPS (nginx)** — in the server console: `curl -fsSLO https://raw.githubusercontent.com/WassupXes/RyanDevX/claude/dazzling-galileo-xznxdg/deploy/setup-vps.sh && bash setup-vps.sh` (private repo: clone manually with a GitHub token, then run `deploy/setup-vps.sh`). Updates: `bash /opt/jokiblox-src/deploy/update.sh`.

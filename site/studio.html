@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio tour — how JokiBlox works inside Roblox Studio</title>
+<meta name="jb-title-id" content="Tur Studio — cara JokiBlox bekerja di Roblox Studio">
+<meta name="description" content="Interactive tour of JokiBlox Agent inside Roblox Studio: install the plugin, connect your account, describe your game, approve the plan, watch the AI squad build, then review and publish.">
+<link rel="canonical" href="https://jokiblox.com/studio.html">
+<meta name="theme-color" content="#0b0c0d">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JokiBlox">
+<meta property="og:title" content="Studio tour — how JokiBlox works inside Roblox Studio">
+<meta property="og:description" content="Interactive tour of JokiBlox Agent inside Roblox Studio: install the plugin, connect your account, describe your game, approve the plan, watch the AI squad build, then review and publish.">
+<meta property="og:url" content="https://jokiblox.com/studio.html">
+<meta property="og:image" content="https://jokiblox.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<script>
+(function(){var l;try{l=localStorage.getItem("jb-lang")}catch(e){}var q=new URLSearchParams(location.search).get("lang");if(q==="id"||q==="en")l=q;if(!l)l=(navigator.language||"").toLowerCase().indexOf("id")===0?"id":"en";document.documentElement.setAttribute("data-lang",l);document.documentElement.lang=l;})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/config.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="promo-bar">🚀 <span lang="en">Launching November 2026 — join the waitlist &amp; lock <b>20% off</b>.</span><span lang="id">Rilis November 2026 — gabung waitlist &amp; kunci <b>diskon 20%</b>.</span> <a href="waitlist.html"><span lang="en">Join now</span><span lang="id">Gabung sekarang</span></a></div>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="index.html" aria-label="JokiBlox home">
+      <img class="brand-mark" src="assets/img/logo.svg" alt="" width="30" height="30">
+      <span>JokiBlox<small>Agent</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="products.html"><span lang="en">Products</span><span lang="id">Produk</span></a></li>
+      <li><a href="studio.html"><span lang="en">Studio tour</span><span lang="id">Tur Studio</span></a></li>
+      <li><a href="index.html#multiplayer">Multiplayer</a></li>
+      <li><a href="pricing.html"><span lang="en">Pricing</span><span lang="id">Harga</span></a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="id" aria-pressed="false">ID</button>
+      </div>
+      <a class="btn btn-primary btn-cta-desktop" href="waitlist.html"><span lang="en">Join waitlist</span><span lang="id">Gabung waitlist</span></a>
+      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+    </div>
+  </nav>
+</header>
+<main id="main">
+<section class="page-hero compact">
+  <div class="container center">
+    <span class="eyebrow"><span lang="en">Interactive tour</span><span lang="id">Tur interaktif</span></span>
+    <h1><span lang="en">This is JokiBlox<br>inside Roblox Studio.</span><span lang="id">Ini JokiBlox<br>di dalam Roblox Studio.</span></h1>
+    <p class="lead"><span lang="en">No new editor to learn. JokiBlox docks into the Studio you already use — click through the six steps, or let it play.</span><span lang="id">Tidak perlu belajar editor baru. JokiBlox menempel di Studio yang sudah kamu pakai — klik enam langkahnya, atau biarkan berjalan sendiri.</span></p>
+  </div>
+</section>
+
+<section class="section black" style="padding-top:20px" data-studio-tour>
+  <div class="container wide">
+    <ol class="stepper" aria-label="Tour steps">
+      <li><button type="button" data-step><i class="n">1</i><span lang="en">Install</span><span lang="id">Pasang</span></button></li>
+      <li><button type="button" data-step><i class="n">2</i><span lang="en">Connect</span><span lang="id">Hubungkan</span></button></li>
+      <li><button type="button" data-step><i class="n">3</i><span lang="en">Describe</span><span lang="id">Ceritakan</span></button></li>
+      <li><button type="button" data-step><i class="n">4</i><span lang="en">Plan</span><span lang="id">Rencana</span></button></li>
+      <li><button type="button" data-step><i class="n">5</i><span lang="en">Build</span><span lang="id">Bangun</span></button></li>
+      <li><button type="button" data-step><i class="n">6</i><span lang="en">Review &amp; publish</span><span lang="id">Review &amp; publish</span></button></li>
+    </ol>
+
+    <div class="tour-grid">
+      <div class="sx" aria-label="Illustration of Roblox Studio with the JokiBlox Agent panel">
+        <div class="sx-title">
+          <i></i><i></i><i></i>
+          <span class="sx-name">Roblox Studio — <b data-place>Baseplate.rbxl</b></span>
+          <span class="sx-conn" data-conn><span lang="en">Not connected</span><span lang="id">Belum terhubung</span></span>
+        </div>
+        <div class="sx-ribbon">
+          <div class="sx-tabs"><span>Home</span><span>Model</span><span>Avatar</span><span>Test</span><span>View</span><span class="on">Plugins</span></div>
+          <div class="sx-tools">
+            <span class="sx-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17.5 14v7M14 17.5h7"/></svg><span lang="en">Manage</span><span lang="id">Kelola</span></span>
+            <span class="sx-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span lang="en">Snapshots</span><span lang="id">Snapshot</span></span>
+            <span class="sx-tool jb" data-jb-tool><img src="assets/img/logo.svg" alt="">JokiBlox</span>
+          </div>
+        </div>
+        <div class="sx-body">
+          <aside class="sx-left">
+            <div class="sx-panel grow"><h6>Explorer</h6><ul class="sx-tree" data-tree></ul></div>
+            <div class="sx-panel"><h6>Properties</h6>
+              <dl class="sx-props"><dt>Name</dt><dd>Workspace</dd><dt>Gravity</dt><dd>196.2</dd><dt>StreamingEnabled</dt><dd>true</dd></dl>
+            </div>
+          </aside>
+          <section class="sx-center">
+            <div class="sx-viewport"><div class="iso"></div><div class="sx-overlay" data-overlay></div></div>
+            <div class="sx-output"><h6>Output</h6><div class="sx-log" data-log></div></div>
+          </section>
+          <aside class="sx-dock">
+            <div class="dk-head">
+              <span class="dk-brand"><img src="assets/img/logo.svg" alt="">JokiBlox Agent</span>
+              <span class="dk-model">Smart Router ▾</span>
+            </div>
+            <div class="dk-tokens"><span><span lang="en">Tokens</span><span lang="id">Token</span></span><b data-tokens>10,000</b><div class="dk-meter" data-meter><b></b></div></div>
+            <div class="dk-tabs"><span data-tab="chat">Chat</span><span data-tab="plan"><span lang="en">Plan</span><span lang="id">Rencana</span></span><span data-tab="squad">Squad</span><span data-tab="changes"><span lang="en">Changes</span><span lang="id">Perubahan</span></span></div>
+            <div class="dk-body" data-dock-body></div>
+          </aside>
+        </div>
+      </div>
+
+      <div class="tour-side">
+        <div class="caption" data-caption aria-live="polite"></div>
+        <div class="tour-ctrl">
+          <button type="button" class="btn btn-ghost" data-prev>← <span lang="en">Back</span><span lang="id">Kembali</span></button>
+          <button type="button" class="btn btn-primary" data-next><span lang="en">Next</span><span lang="id">Lanjut</span> →</button>
+          <button type="button" class="btn btn-ghost" data-play aria-pressed="true">❚❚ <span lang="en">Pause</span><span lang="id">Jeda</span></button>
+        </div>
+        <p class="tour-note"><span lang="en">Illustration of the planned launch experience. Roblox Studio is a trademark of Roblox Corporation; JokiBlox is not affiliated with Roblox.</span><span lang="id">Ilustrasi pengalaman yang direncanakan saat rilis. Roblox Studio adalah merek dagang Roblox Corporation; JokiBlox tidak berafiliasi dengan Roblox.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section light">
+  <div class="container">
+    <div class="center reveal">
+      <span class="eyebrow"><span lang="en">Setup in 60 seconds</span><span lang="id">Setup 60 detik</span></span>
+      <h2><span lang="en">Three clicks to your first build.</span><span lang="id">Tiga klik menuju build pertama.</span></h2>
+    </div>
+    <div class="grid g3 steps" style="margin-top:40px">
+      <div class="step card reveal"><h3><span lang="en">Get the plugin</span><span lang="id">Ambil plugin</span></h3><p><span lang="en">Install JokiBlox Agent from the Creator Store. Works in Roblox Studio on Windows and macOS.</span><span lang="id">Pasang JokiBlox Agent dari Creator Store. Jalan di Roblox Studio untuk Windows dan macOS.</span></p></div>
+      <div class="step card reveal"><h3><span lang="en">Pair your account</span><span lang="id">Pasangkan akun</span></h3><p><span lang="en">Click the JokiBlox button, enter the one-time code from jokiblox.com/pair and approve Studio’s permission prompt.</span><span lang="id">Klik tombol JokiBlox, masukkan kode sekali pakai dari jokiblox.com/pair dan setujui permintaan izin Studio.</span></p></div>
+      <div class="step card reveal"><h3><span lang="en">Say what you want</span><span lang="id">Bilang maumu</span></h3><p><span lang="en">Type a prompt or pick a starter. You approve the plan before any tokens are used.</span><span lang="id">Ketik prompt atau pilih starter. Kamu menyetujui rencana sebelum token terpakai.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="center reveal">
+      <span class="eyebrow"><span lang="en">Safe by design</span><span lang="id">Aman sejak awal</span></span>
+      <h2><span lang="en">You stay in control of your game.</span><span lang="id">Kendali game tetap di tanganmu.</span></h2>
+    </div>
+    <div class="grid g4" style="margin-top:40px">
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3><span lang="en">Snapshots</span><span lang="id">Snapshot</span></h3><p><span lang="en">A restore point before every task. Roll back anything in one click.</span><span lang="id">Titik pemulihan sebelum setiap tugas. Kembalikan apa pun dengan satu klik.</span></p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><h3><span lang="en">Diff approval</span><span lang="id">Persetujuan diff</span></h3><p><span lang="en">Nothing lands in your place until you accept it. Every line is readable.</span><span lang="id">Tidak ada yang masuk ke place sebelum kamu terima. Setiap baris bisa dibaca.</span></p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3><span lang="en">No passwords</span><span lang="id">Tanpa password</span></h3><p><span lang="en">Pairing uses a one-time code. JokiBlox never sees your Roblox password or cookies.</span><span lang="id">Pairing memakai kode sekali pakai. JokiBlox tidak pernah melihat password atau cookie Roblox kamu.</span></p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7z"/></svg></div><h3><span lang="en">Official channels</span><span lang="id">Jalur resmi</span></h3><p><span lang="en">Built on Roblox’s Studio MCP server, plugin APIs and Open Cloud — no injected clients.</span><span lang="id">Dibangun di atas Studio MCP server, API plugin, dan Open Cloud resmi Roblox — tanpa client injeksi.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section black" style="padding-top:0">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div><h2><span lang="en">Want this in your Studio first?</span><span lang="id">Mau ini di Studio kamu duluan?</span></h2><p class="lead"><span lang="en">Waitlist members get beta invites before the November 2026 launch — and 20% off for 12 months.</span><span lang="id">Anggota waitlist dapat undangan beta sebelum rilis November 2026 — plus diskon 20% selama 12 bulan.</span></p></div>
+      <div class="btn-row" style="justify-content:flex-end"><a class="btn btn-primary" href="waitlist.html"><span lang="en">Join the waitlist</span><span lang="id">Gabung waitlist</span> →</a></div>
+    </div>
+  </div>
+</section>
+<script src="assets/js/studio.js" defer></script>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html"><img class="brand-mark" src="assets/img/logo.svg" alt="" width="30" height="30"><span>JokiBlox<small>Agent</small></span></a>
+        <p style="margin-top:14px;max-width:340px"><span lang="en">The AI game-dev squad for Roblox creators. Build, migrate, upgrade and dress your games — faster.</span><span lang="id">Squad AI game-dev untuk kreator Roblox. Bikin, migrasi, upgrade, dan desain baju game kamu — lebih cepat.</span></p>
+        <p style="font-size:.8rem;color:#9a9c9e"><span lang="en">JokiBlox is an independent product and is not affiliated with, endorsed by, or sponsored by Roblox Corporation. Roblox and Roblox Studio are trademarks of Roblox Corporation.</span><span lang="id">JokiBlox adalah produk independen dan tidak berafiliasi, didukung, atau disponsori oleh Roblox Corporation. Roblox dan Roblox Studio adalah merek dagang Roblox Corporation.</span></p>
+      </div>
+      <div>
+        <h4><span lang="en">Product</span><span lang="id">Produk</span></h4>
+        <ul>
+          <li><a href="products.html#create"><span lang="en">Create games</span><span lang="id">Bikin game</span></a></li>
+          <li><a href="products.html#migrate"><span lang="en">Migrate &amp; fix</span><span lang="id">Migrasi &amp; perbaiki</span></a></li>
+          <li><a href="products.html#remix"><span lang="en">Remix &amp; upgrade</span><span lang="id">Remix &amp; upgrade</span></a></li>
+          <li><a href="products.html#assets"><span lang="en">Game assets</span><span lang="id">Aset game</span></a></li>
+          <li><a href="products.html#ugc"><span lang="en">Clothing &amp; UGC</span><span lang="id">Baju &amp; UGC</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <h4><span lang="en">Company</span><span lang="id">Perusahaan</span></h4>
+        <ul>
+          <li><a href="pricing.html"><span lang="en">Pricing</span><span lang="id">Harga</span></a></li>
+          <li><a href="waitlist.html"><span lang="en">Waitlist</span><span lang="id">Waitlist</span></a></li>
+          <li><a href="studio.html"><span lang="en">Studio tour</span><span lang="id">Tur Studio</span></a></li>
+          <li><a href="products.html#integrations"><span lang="en">AI integrations</span><span lang="id">Integrasi AI</span></a></li>
+          <li><a href="mailto:hello@jokiblox.com">hello@jokiblox.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html"><span lang="en">Terms of Service</span><span lang="id">Syarat &amp; Ketentuan</span></a></li>
+          <li><a href="privacy.html"><span lang="en">Privacy Policy</span><span lang="id">Kebijakan Privasi</span></a></li>
+          <li><a href="terms.html#refunds"><span lang="en">Refunds</span><span lang="id">Refund</span></a></li>
+          <li><a href="terms.html#acceptable-use"><span lang="en">Acceptable use</span><span lang="id">Penggunaan wajar</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> JokiBlox. <span lang="en">All rights reserved.</span><span lang="id">Hak cipta dilindungi.</span></span>
+      <span><span lang="en">Made in Indonesia 🇮🇩 for creators everywhere.</span><span lang="id">Dibuat di Indonesia 🇮🇩 untuk kreator di mana saja.</span></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

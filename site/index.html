@@ -37,9 +37,9 @@
     </a>
     <ul class="nav-links">
       <li><a href="products.html"><span lang="en">Products</span><span lang="id">Produk</span></a></li>
-      <li><a href="index.html#multiplayer"><span lang="en">Multiplayer Mode</span><span lang="id">Mode Multiplayer</span></a></li>
+      <li><a href="studio.html"><span lang="en">Studio tour</span><span lang="id">Tur Studio</span></a></li>
+      <li><a href="index.html#multiplayer">Multiplayer</a></li>
       <li><a href="pricing.html"><span lang="en">Pricing</span><span lang="id">Harga</span></a></li>
-      <li><a href="index.html#faq">FAQ</a></li>
     </ul>
     <div class="nav-actions">
       <div class="lang-toggle" role="group" aria-label="Language">
@@ -79,7 +79,8 @@
       </div>
     </div>
 
-    <div class="window reveal" data-demo="studio" aria-label="Animated demo of JokiBlox Agent building a game in Roblox Studio">
+    <div class="reveal">
+    <div class="window" data-demo="studio" aria-label="Animated demo of JokiBlox Agent building a game in Roblox Studio">
       <div class="window-bar"><i></i><i></i><i></i><span class="title">Roblox Studio — JokiBlox Agent</span><span class="live"><span lang="en">4 agents live</span><span lang="id">4 agent aktif</span></span></div>
       <div class="studio">
         <div class="explorer"><div class="h">Explorer</div><div class="items"></div></div>
@@ -88,6 +89,21 @@
           <div class="chat"></div>
         </div>
       </div>
+    </div>
+    <div class="promptbar">
+      <p class="hero-try"><span lang="en">Try it — type a game idea</span><span lang="id">Coba — ketik ide game</span></p>
+      <div class="pb-input">
+        <span class="pb-icon">✦</span>
+        <input type="text" data-hero-input maxlength="140" aria-label="Describe your game" data-ph-en="e.g. a horror obby with 10 stages" data-ph-id="cth. obby horor 10 stage" placeholder="e.g. a horror obby with 10 stages">
+        <button type="button" class="btn btn-primary" data-hero-go><span lang="en">Build</span><span lang="id">Bangun</span> ▶</button>
+      </div>
+      <div class="chips">
+        <button type="button" class="chip" data-scene="0">🏭 Tycoon</button>
+        <button type="button" class="chip" data-scene="1">🧗 Obby</button>
+        <button type="button" class="chip" data-scene="2">🥚 Pet Sim</button>
+        <a class="chip" href="studio.html" style="text-decoration:none">🎬 <span lang="en">Full Studio tour →</span><span lang="id">Tur Studio lengkap →</span></a>
+      </div>
+    </div>
     </div>
   </div>
 </section>
@@ -120,6 +136,8 @@
   </div>
 </section>
 
+<div class="marquee" aria-hidden="true"><div class="track"><span>Tycoon</span><span>Obby</span><span>Pet Simulator</span><span>Tower Defense</span><span>Horror</span><span>RPG</span><span>Racing</span><span>Roleplay</span><span><span lang="en">Fix legacy chat</span><span lang="id">Perbaiki legacy chat</span></span><span><span lang="en">Batik clothing</span><span lang="id">Baju batik</span></span><span><span lang="en">Mobile UI</span><span lang="id">UI mobile</span></span><span><span lang="en">Anti-exploit</span><span lang="id">Anti-exploit</span></span><span>DataStore</span><span>Gamepass</span><span>Tycoon</span><span>Obby</span><span>Pet Simulator</span><span>Tower Defense</span><span>Horror</span><span>RPG</span><span>Racing</span><span>Roleplay</span><span><span lang="en">Fix legacy chat</span><span lang="id">Perbaiki legacy chat</span></span><span><span lang="en">Batik clothing</span><span lang="id">Baju batik</span></span><span><span lang="en">Mobile UI</span><span lang="id">UI mobile</span></span><span><span lang="en">Anti-exploit</span><span lang="id">Anti-exploit</span></span><span>DataStore</span><span>Gamepass</span></div></div>
+
 <!-- ============ PRODUCTS ============ -->
 <section class="section light" id="products">
   <div class="container">
@@ -128,13 +146,32 @@
       <h2><span lang="en">One agent. Every part of your game.</span><span lang="id">Satu agent. Semua bagian game kamu.</span></h2>
       <p class="lead"><span lang="en">From a blank baseplate to a published, monetized experience — JokiBlox handles the grind so you can focus on the fun.</span><span lang="id">Dari baseplate kosong sampai game yang terbit dan menghasilkan — JokiBlox mengerjakan bagian yang melelahkan, kamu fokus ke bagian serunya.</span></p>
     </div>
-    <div class="grid g3" style="margin-top:44px">
-      <article class="card reveal">
+    <div class="bento" style="margin-top:44px">
+      <article class="card reveal wide"><div>
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></div>
         <span class="tag"><span lang="en">Create</span><span lang="id">Bikin</span></span>
         <h3><span lang="en">Build a new game from a prompt</span><span lang="id">Bikin game baru dari prompt</span></h3>
         <p><span lang="en">Tycoons, obbies, simulators, RPGs, horror. Full systems: DataStores, leaderboards, gamepasses, mobile UI.</span><span lang="id">Tycoon, obby, simulator, RPG, horor. Sistem lengkap: DataStore, leaderboard, gamepass, UI mobile.</span></p>
         <a class="more" href="products.html#create"><span lang="en">Learn more</span><span lang="id">Selengkapnya</span></a>
+      </div>
+        <div class="mini-flow" aria-hidden="true">
+          <div class="mf-prompt">“<span lang="en">make a horror game in a school, 5 floors, flashlight</span><span lang="id">bikin game horor di sekolah, 5 lantai, senter</span>”</div>
+          <div class="mf-arrow">↓</div>
+          <div class="mf-out"><span>Workspace/School</span><span>FlashlightTool</span><span>MonsterAI</span><span>JumpscareUI</span><span>FloorDoors</span></div>
+        </div>
+      </article>
+      <article class="card reveal tall dark">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.6A5 5 0 0 1 21 20"/></svg></div>
+        <span class="tag"><span lang="en">Our edge</span><span lang="id">Keunggulan kami</span></span>
+        <h3><span lang="en">Multiplayer Mode</span><span lang="id">Mode Multiplayer</span></h3>
+        <p><span lang="en">Not one chatbot — a squad. Up to 8 specialised agents work on your game at the same time, then merge and test together.</span><span lang="id">Bukan satu chatbot — tapi satu squad. Hingga 8 agent spesialis mengerjakan game kamu bersamaan, lalu digabung dan dites bersama.</span></p>
+        <div class="mp-lanes" aria-hidden="true">
+          <div class="mp-lane"><span data-avatar="scripter"></span><div class="bar"><b></b></div></div>
+          <div class="mp-lane"><span data-avatar="builder"></span><div class="bar"><b></b></div></div>
+          <div class="mp-lane"><span data-avatar="ui"></span><div class="bar"><b></b></div></div>
+          <div class="mp-lane"><span data-avatar="qa"></span><div class="bar"><b></b></div></div>
+        </div>
+        <a class="more" href="#multiplayer"><span lang="en">See how</span><span lang="id">Lihat caranya</span></a>
       </article>
       <article class="card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h14l-3-3M20 17H6l3 3"/></svg></div>
@@ -164,12 +201,9 @@
         <p><span lang="en">Shirts, pants and accessory concepts on the official templates, with a moderation pre-check before you pay the upload fee.</span><span lang="id">Shirt, pants, dan konsep aksesori di template resmi, dengan pre-check moderasi sebelum kamu bayar biaya upload.</span></p>
         <a class="more" href="products.html#ugc"><span lang="en">Learn more</span><span lang="id">Selengkapnya</span></a>
       </article>
-      <article class="card reveal">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.6A5 5 0 0 1 21 20"/></svg></div>
-        <span class="tag"><span lang="en">Our edge</span><span lang="id">Keunggulan kami</span></span>
-        <h3><span lang="en">Multiplayer Mode</span><span lang="id">Mode Multiplayer</span></h3>
-        <p><span lang="en">Not one chatbot — a squad. Up to 8 specialised agents work on your game at the same time, then merge and test together.</span><span lang="id">Bukan satu chatbot — tapi satu squad. Hingga 8 agent spesialis mengerjakan game kamu bersamaan, lalu digabung dan dites bersama.</span></p>
-        <a class="more" href="#multiplayer"><span lang="en">See how</span><span lang="id">Lihat caranya</span></a>
+            <article class="card reveal cta-card">
+        <div><span class="tag"><span lang="en">Interactive</span><span lang="id">Interaktif</span></span><h3><span lang="en">See it inside Roblox Studio</span><span lang="id">Lihat di dalam Roblox Studio</span></h3><p><span lang="en">A 60-second click-through of install, plan, squad build and publish.</span><span lang="id">Klik-klik 60 detik: pasang, rencana, squad bekerja, sampai publish.</span></p></div>
+        <a class="btn btn-primary" href="studio.html" style="margin-top:16px"><span lang="en">Start the tour</span><span lang="id">Mulai tur</span> →</a>
       </article>
     </div>
   </div>
@@ -184,11 +218,11 @@
         <h2><span lang="en">Game dev is a team sport. So is our AI.</span><span lang="id">Bikin game itu kerja tim. AI kami juga.</span></h2>
         <p class="lead"><span lang="en">A single AI assistant already makes developers about 2.3× faster. JokiBlox goes further: an Architect agent splits your game into independent systems, then specialist agents build them <b>at the same time</b> — like a squad of friends in one Studio session.</span><span lang="id">Satu AI assistant saja sudah bikin developer sekitar 2,3× lebih cepat. JokiBlox melangkah lebih jauh: agent Architect memecah game jadi sistem-sistem terpisah, lalu agent spesialis membangunnya <b>bersamaan</b> — seperti squad teman dalam satu sesi Studio.</span></p>
         <div class="squad" style="margin:22px 0">
-          <span class="agent-chip"><span class="face">AR</span>Architect</span>
-          <span class="agent-chip"><span class="face">SC</span>Scripter</span>
-          <span class="agent-chip"><span class="face">BL</span>Builder</span>
-          <span class="agent-chip"><span class="face">UI</span>UI/UX</span>
-          <span class="agent-chip"><span class="face">QA</span>QA Tester</span>
+          <span class="agent-chip"><span data-avatar="architect"></span>Architect</span>
+          <span class="agent-chip"><span data-avatar="scripter"></span>Scripter</span>
+          <span class="agent-chip"><span data-avatar="builder"></span>Builder</span>
+          <span class="agent-chip"><span data-avatar="ui"></span>UI/UX</span>
+          <span class="agent-chip"><span data-avatar="qa"></span>QA Tester</span>
         </div>
         <p style="color:var(--soft)"><span lang="en">Each agent gets its own slice of the DataModel, so they never overwrite each other. The QA agent playtests every merge and sends bugs back automatically.</span><span lang="id">Setiap agent dapat bagian DataModel sendiri, jadi tidak saling menimpa. Agent QA melakukan playtest di tiap penggabungan dan mengirim balik bug secara otomatis.</span></p>
       </div>
@@ -376,6 +410,7 @@
       <div class="step card reveal"><h3><span lang="en">Describe what you want</span><span lang="id">Ceritakan maumu</span></h3><p><span lang="en">“Make a pet simulator”, “fix my chat”, “upgrade my UI for mobile”. English or Bahasa Indonesia — both work.</span><span lang="id">“Bikin pet simulator”, “benerin chat aku”, “upgrade UI buat HP”. Bahasa Inggris atau Indonesia — dua-duanya bisa.</span></p></div>
       <div class="step card reveal"><h3><span lang="en">Review, playtest, publish</span><span lang="id">Review, playtest, publish</span></h3><p><span lang="en">Every change is a diff you approve. The QA agent playtests first. Undo anything with one click.</span><span lang="id">Setiap perubahan berupa diff yang kamu setujui. Agent QA playtest dulu. Semua bisa di-undo dengan satu klik.</span></p></div>
     </div>
+    <div class="center" style="margin-top:32px"><a class="btn btn-primary" href="studio.html">🎬 <span lang="en">Take the interactive Studio tour</span><span lang="id">Ikuti tur Studio interaktif</span> →</a></div>
   </div>
 </section>
 
@@ -467,6 +502,7 @@
         <ul>
           <li><a href="pricing.html"><span lang="en">Pricing</span><span lang="id">Harga</span></a></li>
           <li><a href="waitlist.html"><span lang="en">Waitlist</span><span lang="id">Waitlist</span></a></li>
+          <li><a href="studio.html"><span lang="en">Studio tour</span><span lang="id">Tur Studio</span></a></li>
           <li><a href="products.html#integrations"><span lang="en">AI integrations</span><span lang="id">Integrasi AI</span></a></li>
           <li><a href="mailto:hello@jokiblox.com">hello@jokiblox.com</a></li>
         </ul>

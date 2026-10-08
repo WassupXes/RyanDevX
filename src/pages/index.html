@@ -31,7 +31,8 @@ path: /
       </div>
     </div>
 
-    <div class="window reveal" data-demo="studio" aria-label="Animated demo of JokiBlox Agent building a game in Roblox Studio">
+    <div class="reveal">
+    <div class="window" data-demo="studio" aria-label="Animated demo of JokiBlox Agent building a game in Roblox Studio">
       <div class="window-bar"><i></i><i></i><i></i><span class="title">Roblox Studio — JokiBlox Agent</span><span class="live">[[4 agents live||4 agent aktif]]</span></div>
       <div class="studio">
         <div class="explorer"><div class="h">Explorer</div><div class="items"></div></div>
@@ -40,6 +41,21 @@ path: /
           <div class="chat"></div>
         </div>
       </div>
+    </div>
+    <div class="promptbar">
+      <p class="hero-try">[[Try it — type a game idea||Coba — ketik ide game]]</p>
+      <div class="pb-input">
+        <span class="pb-icon">✦</span>
+        <input type="text" data-hero-input maxlength="140" aria-label="Describe your game" data-ph-en="e.g. a horror obby with 10 stages" data-ph-id="cth. obby horor 10 stage" placeholder="e.g. a horror obby with 10 stages">
+        <button type="button" class="btn btn-primary" data-hero-go>[[Build||Bangun]] ▶</button>
+      </div>
+      <div class="chips">
+        <button type="button" class="chip" data-scene="0">🏭 Tycoon</button>
+        <button type="button" class="chip" data-scene="1">🧗 Obby</button>
+        <button type="button" class="chip" data-scene="2">🥚 Pet Sim</button>
+        <a class="chip" href="studio.html" style="text-decoration:none">🎬 [[Full Studio tour →||Tur Studio lengkap →]]</a>
+      </div>
+    </div>
     </div>
   </div>
 </section>
@@ -72,6 +88,8 @@ path: /
   </div>
 </section>
 
+<div class="marquee" aria-hidden="true"><div class="track"><span>Tycoon</span><span>Obby</span><span>Pet Simulator</span><span>Tower Defense</span><span>Horror</span><span>RPG</span><span>Racing</span><span>Roleplay</span><span>[[Fix legacy chat||Perbaiki legacy chat]]</span><span>[[Batik clothing||Baju batik]]</span><span>[[Mobile UI||UI mobile]]</span><span>[[Anti-exploit||Anti-exploit]]</span><span>DataStore</span><span>Gamepass</span><span>Tycoon</span><span>Obby</span><span>Pet Simulator</span><span>Tower Defense</span><span>Horror</span><span>RPG</span><span>Racing</span><span>Roleplay</span><span>[[Fix legacy chat||Perbaiki legacy chat]]</span><span>[[Batik clothing||Baju batik]]</span><span>[[Mobile UI||UI mobile]]</span><span>[[Anti-exploit||Anti-exploit]]</span><span>DataStore</span><span>Gamepass</span></div></div>
+
 <!-- ============ PRODUCTS ============ -->
 <section class="section light" id="products">
   <div class="container">
@@ -80,13 +98,32 @@ path: /
       <h2>[[One agent. Every part of your game.||Satu agent. Semua bagian game kamu.]]</h2>
       <p class="lead">[[From a blank baseplate to a published, monetized experience — JokiBlox handles the grind so you can focus on the fun.||Dari baseplate kosong sampai game yang terbit dan menghasilkan — JokiBlox mengerjakan bagian yang melelahkan, kamu fokus ke bagian serunya.]]</p>
     </div>
-    <div class="grid g3" style="margin-top:44px">
-      <article class="card reveal">
+    <div class="bento" style="margin-top:44px">
+      <article class="card reveal wide"><div>
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></div>
         <span class="tag">[[Create||Bikin]]</span>
         <h3>[[Build a new game from a prompt||Bikin game baru dari prompt]]</h3>
         <p>[[Tycoons, obbies, simulators, RPGs, horror. Full systems: DataStores, leaderboards, gamepasses, mobile UI.||Tycoon, obby, simulator, RPG, horor. Sistem lengkap: DataStore, leaderboard, gamepass, UI mobile.]]</p>
         <a class="more" href="products.html#create">[[Learn more||Selengkapnya]]</a>
+      </div>
+        <div class="mini-flow" aria-hidden="true">
+          <div class="mf-prompt">“[[make a horror game in a school, 5 floors, flashlight||bikin game horor di sekolah, 5 lantai, senter]]”</div>
+          <div class="mf-arrow">↓</div>
+          <div class="mf-out"><span>Workspace/School</span><span>FlashlightTool</span><span>MonsterAI</span><span>JumpscareUI</span><span>FloorDoors</span></div>
+        </div>
+      </article>
+      <article class="card reveal tall dark">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.6A5 5 0 0 1 21 20"/></svg></div>
+        <span class="tag">[[Our edge||Keunggulan kami]]</span>
+        <h3>[[Multiplayer Mode||Mode Multiplayer]]</h3>
+        <p>[[Not one chatbot — a squad. Up to 8 specialised agents work on your game at the same time, then merge and test together.||Bukan satu chatbot — tapi satu squad. Hingga 8 agent spesialis mengerjakan game kamu bersamaan, lalu digabung dan dites bersama.]]</p>
+        <div class="mp-lanes" aria-hidden="true">
+          <div class="mp-lane"><span data-avatar="scripter"></span><div class="bar"><b></b></div></div>
+          <div class="mp-lane"><span data-avatar="builder"></span><div class="bar"><b></b></div></div>
+          <div class="mp-lane"><span data-avatar="ui"></span><div class="bar"><b></b></div></div>
+          <div class="mp-lane"><span data-avatar="qa"></span><div class="bar"><b></b></div></div>
+        </div>
+        <a class="more" href="#multiplayer">[[See how||Lihat caranya]]</a>
       </article>
       <article class="card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h14l-3-3M20 17H6l3 3"/></svg></div>
@@ -116,12 +153,9 @@ path: /
         <p>[[Shirts, pants and accessory concepts on the official templates, with a moderation pre-check before you pay the upload fee.||Shirt, pants, dan konsep aksesori di template resmi, dengan pre-check moderasi sebelum kamu bayar biaya upload.]]</p>
         <a class="more" href="products.html#ugc">[[Learn more||Selengkapnya]]</a>
       </article>
-      <article class="card reveal">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.6A5 5 0 0 1 21 20"/></svg></div>
-        <span class="tag">[[Our edge||Keunggulan kami]]</span>
-        <h3>[[Multiplayer Mode||Mode Multiplayer]]</h3>
-        <p>[[Not one chatbot — a squad. Up to 8 specialised agents work on your game at the same time, then merge and test together.||Bukan satu chatbot — tapi satu squad. Hingga 8 agent spesialis mengerjakan game kamu bersamaan, lalu digabung dan dites bersama.]]</p>
-        <a class="more" href="#multiplayer">[[See how||Lihat caranya]]</a>
+            <article class="card reveal cta-card">
+        <div><span class="tag">[[Interactive||Interaktif]]</span><h3>[[See it inside Roblox Studio||Lihat di dalam Roblox Studio]]</h3><p>[[A 60-second click-through of install, plan, squad build and publish.||Klik-klik 60 detik: pasang, rencana, squad bekerja, sampai publish.]]</p></div>
+        <a class="btn btn-primary" href="studio.html" style="margin-top:16px">[[Start the tour||Mulai tur]] →</a>
       </article>
     </div>
   </div>
@@ -136,11 +170,11 @@ path: /
         <h2>[[Game dev is a team sport. So is our AI.||Bikin game itu kerja tim. AI kami juga.]]</h2>
         <p class="lead">[[A single AI assistant already makes developers about 2.3× faster. JokiBlox goes further: an Architect agent splits your game into independent systems, then specialist agents build them <b>at the same time</b> — like a squad of friends in one Studio session.||Satu AI assistant saja sudah bikin developer sekitar 2,3× lebih cepat. JokiBlox melangkah lebih jauh: agent Architect memecah game jadi sistem-sistem terpisah, lalu agent spesialis membangunnya <b>bersamaan</b> — seperti squad teman dalam satu sesi Studio.]]</p>
         <div class="squad" style="margin:22px 0">
-          <span class="agent-chip"><span class="face">AR</span>Architect</span>
-          <span class="agent-chip"><span class="face">SC</span>Scripter</span>
-          <span class="agent-chip"><span class="face">BL</span>Builder</span>
-          <span class="agent-chip"><span class="face">UI</span>UI/UX</span>
-          <span class="agent-chip"><span class="face">QA</span>QA Tester</span>
+          <span class="agent-chip"><span data-avatar="architect"></span>Architect</span>
+          <span class="agent-chip"><span data-avatar="scripter"></span>Scripter</span>
+          <span class="agent-chip"><span data-avatar="builder"></span>Builder</span>
+          <span class="agent-chip"><span data-avatar="ui"></span>UI/UX</span>
+          <span class="agent-chip"><span data-avatar="qa"></span>QA Tester</span>
         </div>
         <p style="color:var(--soft)">[[Each agent gets its own slice of the DataModel, so they never overwrite each other. The QA agent playtests every merge and sends bugs back automatically.||Setiap agent dapat bagian DataModel sendiri, jadi tidak saling menimpa. Agent QA melakukan playtest di tiap penggabungan dan mengirim balik bug secara otomatis.]]</p>
       </div>
@@ -328,6 +362,7 @@ path: /
       <div class="step card reveal"><h3>[[Describe what you want||Ceritakan maumu]]</h3><p>[[“Make a pet simulator”, “fix my chat”, “upgrade my UI for mobile”. English or Bahasa Indonesia — both work.||“Bikin pet simulator”, “benerin chat aku”, “upgrade UI buat HP”. Bahasa Inggris atau Indonesia — dua-duanya bisa.]]</p></div>
       <div class="step card reveal"><h3>[[Review, playtest, publish||Review, playtest, publish]]</h3><p>[[Every change is a diff you approve. The QA agent playtests first. Undo anything with one click.||Setiap perubahan berupa diff yang kamu setujui. Agent QA playtest dulu. Semua bisa di-undo dengan satu klik.]]</p></div>
     </div>
+    <div class="center" style="margin-top:32px"><a class="btn btn-primary" href="studio.html">🎬 [[Take the interactive Studio tour||Ikuti tur Studio interaktif]] →</a></div>
   </div>
 </section>
 

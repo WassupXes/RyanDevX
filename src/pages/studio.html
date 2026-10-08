@@ -1,0 +1,114 @@
+---
+title_en: Studio tour — how JokiBlox works inside Roblox Studio
+title_id: Tur Studio — cara JokiBlox bekerja di Roblox Studio
+desc: Interactive tour of JokiBlox Agent inside Roblox Studio: install the plugin, connect your account, describe your game, approve the plan, watch the AI squad build, then review and publish.
+path: /studio.html
+---
+<section class="page-hero compact">
+  <div class="container center">
+    <span class="eyebrow">[[Interactive tour||Tur interaktif]]</span>
+    <h1>[[This is JokiBlox<br>inside Roblox Studio.||Ini JokiBlox<br>di dalam Roblox Studio.]]</h1>
+    <p class="lead">[[No new editor to learn. JokiBlox docks into the Studio you already use — click through the six steps, or let it play.||Tidak perlu belajar editor baru. JokiBlox menempel di Studio yang sudah kamu pakai — klik enam langkahnya, atau biarkan berjalan sendiri.]]</p>
+  </div>
+</section>
+
+<section class="section black" style="padding-top:20px" data-studio-tour>
+  <div class="container wide">
+    <ol class="stepper" aria-label="Tour steps">
+      <li><button type="button" data-step><i class="n">1</i>[[Install||Pasang]]</button></li>
+      <li><button type="button" data-step><i class="n">2</i>[[Connect||Hubungkan]]</button></li>
+      <li><button type="button" data-step><i class="n">3</i>[[Describe||Ceritakan]]</button></li>
+      <li><button type="button" data-step><i class="n">4</i>[[Plan||Rencana]]</button></li>
+      <li><button type="button" data-step><i class="n">5</i>[[Build||Bangun]]</button></li>
+      <li><button type="button" data-step><i class="n">6</i>[[Review &amp; publish||Review &amp; publish]]</button></li>
+    </ol>
+
+    <div class="tour-grid">
+      <div class="sx" aria-label="Illustration of Roblox Studio with the JokiBlox Agent panel">
+        <div class="sx-title">
+          <i></i><i></i><i></i>
+          <span class="sx-name">Roblox Studio — <b data-place>Baseplate.rbxl</b></span>
+          <span class="sx-conn" data-conn>[[Not connected||Belum terhubung]]</span>
+        </div>
+        <div class="sx-ribbon">
+          <div class="sx-tabs"><span>Home</span><span>Model</span><span>Avatar</span><span>Test</span><span>View</span><span class="on">Plugins</span></div>
+          <div class="sx-tools">
+            <span class="sx-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17.5 14v7M14 17.5h7"/></svg>[[Manage||Kelola]]</span>
+            <span class="sx-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>[[Snapshots||Snapshot]]</span>
+            <span class="sx-tool jb" data-jb-tool><img src="assets/img/logo.svg" alt="">JokiBlox</span>
+          </div>
+        </div>
+        <div class="sx-body">
+          <aside class="sx-left">
+            <div class="sx-panel grow"><h6>Explorer</h6><ul class="sx-tree" data-tree></ul></div>
+            <div class="sx-panel"><h6>Properties</h6>
+              <dl class="sx-props"><dt>Name</dt><dd>Workspace</dd><dt>Gravity</dt><dd>196.2</dd><dt>StreamingEnabled</dt><dd>true</dd></dl>
+            </div>
+          </aside>
+          <section class="sx-center">
+            <div class="sx-viewport"><div class="iso"></div><div class="sx-overlay" data-overlay></div></div>
+            <div class="sx-output"><h6>Output</h6><div class="sx-log" data-log></div></div>
+          </section>
+          <aside class="sx-dock">
+            <div class="dk-head">
+              <span class="dk-brand"><img src="assets/img/logo.svg" alt="">JokiBlox Agent</span>
+              <span class="dk-model">Smart Router ▾</span>
+            </div>
+            <div class="dk-tokens"><span>[[Tokens||Token]]</span><b data-tokens>10,000</b><div class="dk-meter" data-meter><b></b></div></div>
+            <div class="dk-tabs"><span data-tab="chat">Chat</span><span data-tab="plan">[[Plan||Rencana]]</span><span data-tab="squad">Squad</span><span data-tab="changes">[[Changes||Perubahan]]</span></div>
+            <div class="dk-body" data-dock-body></div>
+          </aside>
+        </div>
+      </div>
+
+      <div class="tour-side">
+        <div class="caption" data-caption aria-live="polite"></div>
+        <div class="tour-ctrl">
+          <button type="button" class="btn btn-ghost" data-prev>← [[Back||Kembali]]</button>
+          <button type="button" class="btn btn-primary" data-next>[[Next||Lanjut]] →</button>
+          <button type="button" class="btn btn-ghost" data-play aria-pressed="true">❚❚ [[Pause||Jeda]]</button>
+        </div>
+        <p class="tour-note">[[Illustration of the planned launch experience. Roblox Studio is a trademark of Roblox Corporation; JokiBlox is not affiliated with Roblox.||Ilustrasi pengalaman yang direncanakan saat rilis. Roblox Studio adalah merek dagang Roblox Corporation; JokiBlox tidak berafiliasi dengan Roblox.]]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section light">
+  <div class="container">
+    <div class="center reveal">
+      <span class="eyebrow">[[Setup in 60 seconds||Setup 60 detik]]</span>
+      <h2>[[Three clicks to your first build.||Tiga klik menuju build pertama.]]</h2>
+    </div>
+    <div class="grid g3 steps" style="margin-top:40px">
+      <div class="step card reveal"><h3>[[Get the plugin||Ambil plugin]]</h3><p>[[Install JokiBlox Agent from the Creator Store. Works in Roblox Studio on Windows and macOS.||Pasang JokiBlox Agent dari Creator Store. Jalan di Roblox Studio untuk Windows dan macOS.]]</p></div>
+      <div class="step card reveal"><h3>[[Pair your account||Pasangkan akun]]</h3><p>[[Click the JokiBlox button, enter the one-time code from jokiblox.com/pair and approve Studio’s permission prompt.||Klik tombol JokiBlox, masukkan kode sekali pakai dari jokiblox.com/pair dan setujui permintaan izin Studio.]]</p></div>
+      <div class="step card reveal"><h3>[[Say what you want||Bilang maumu]]</h3><p>[[Type a prompt or pick a starter. You approve the plan before any tokens are used.||Ketik prompt atau pilih starter. Kamu menyetujui rencana sebelum token terpakai.]]</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="center reveal">
+      <span class="eyebrow">[[Safe by design||Aman sejak awal]]</span>
+      <h2>[[You stay in control of your game.||Kendali game tetap di tanganmu.]]</h2>
+    </div>
+    <div class="grid g4" style="margin-top:40px">
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>[[Snapshots||Snapshot]]</h3><p>[[A restore point before every task. Roll back anything in one click.||Titik pemulihan sebelum setiap tugas. Kembalikan apa pun dengan satu klik.]]</p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><h3>[[Diff approval||Persetujuan diff]]</h3><p>[[Nothing lands in your place until you accept it. Every line is readable.||Tidak ada yang masuk ke place sebelum kamu terima. Setiap baris bisa dibaca.]]</p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3>[[No passwords||Tanpa password]]</h3><p>[[Pairing uses a one-time code. JokiBlox never sees your Roblox password or cookies.||Pairing memakai kode sekali pakai. JokiBlox tidak pernah melihat password atau cookie Roblox kamu.]]</p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7z"/></svg></div><h3>[[Official channels||Jalur resmi]]</h3><p>[[Built on Roblox’s Studio MCP server, plugin APIs and Open Cloud — no injected clients.||Dibangun di atas Studio MCP server, API plugin, dan Open Cloud resmi Roblox — tanpa client injeksi.]]</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section black" style="padding-top:0">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div><h2>[[Want this in your Studio first?||Mau ini di Studio kamu duluan?]]</h2><p class="lead">[[Waitlist members get beta invites before the November 2026 launch — and 20% off for 12 months.||Anggota waitlist dapat undangan beta sebelum rilis November 2026 — plus diskon 20% selama 12 bulan.]]</p></div>
+      <div class="btn-row" style="justify-content:flex-end"><a class="btn btn-primary" href="waitlist.html">[[Join the waitlist||Gabung waitlist]] →</a></div>
+    </div>
+  </div>
+</section>
+<script src="assets/js/studio.js" defer></script>
