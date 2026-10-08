@@ -292,6 +292,9 @@
     el.caption.innerHTML = '<span class="cap-n">' + (i + 1) + "/" + STEPS.length + "</span><h3>" + L(s[1]) + "</h3><p>" + L(s[2]) + "</p>" +
       '<div class="cap-split"><div><small>' + t("You", "Kamu") + "</small>" + L(s[3]) + "</div><div><small>JokiBlox</small>" + L(s[4]) + "</div></div>";
     el.steps.forEach(function (b, k) { b.classList.toggle("on", k === i); b.classList.toggle("done", k < i); b.setAttribute("aria-current", k === i ? "step" : "false"); });
+    // on phones the stepper is a swipe row: keep the current step centred (horizontal scroll only, never the page)
+    var row = el.steps[i].closest(".stepper"), btn = el.steps[i];
+    if (row && row.scrollWidth > row.clientWidth) row.scrollTo({ left: btn.offsetLeft - (row.clientWidth - btn.offsetWidth) / 2, behavior: "smooth" });
     el.prev.disabled = i === 0;
   }
   async function go(i) {

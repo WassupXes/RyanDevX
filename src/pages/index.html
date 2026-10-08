@@ -16,7 +16,7 @@ path: /
         <h1>[[Roblox games in <span class="stroke">minutes</span>, not months.||Game Roblox dalam <span class="stroke">menit</span>, bukan bulan.]]</h1>
       </div>
       <div>
-        <p class="lead">[[Open Roblox Studio, tell JokiBlox what you want, and watch your game build itself. You approve every change.||Buka Roblox Studio, bilang ke JokiBlox maumu, lalu lihat game kamu terbangun sendiri. Setiap perubahan kamu yang setujui.]]</p>
+        <p class="lead">[[Type it in Studio. Watch it build. Approve every change.||Ketik di Studio. Lihat game-nya jadi. Kamu setujui tiap perubahan.]]</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="waitlist.html">[[Join waitlist — 20% off||Gabung waitlist — diskon 20%]] →</a>
           <a class="btn btn-ghost" href="studio.html">🎬 [[Studio tour||Tur Studio]]</a>
@@ -33,7 +33,15 @@ path: /
     <div class="hero-visual reveal slot slot-free" data-slot="hero">
       <img class="hero-poster" src="assets/clips/hero.jpg" alt="Sniper Arena, built in Roblox Studio from one prompt" width="960" height="684">
     </div>
-    <p class="hero-note">[[Real test session: Sniper Arena from one prompt. The map build is a replay; everything else is the Studio recording, sped up. Times come from the session log.||Sesi tes asli: Sniper Arena dari satu prompt. Build map berupa replay; sisanya rekaman Studio yang dipercepat. Waktu diambil dari log sesi.]]</p>
+    <div class="hero-chips" data-hero-chips role="group" aria-label="Demos">
+      <button type="button" data-clip="hero">🏗️ [[Build a game||Bikin game]]</button>
+      <button type="button" data-clip="usp-inside">🐞 [[Fix a bug||Perbaiki bug]]</button>
+      <button type="button" data-clip="usp-qa">🧪 [[Playtest it||Playtest]]</button>
+      <button type="button" data-clip="usp-antiexploit">🛡️ [[Stop exploiters||Tangkal exploit]]</button>
+      <button type="button" data-clip="usp-approve">↶ [[Undo anything||Undo apa saja]]</button>
+      <button type="button" data-clip="usp-squad">💡 [[Get ideas||Dapat ide]]</button>
+    </div>
+    <p class="hero-note">[[Real Sniper Arena session, sped up. Map build shown as a replay.||Sesi asli Sniper Arena, dipercepat. Build map ditampilkan sebagai replay.]]</p>
   </div>
 </section>
 
@@ -44,8 +52,7 @@ path: /
   <div class="container">
     <div class="center reveal">
       <span class="eyebrow">[[Why JokiBlox||Kenapa JokiBlox]]</span>
-      <h2>[[Built for what Roblox creators actually complain about.||Dibuat untuk keluhan nyata para kreator Roblox.]]</h2>
-      <p class="lead">[[Real quotes from the Roblox DevForum and docs, and what JokiBlox does about each one.||Kutipan asli dari DevForum dan dokumentasi Roblox, dan apa yang JokiBlox lakukan untuk masing-masing.]]</p>
+      <h2>[[Built for what creators complain about.||Dibuat dari keluhan nyata kreator.]]</h2>
     </div>
     <p class="swipe-hint">[[Swipe → 9 creator pains||Geser → 9 keluhan kreator]]</p>
     <div class="usp-grid">
@@ -57,9 +64,9 @@ path: /
           </div>
           </div></div></div>
         <div class="usp-body">
-          <blockquote class="usp-pain">“AI can write Luau, but it can’t see your game, so you end up being the middleman, copying code back and forth.” <a href="https://devforum.roblox.com/t/we-built-a-full-game-with-2-people-using-ai-in-studio-heres-the-tool/4308613" target="_blank" rel="noopener">— DevForum</a></blockquote>
+          <blockquote class="usp-pain">“…you end up being the middleman, copying code back and forth.” <a href="https://devforum.roblox.com/t/we-built-a-full-game-with-2-people-using-ai-in-studio-heres-the-tool/4308613" target="_blank" rel="noopener">— DevForum</a></blockquote>
           <h3>[[It works inside your game||Bekerja di dalam game kamu]]</h3>
-          <p>[[Connected to Studio, it reads your whole place, writes the scripts, reads the Output and fixes its own errors.||Terhubung ke Studio: membaca seluruh place, menulis script, membaca Output, dan memperbaiki error-nya sendiri.]]</p>
+          <p>[[Sees your place, plays it, fixes it.||Melihat place-mu, memainkannya, memperbaikinya.]]</p>
         </div>
       </article>
       <article class="usp-card reveal" id="usp-runs">
@@ -72,7 +79,7 @@ path: /
         <div class="usp-body">
           <blockquote class="usp-pain">“Code Assist always suggests functions that don’t exist.” <a href="https://devforum.roblox.com/t/code-assist-always-suggests-functions-that-dont-exist/4159687" target="_blank" rel="noopener">— DevForum</a></blockquote>
           <h3>[[Code that actually runs||Kode yang benar-benar jalan]]</h3>
-          <p>[[Every call is checked against the real Roblox API, type-checked and playtested before you see it.||Setiap pemanggilan dicek ke API Roblox asli, di-type-check, dan di-playtest sebelum kamu lihat.]]</p>
+          <p>[[Checked against the real API, then playtested.||Dicek ke API asli, lalu di-playtest.]]</p>
         </div>
       </article>
       <article class="usp-card reveal" id="usp-approve">
@@ -85,9 +92,9 @@ path: /
           </div>
           </div></div></div>
         <div class="usp-body">
-          <blockquote class="usp-pain">“Assistant replaced my script with its own while trying to help, and now I can’t get it back.” <a href="https://devforum.roblox.com/t/beta-feature-assistant-replaced-my-script-to-its-own-while-trying-to-help-and-now-i-cant-get-it-back/3409010" target="_blank" rel="noopener">— DevForum</a></blockquote>
+          <blockquote class="usp-pain">“Assistant replaced my script… and now I can’t get it back.” <a href="https://devforum.roblox.com/t/beta-feature-assistant-replaced-my-script-to-its-own-while-trying-to-help-and-now-i-cant-get-it-back/3409010" target="_blank" rel="noopener">— DevForum</a></blockquote>
           <h3>[[Nothing changes without your OK||Tidak ada yang berubah tanpa izinmu]]</h3>
-          <p>[[A plan first, then diffs. It only touches what’s in the plan, and every task has a one-click undo.||Rencana dulu, lalu diff. Hanya menyentuh yang ada di rencana, dan setiap tugas bisa di-undo satu klik.]]</p>
+          <p>[[Every change is a version. Undo in one click.||Tiap perubahan jadi versi. Undo sekali klik.]]</p>
         </div>
       </article>
       <article class="usp-card reveal" id="usp-qa">
@@ -95,7 +102,7 @@ path: /
         <div class="usp-body">
           <blockquote class="usp-pain">“Studio will not open Server & Clients testing.” <a href="https://devforum.roblox.com/t/studio-will-not-open-server-clients-testing/4762571" target="_blank" rel="noopener">— DevForum</a></blockquote>
           <h3>[[A QA agent that plays your game||Agent QA yang memainkan game kamu]]</h3>
-          <p>[[Bots playtest after every task, try purchases and saves, and recheck every fix. You get a report, not a surprise.||Bot playtest setiap tugas selesai, mencoba pembelian dan save, lalu recheck setiap perbaikan. Kamu dapat laporan, bukan kejutan.]]</p>
+          <p>[[Buys, claims, shoots, then reports what broke.||Beli, klaim, tembak, lalu lapor yang rusak.]]</p>
         </div>
       </article>
       <article class="usp-card reveal" id="usp-secure">
@@ -106,9 +113,9 @@ path: /
           </div>
           </div></div></div>
         <div class="usp-body">
-          <blockquote class="usp-pain">“Exploiters… fire unsecured RemoteEvents… to award themselves items without earning them.” <a href="https://create.roblox.com/docs/scripting/security/client-server-boundary" target="_blank" rel="noopener">— Roblox docs</a></blockquote>
+          <blockquote class="usp-pain">“Exploiters… fire unsecured RemoteEvents… to award themselves items.” <a href="https://create.roblox.com/docs/scripting/security/client-server-boundary" target="_blank" rel="noopener">— Roblox docs</a></blockquote>
           <h3>[[Remotes locked down by default||Remote terkunci sejak awal]]</h3>
-          <p>[[Every RemoteEvent gets server-side checks and rate limits. Free models are scanned for backdoors.||Setiap RemoteEvent dapat cek di server dan batas laju. Free model dipindai dari backdoor.]]</p>
+          <p>[[Every RemoteEvent is checked on the server.||Setiap RemoteEvent dicek di server.]]</p>
         </div>
       </article>
       <article class="usp-card reveal" id="usp-antiexploit">
@@ -116,23 +123,23 @@ path: /
         <div class="usp-body">
           <blockquote class="usp-pain">“Exploiters crashing the game?” <a href="https://devforum.roblox.com/t/exploiters-crashing-the-game/1150787" target="_blank" rel="noopener">— DevForum</a></blockquote>
           <h3>[[Anti-exploit built in||Anti-exploit bawaan]]</h3>
-          <p>[[Server-side checks catch speed, fly, teleport and remote spam, then rubber-band, kick or flag the player and ping you on Discord.||Cek di server menangkap speed, fly, teleport, dan spam remote, lalu menarik balik, kick, atau menandai pemain dan kabari kamu di Discord.]]</p>
+          <p>[[Speed, teleport and spam caught live.||Speed, teleport, dan spam tertangkap langsung.]]</p>
         </div>
       </article>
       <article class="usp-card reveal" id="usp-squad">
         <div class="slot usp-media" data-slot="usp-squad"><div class="scale-wrap" data-scale><div class="scale-box"><div data-fx-mount="create"></div></div></div></div>
         <div class="usp-body">
-          <blockquote class="usp-pain">“I’m struggling because I’m making this game by myself.” <a href="https://devforum.roblox.com/t/i%E2%80%99m-struggling-because-i%E2%80%99m-making-this-game-by-myself-i-don%E2%80%99t-have-motivation-and-i%E2%80%99m-lost/826975" target="_blank" rel="noopener">— DevForum</a></blockquote>
+          <blockquote class="usp-pain">“I’m making this game by myself.” <a href="https://devforum.roblox.com/t/i%E2%80%99m-struggling-because-i%E2%80%99m-making-this-game-by-myself-i-don%E2%80%99t-have-motivation-and-i%E2%80%99m-lost/826975" target="_blank" rel="noopener">— DevForum</a></blockquote>
           <h3>[[A squad, not a solo grind||Squad, bukan kerja sendirian]]</h3>
-          <p>[[The Architect cuts your idea into a small version you can ship. Specialists cover scripts, map, UI and art.||Architect memangkas idemu jadi versi kecil yang bisa dirilis. Spesialis menangani script, map, UI, dan art.]]</p>
+          <p>[[It fixes bugs and pitches ideas too.||Ikut memperbaiki bug dan mengusulkan ide.]]</p>
         </div>
       </article>
       <article class="usp-card reveal" id="usp-precheck">
         <div class="slot usp-media" data-slot="usp-precheck"><div class="scale-wrap" data-scale><div class="scale-box"><div data-fx-mount="clothing"></div></div></div></div>
         <div class="usp-body">
           <blockquote class="usp-pain">“Get a refund if clothing item is deleted.” <a href="https://devforum.roblox.com/t/get-a-refund-if-clothing-item-is-deleted/486384" target="_blank" rel="noopener">— DevForum</a></blockquote>
-          <h3>[[Check before you pay the upload fee||Cek dulu sebelum bayar biaya upload]]</h3>
-          <p>[[Assets and clothing are checked for limits and moderation risks before you spend Robux uploading them.||Aset dan baju dicek batas teknis dan risiko moderasinya sebelum kamu keluar Robux untuk upload.]]</p>
+          <h3>[[Check before you pay to upload||Cek dulu sebelum bayar upload]]</h3>
+          <p>[[Limits and moderation risk, checked first.||Batas & risiko moderasi dicek duluan.]]</p>
         </div>
       </article>
       <article class="usp-card reveal" id="usp-migrate">
@@ -140,7 +147,7 @@ path: /
         <div class="usp-body">
           <blockquote class="usp-pain">“After 30 April 2025, all creators must use the TextChatService API.” <a href="https://devforum.roblox.com/t/-/3237100" target="_blank" rel="noopener">— Roblox</a></blockquote>
           <h3>[[Fix what Roblox updates broke||Perbaiki yang rusak karena update Roblox]]</h3>
-          <p>[[Deprecated chat, physics and audio fixed in one pass, with a report of every change.||Chat, fisika, dan audio usang diperbaiki sekaligus, lengkap dengan laporan setiap perubahan.]]</p>
+          <p>[[Deprecated APIs and backdoors, found and fixed.||API usang & backdoor, ditemukan dan diperbaiki.]]</p>
         </div>
       </article>
     </div>
@@ -163,7 +170,7 @@ path: /
             <div class="jp-ask"><div class="jp-field">[[Add a VIP door that only opens for…||Tambah pintu VIP yang hanya terbuka untuk…]]</div><div class="jp-row"><span>＋</span><span>⚙</span><span class="jp-mode">Squad ▾</span><span class="jp-send">↑</span></div></div>
           </div>
         </div>
-        <div class="how-text"><span class="how-n">1</span><div><h3>[[You describe it||Kamu ceritakan]]</h3><p>[[Type in the JokiBlox panel inside Studio. English or Bahasa Indonesia.||Ketik di panel JokiBlox di dalam Studio. Bahasa Inggris atau Indonesia.]]</p></div></div>
+        <div class="how-text"><span class="how-n">1</span><div><h3>[[You describe it||Kamu ceritakan]]</h3><p>[[In the JokiBlox panel, in Studio.||Di panel JokiBlox, di dalam Studio.]]</p></div></div>
       </article>
       <article class="how-card reveal">
         <div class="slot" data-slot="how-plan">
@@ -178,13 +185,13 @@ path: /
             <div class="estimate"><span>[[Approve to start||Setujui untuk mulai]]</span><b class="plan-ok">✓ [[Approved||Disetujui]]</b></div>
           </div>
         </div>
-        <div class="how-text"><span class="how-n">2</span><div><h3>[[You approve the plan||Kamu setujui rencananya]]</h3><p>[[See every task and the token cost before anything starts.||Lihat semua tugas dan biaya token sebelum apa pun dimulai.]]</p></div></div>
+        <div class="how-text"><span class="how-n">2</span><div><h3>[[You approve the plan||Kamu setujui rencananya]]</h3><p>[[Tasks and token cost, up front.||Tugas dan biaya token di awal.]]</p></div></div>
       </article>
       <article class="how-card reveal">
         <div class="slot" data-slot="how-build">
           <div class="mini mini-build rs-vp"><div class="rs-groundwrap"><div class="rs-ground"></div></div><div class="rs-world"><span class="spawn"></span><span class="coin" style="left:24%;top:70%;--d:0.0s"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="13" ry="16" fill="#f5c542" stroke="#b8860b" stroke-width="3"/><ellipse cx="16" cy="15" rx="3" ry="5" fill="#fff3b0"/></svg></span><span class="coin" style="left:38%;top:62%;--d:0.2s"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="13" ry="16" fill="#f5c542" stroke="#b8860b" stroke-width="3"/><ellipse cx="16" cy="15" rx="3" ry="5" fill="#fff3b0"/></svg></span><span class="coin" style="left:52%;top:76%;--d:0.4s"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="13" ry="16" fill="#f5c542" stroke="#b8860b" stroke-width="3"/><ellipse cx="16" cy="15" rx="3" ry="5" fill="#fff3b0"/></svg></span><span class="coin" style="left:66%;top:64%;--d:0.6000000000000001s"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="13" ry="16" fill="#f5c542" stroke="#b8860b" stroke-width="3"/><ellipse cx="16" cy="15" rx="3" ry="5" fill="#fff3b0"/></svg></span><span class="coin" style="left:78%;top:80%;--d:0.8s"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="13" ry="16" fill="#f5c542" stroke="#b8860b" stroke-width="3"/><ellipse cx="16" cy="15" rx="3" ry="5" fill="#fff3b0"/></svg></span><span class="coin" style="left:32%;top:86%;--d:1.0s"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="13" ry="16" fill="#f5c542" stroke="#b8860b" stroke-width="3"/><ellipse cx="16" cy="15" rx="3" ry="5" fill="#fff3b0"/></svg></span><span class="coin" style="left:60%;top:88%;--d:1.2000000000000002s"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="13" ry="16" fill="#f5c542" stroke="#b8860b" stroke-width="3"/><ellipse cx="16" cy="15" rx="3" ry="5" fill="#fff3b0"/></svg></span></div><div class="rs-hud">Coins: 40</div><div class="rs-timer">⏱ 4m 12s</div></div>
         </div>
-        <div class="how-text"><span class="how-n">3</span><div><h3>[[You watch it build||Kamu lihat prosesnya]]</h3><p>[[Parts, scripts and UI appear in your Studio while four agents work.||Part, script, dan UI muncul di Studio kamu selagi empat agent bekerja.]]</p></div></div>
+        <div class="how-text"><span class="how-n">3</span><div><h3>[[You watch it build||Kamu lihat prosesnya]]</h3><p>[[Parts, scripts and UI appear live.||Part, script, dan UI muncul langsung.]]</p></div></div>
       </article>
       <article class="how-card reveal">
         <div class="slot" data-slot="how-publish">
@@ -195,7 +202,7 @@ path: /
             <div class="toast dc">💬 [[Discord: Coin Rush v1 is live||Discord: Coin Rush v1 sudah live]]</div>
           </div>
         </div>
-        <div class="how-text"><span class="how-n">4</span><div><h3>[[You playtest &amp; publish||Kamu playtest &amp; publish]]</h3><p>[[Review the changes, undo anything, publish, and get a ping on Discord.||Review perubahan, undo apa saja, publish, lalu dapat notifikasi di Discord.]]</p></div></div>
+        <div class="how-text"><span class="how-n">4</span><div><h3>[[You playtest &amp; publish||Kamu playtest &amp; publish]]</h3><p>[[Undo anything. Get a Discord ping.||Undo apa saja. Dapat notif Discord.]]</p></div></div>
       </article>
     </div>
     <div class="center" style="margin-top:28px"><a class="btn btn-ghost" href="studio.html">🎬 [[Full Studio tour||Tur Studio lengkap]] →</a></div>
@@ -205,25 +212,32 @@ path: /
 <!-- ============ RACE ============ -->
 <section class="section" id="multiplayer">
   <div class="container">
-    <div class="grid g2" style="align-items:center;gap:48px">
-      <div class="reveal">
+    <div class="mp">
+      <div class="mp-copy reveal">
         <span class="eyebrow">[[Multiplayer Mode||Mode Multiplayer]]</span>
-        <h2>[[Four agents. One game. Same time.||Empat agent. Satu game. Bersamaan.]]</h2>
-        <div class="squad" style="margin:22px 0">
-          <span class="agent-chip"><span data-avatar="architect"></span>Architect</span>
-          <span class="agent-chip"><span data-avatar="scripter"></span>Scripter</span>
-          <span class="agent-chip"><span data-avatar="builder"></span>Builder</span>
-          <span class="agent-chip"><span data-avatar="ui"></span>UI/UX</span>
-          <span class="agent-chip"><span data-avatar="qa"></span>QA</span>
-        </div>
-        <p style="color:var(--soft);max-width:460px">[[The Architect splits your game into parts. Specialists build them in parallel. QA checks every merge.||Architect memecah game jadi bagian-bagian. Spesialis membangunnya paralel. QA mengecek setiap penggabungan.]]</p>
+        <h2>[[A squad you can steer. Not a one-shot.||Squad yang bisa kamu arahkan. Bukan sekali jadi.]]</h2>
+        <p class="lead">[[Message any agent, any time. Every revision is a version.||Chat agent mana saja, kapan saja. Tiap revisi jadi versi.]]</p>
+        <ul class="crew">
+          <li><span data-avatar="architect"></span><b>Architect</b><small>[[plans & routes||rencana & bagi tugas]]</small></li>
+          <li><span data-avatar="builder"></span><b>Builder</b><small>[[map & parts||map & part]]</small></li>
+          <li><span data-avatar="scripter"></span><b>Scripter</b><small>[[Luau & remotes||Luau & remote]]</small></li>
+          <li><span data-avatar="ui"></span><b>UI/UX</b><small>[[HUD & menus||HUD & menu]]</small></li>
+          <li><span data-avatar="qa"></span><b>QA</b><small>[[plays & breaks it||main & cari bug]]</small></li>
+          <li><span data-avatar="guard"></span><b>Guard</b><small>[[anti-exploit||anti-exploit]]</small></li>
+        </ul>
       </div>
-      <div class="race2 reveal" data-demo="race2">
-        <h3>[[First playable tycoon||Tycoon pertama yang bisa dimainkan]]<small>[[From a blank baseplate||Dari baseplate kosong]]</small></h3>
-        <div class="rr"><div class="rr-who">[[By hand||Manual]]<small>[[solo dev||dev solo]]</small></div><div class="track"><span class="runner solo" data-avatar="builder" style="--d:7s"></span></div><div class="rr-time"><span data-count="6" data-dur="7">0</span> h</div></div>
-        <div class="rr"><div class="rr-who">[[One AI assistant||Satu AI assistant]]<small>≈2.3×</small></div><div class="track"><span class="runner one" data-avatar="scripter" style="--d:3s"></span></div><div class="rr-time"><span data-count="2.6" data-dur="3">0</span> h</div></div>
-        <div class="rr win"><div class="rr-who">JokiBlox<small>[[4 agents||4 agent]]</small></div><div class="track squad"><span class="runner" data-avatar="scripter" style="--d:.9s"></span><span class="runner" data-avatar="builder" style="--d:.9s"></span><span class="runner" data-avatar="ui" style="--d:.9s"></span><span class="runner" data-avatar="qa" style="--d:.9s"></span></div><div class="rr-time"><span data-count="25" data-dur=".9">0</span> min</div></div>
-        <details><summary>[[How we estimate||Cara kami menghitung]]</summary><p>[[By hand: 4–8 h for a simple tycoon (Playgama estimate). One AI assistant: ÷2.3 from a controlled coding study (GitHub/Microsoft, 2023). JokiBlox ~25 min is our pre-launch target for 4 parallel agents; beta measurements will replace it.||Manual: 4–8 jam untuk tycoon sederhana (estimasi Playgama). Satu AI assistant: ÷2,3 dari studi coding terkontrol (GitHub/Microsoft, 2023). JokiBlox ~25 menit adalah target pra-rilis untuk 4 agent paralel; hasil ukur beta akan menggantikannya.]]</p></details>
+      <div class="board reveal" data-board>
+        <div class="bd-head"><b>Sniper Arena</b><span class="bd-ver" data-bd-ver>v0</span><span class="bd-count" data-bd-count></span></div>
+        <ul class="bd-lanes">
+          <li data-lane="architect"><span data-avatar="architect"></span><b class="ln-n">Architect</b><span class="ln-t">—</span><i class="ln-bar"><b></b></i></li>
+          <li data-lane="builder"><span data-avatar="builder"></span><b class="ln-n">Builder</b><span class="ln-t">—</span><i class="ln-bar"><b></b></i></li>
+          <li data-lane="scripter"><span data-avatar="scripter"></span><b class="ln-n">Scripter</b><span class="ln-t">—</span><i class="ln-bar"><b></b></i></li>
+          <li data-lane="ui"><span data-avatar="ui"></span><b class="ln-n">UI/UX</b><span class="ln-t">—</span><i class="ln-bar"><b></b></i></li>
+          <li data-lane="qa"><span data-avatar="qa"></span><b class="ln-n">QA</b><span class="ln-t">—</span><i class="ln-bar"><b></b></i></li>
+          <li data-lane="guard"><span data-avatar="guard"></span><b class="ln-n">Guard</b><span class="ln-t">—</span><i class="ln-bar"><b></b></i></li>
+        </ul>
+        <div class="bd-thread" data-bd-thread aria-live="off"></div>
+        <p class="bd-note">[[Example flow using real changes from the Sniper Arena session.||Contoh alur memakai perubahan asli dari sesi Sniper Arena.]]</p>
       </div>
     </div>
   </div>
@@ -236,12 +250,12 @@ path: /
       <div class="reveal">
         <span class="eyebrow">[[Discord &amp; alerts||Discord &amp; notifikasi]]</span>
         <h2>[[Close Studio. We’ll ping you.||Tutup Studio. Nanti kami kabari.]]</h2>
-        <p class="lead">[[Start tasks from Discord and get a ping for every result.||Mulai tugas dari Discord dan dapat notifikasi untuk setiap hasil.]]</p>
+        <p class="lead">[[Start from Discord. Get pinged for every result.||Mulai dari Discord. Dapat notif tiap hasil.]]</p>
         <div class="toggles">
-          <div class="toggle"><span>[[Task finished||Tugas selesai]]<small>[[with a link to review||dengan link untuk review]]</small></span><i class="switch"></i></div>
-          <div class="toggle"><span>[[QA recheck result||Hasil recheck QA]]<small>[[pass, or what was fixed||lolos, atau apa yang diperbaiki]]</small></span><i class="switch"></i></div>
-          <div class="toggle"><span>[[Traffic milestone||Target trafik]]<small>[[e.g. 1,000 players online||cth. 1.000 pemain online]]</small></span><i class="switch"></i></div>
-          <div class="toggle"><span>[[Error spike in live game||Lonjakan error di game live]]<small>[[with a ready fix||dengan perbaikan siap pakai]]</small></span><i class="switch"></i></div>
+          <div class="toggle"><span>[[Task finished||Tugas selesai]]</span><i class="switch"></i></div>
+          <div class="toggle"><span>[[QA recheck result||Hasil recheck QA]]</span><i class="switch"></i></div>
+          <div class="toggle"><span>[[Traffic milestone||Target trafik]]</span><i class="switch"></i></div>
+          <div class="toggle"><span>[[Error spike in live game||Lonjakan error di game live]]</span><i class="switch"></i></div>
         </div>
       </div>
       <div class="phone reveal" data-notifs aria-label="Example notifications">
@@ -271,7 +285,7 @@ path: /
       <li><a href="#usp-antiexploit"><img src="assets/clips/t-shield.jpg" alt="" loading="lazy" width="400" height="285"><time>≈1:24</time><span>[[18 exploits blocked||18 exploit diblokir]]</span></a></li>
       <li><a href="#usp-squad"><img src="assets/clips/t-review.jpg" alt="" loading="lazy" width="400" height="285"><time>≈1:30</time><span>[[8 bugs fixed, 4 ideas built||8 bug beres, 4 ide dibuat]]</span></a></li>
     </ol>
-    <p class="tl-note">[[Times from the session log of one test run on one machine. For context: AI pair-programming made developers 55% faster in a controlled study <a href="#sources">[1]</a>, and Roblox creators using AI tools publish about 31% more <a href="#sources">[2]</a>.||Waktu dari log sesi satu kali tes di satu mesin. Sebagai konteks: AI pair-programming membuat developer 55% lebih cepat dalam studi terkontrol <a href="#sources">[1]</a>, dan kreator Roblox yang memakai AI publish sekitar 31% lebih banyak <a href="#sources">[2]</a>.]]</p>
+    <p class="tl-note">[[One recorded session. For context: AI makes developers 55% faster <a href="#sources">[1]</a>; Roblox creators using AI publish 31% more <a href="#sources">[2]</a>.||Satu sesi yang direkam. Konteks: AI membuat developer 55% lebih cepat <a href="#sources">[1]</a>; kreator Roblox yang pakai AI publish 31% lebih banyak <a href="#sources">[2]</a>.]]</p>
   </div>
 </section>
 
@@ -279,10 +293,10 @@ path: /
 <section class="section light">
   <div class="container">
     <div class="center reveal"><span class="eyebrow">[[Pricing||Harga]]</span><h2>[[Simple plans. 20% off for the waitlist.||Paket simpel. Diskon 20% untuk waitlist.]]</h2></div>
-    <div class="grid g3" style="margin-top:36px">
-      <a class="card reveal" href="pricing.html" style="text-decoration:none"><span class="tag">Starter</span><div class="price"><span class="now" style="font:900 2.2rem var(--display)">$9.60</span><span class="was">$12</span><span class="per">[[/mo||/bln]]</span></div><p>[[Solo creators · 2 agents||Kreator solo · 2 agent]]</p></a>
-      <a class="card reveal dark" href="pricing.html" style="text-decoration:none"><span class="tag">Pro</span><div class="price"><span class="now" style="font:900 2.2rem var(--display)">$23.20</span><span class="was">$29</span><span class="per">[[/mo||/bln]]</span></div><p>[[Multiplayer Mode · Discord · clothing||Mode Multiplayer · Discord · baju]]</p></a>
-      <a class="card reveal" href="pricing.html" style="text-decoration:none"><span class="tag">Studio</span><div class="price"><span class="now" style="font:900 2.2rem var(--display)">$63.20</span><span class="was">$79</span><span class="per">[[/mo||/bln]]</span></div><p>[[Teams · 8 agents · 3 seats||Tim · 8 agent · 3 seat]]</p></a>
+    <div class="grid g3 teaser" style="margin-top:36px">
+      <a class="card reveal" href="pricing.html" style="text-decoration:none"><span class="tag">Starter</span><div class="price"><span class="now">$9.60</span><span class="was">$12</span><span class="per">[[/mo||/bln]]</span></div><p>[[Solo creators · 2 agents||Kreator solo · 2 agent]]</p></a>
+      <a class="card reveal dark" href="pricing.html" style="text-decoration:none"><span class="tag">Pro</span><div class="price"><span class="now">$23.20</span><span class="was">$29</span><span class="per">[[/mo||/bln]]</span></div><p>[[Multiplayer Mode · Discord · clothing||Mode Multiplayer · Discord · baju]]</p></a>
+      <a class="card reveal" href="pricing.html" style="text-decoration:none"><span class="tag">Studio</span><div class="price"><span class="now">$63.20</span><span class="was">$79</span><span class="per">[[/mo||/bln]]</span></div><p>[[Teams · 8 agents · 3 seats||Tim · 8 agent · 3 seat]]</p></a>
     </div>
   </div>
 </section>
@@ -315,13 +329,13 @@ path: /
     </div>
 
     <div class="sources" id="sources" style="margin-top:56px">
-      <h4 style="color:var(--muted);font:800 .76rem/1 var(--font);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">[[Data &amp; sources||Data &amp; sumber]]</h4>
+      <details><summary>[[Data &amp; sources||Data &amp; sumber]]</summary>
       <ol>
         <li>GitHub / Microsoft Research — <a href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" rel="noopener" target="_blank">Quantifying GitHub Copilot’s impact on developer productivity</a> [[(95 developers; 1h11m vs 2h41m).||(95 developer; 1j11m vs 2j41m).]]</li>
         <li>Roblox — [[creators who used AI tools at least once increased publishes by an estimated 31%;||kreator yang pernah memakai tools AI meningkatkan publish sekitar 31%;]] <a href="https://www.pocketgamer.biz/roblox-studio-chief-on-how-ai-will-revolutionise-ugc/" rel="noopener" target="_blank">PocketGamer.biz</a>.</li>
         <li>[[Simple tycoon 4–8 h:||Tycoon sederhana 4–8 jam:]] <a href="https://playgama.com/blog/2025/07/10/how-much-time-is-needed-to-create-a-roblox-game/" rel="noopener" target="_blank">Playgama</a>. [[Legacy chat end of support:||Akhir dukungan legacy chat:]] <a href="https://devforum.roblox.com/t/-/3237100" rel="noopener" target="_blank">Roblox DevForum</a>.</li>
-        <li>[[Sniper Arena times come from one recorded test session (Roblox Studio + Studio MCP, from an empty baseplate). “25 min” in the multiplayer race is still a pre-launch estimate, to be replaced by beta results.||Waktu Sniper Arena berasal dari satu sesi tes yang direkam (Roblox Studio + Studio MCP, dari baseplate kosong). “25 mnt” di perbandingan multiplayer masih estimasi pra-rilis, akan diganti hasil beta.]]</li>
-      </ol>
+        <li>[[Sniper Arena times come from one recorded test session (Roblox Studio + Studio MCP, from an empty baseplate).||Waktu Sniper Arena berasal dari satu sesi tes yang direkam (Roblox Studio + Studio MCP, dari baseplate kosong).]]</li>
+      </ol></details>
     </div>
   </div>
 </section>

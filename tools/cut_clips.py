@@ -36,7 +36,8 @@ SPECS = {
 
 # Timeline stills on the homepage: name -> (clip key, second)
 STILLS = {"t-map": ("build", 13.6), "t-lobby": ("lobby", 1.0), "t-play": ("hero", 15.2),
-          "t-qa": ("qa", 9.6), "t-shield": ("shield", 10.6), "t-review": ("review", 10.0)}
+          "t-qa": ("qa", 9.6), "t-shield": ("shield", 10.6), "t-review": ("review", 10.0),
+          "rev-night": ("undo", 4.0)}  # squad board thumbnail
 
 
 def find(src_dir, suffix):

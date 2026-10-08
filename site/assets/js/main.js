@@ -79,7 +79,51 @@
     }, { threshold: 0.25 });
     io.observe(el);
   }
-  $$(".reveal").forEach(function (el) { onVisible(el, function () { el.classList.add("in"); }); });
+  // Reveal as soon as an element starts entering (not at 25%), so fast scrolling never shows empty space.
+  if ("IntersectionObserver" in window) {
+    var rio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); rio.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0 });
+    $$(".reveal").forEach(function (el) { rio.observe(el); });
+  } else $$(".reveal").forEach(function (el) { el.classList.add("in"); });
+
+  // Header tucks away while scrolling down and comes back on scroll up (more room on phones).
+  var hdr = $(".site-header"), lastY = window.scrollY, ticking = false;
+  if (hdr) window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      var y = window.scrollY, dy = y - lastY;
+      if (Math.abs(dy) > 6) {
+        hdr.classList.toggle("tuck", dy > 0 && y > 180 && !(links && links.classList.contains("open")));
+        lastY = y;
+      }
+      ticking = false;
+    });
+  }, { passive: true });
+  if (links) $$("a", links).forEach(function (a) {
+    a.addEventListener("click", function () { links.classList.remove("open"); if (menuBtn) menuBtn.setAttribute("aria-expanded", "false"); });
+  });
+
+  // Source links open the collapsed sources list.
+  $$('a[href="#sources"]').forEach(function (a) { a.addEventListener("click", function () { var d = $("#sources details"); if (d) d.open = true; }); });
+
+  // Swipe rows on phones get position dots.
+  $$(".usp-grid, .how-grid").forEach(function (row) {
+    var cards = Array.prototype.slice.call(row.children), dots = document.createElement("div");
+    dots.className = "swipe-dots";
+    dots.innerHTML = cards.map(function (c, i) { return '<button type="button" aria-label="' + (i + 1) + '"></button>'; }).join("");
+    row.after(dots);
+    var btns = $$("button", dots);
+    function mark() {
+      var step = cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 1;
+      var i = Math.max(0, Math.min(cards.length - 1, Math.round(row.scrollLeft / (step || 1))));
+      btns.forEach(function (b, k) { b.classList.toggle("on", k === i); });
+    }
+    btns.forEach(function (b, i) { b.addEventListener("click", function () { row.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: "smooth" }); }); });
+    row.addEventListener("scroll", function () { requestAnimationFrame(mark); }, { passive: true });
+    mark();
+  });
 
   /* ---------------- clip slots (videos cut from the Studio recording) ---------------- */
   var CLIPS = CFG.CLIPS || {};
@@ -134,7 +178,7 @@
     if (c.kind === "concept") return t("Concept on real game assets", "Konsep di aset game asli");
     return t("Studio recording", "Rekaman Studio") + sp;
   }
-  JB.player = function (box, c) {
+  JB.player = function (box, c, opts) {
     var hero = box.getAttribute("data-slot") === "hero";
     var run = 0, visible = false, warmed = false, raf = 0;
     box.classList.add("has-clip");
@@ -155,6 +199,13 @@
     var cursor = $(".pp-cursor", box), stepEl = $(".pp-step", box), timeEl = $(".pp-time", box);
     var list = $(".pp-steps", box), me = $(".pp-me", box), doneEl = $(".pp-done span", box);
     function setState(s) { pp.setAttribute("data-state", s); }
+    function load(nc) {  // swap to another clip in the same player (hero scenario chips)
+      c = nc;
+      v.poster = c.src.replace(/\.mp4$/, ".jpg");
+      v.innerHTML = sources(c.src);
+      v.load();
+    }
+    if (opts) opts.swap = function (nc) { load(nc); if (visible) cycle(); };
     var steps = [];
     function paintText() {
       steps = stepsOf(c);
@@ -215,7 +266,7 @@
         if (my !== run) return;
         setState("done");
         await nap(my, hero ? 3200 : 2200);
-        if (visible) cycle();
+        if (visible) { if (opts && opts.next) load(opts.next()); cycle(); }
       } catch (e) { if (e !== "cancel") throw e; }
     }
     function stop() { run++; v.pause(); }
@@ -235,9 +286,24 @@
   // Plain looping clips used as decoration (e.g. the drone shot in the CTA)
   $$("[data-bgclip]").forEach(function (el) { JB.mountClip(el, el.getAttribute("data-bgclip"), true); });
 
+  // Hero scenario chips: tap one to replay that feature in the hero player; otherwise they auto-advance.
+  function heroOpts() {
+    var box = $("[data-hero-chips]");
+    if (!box) return null;
+    var chips = $$("button", box), cur = 0;
+    function mark(i) {
+      cur = i;
+      chips.forEach(function (b, k) { b.classList.toggle("on", k === i); b.setAttribute("aria-pressed", String(k === i)); });
+      if (box.scrollWidth > box.clientWidth) box.scrollTo({ left: chips[i].offsetLeft - (box.clientWidth - chips[i].offsetWidth) / 2, behavior: "smooth" });
+    }
+    var o = { next: function () { mark((cur + 1) % chips.length); return JB.clipInfo(chips[cur].dataset.clip); } };
+    chips.forEach(function (b, i) { b.addEventListener("click", function () { if (i !== cur) { mark(i); o.swap(JB.clipInfo(b.dataset.clip)); } }); });
+    mark(0);
+    return o;
+  }
   $$("[data-slot]").forEach(function (slot) {
     var key = slot.dataset.slot, c = JB.clipInfo(key);
-    if (c) JB.player(slot, c);
+    if (c) JB.player(slot, c, key === "hero" ? heroOpts() : null);
     JB.slotLabel(slot, key);
   });
 
@@ -278,22 +344,45 @@
       return el;
     });
   }
-  var HATS = {
-    architect: '<rect x="11" y="5" width="26" height="6" rx="3" fill="#0b0c0d"/><path d="m24 0 2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z" fill="#ffd84d" stroke="#0b0c0d" stroke-width="1"/>',
-    scripter: '<rect x="12" y="6" width="24" height="6" rx="3" fill="#0b0c0d"/><rect x="15.5" y="15" width="8" height="7" rx="2" fill="none" stroke="#0b0c0d" stroke-width="2"/><rect x="24.5" y="15" width="8" height="7" rx="2" fill="none" stroke="#0b0c0d" stroke-width="2"/>',
-    builder: '<path d="M10 14a14 11 0 0 1 28 0z" fill="#00b06f" stroke="#0b0c0d" stroke-width="2"/><rect x="8" y="13" width="32" height="3" rx="1.5" fill="#0b0c0d"/>',
-    ui: '<ellipse cx="22" cy="9" rx="12" ry="4.5" fill="#0b0c0d"/><circle cx="22" cy="4.5" r="2" fill="#0b0c0d"/>',
-    qa: '<path d="M10 21a14 14 0 0 1 28 0" fill="none" stroke="#0b0c0d" stroke-width="3"/><rect x="7" y="18" width="6" height="9" rx="2" fill="#0b0c0d"/><rect x="35" y="18" width="6" height="9" rx="2" fill="#0b0c0d"/><path d="M38 27q0 4-6 4" fill="none" stroke="#0b0c0d" stroke-width="2"/>',
+  // Agent avatars: blocky Roblox-style busts, each role in its own outfit + prop.
+  var K = ' stroke="#0b0c0d" stroke-width="';
+  var OUTFIT = {
+    architect: { shirt: "#23314f",
+      over: '<path d="M19.5 31 24 37l4.5-6" fill="#fff"' + K + '1.5" stroke-linejoin="round"/><path d="m24 36.5-1.6 2.2L24 45l1.6-6.3z" fill="#e5484d"' + K + '1"/>',
+      hat: '<rect x="11" y="5" width="26" height="6" rx="3" fill="#0b0c0d"/><path d="m24 0 2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z" fill="#ffd84d"' + K + '1"/>',
+      prop: '<g transform="rotate(-25 41 38)"><rect x="37.5" y="31" width="7" height="15" rx="3.5" fill="#9cc9ff"' + K + '2"/><ellipse cx="41" cy="31.6" rx="3.5" ry="1.6" fill="#fff"' + K + '1.2"/></g>' },
+    scripter: { shirt: "#26282c", eyes: "glasses",
+      over: '<path d="M21 31v4M27 31v4" stroke="#fff" stroke-width="1.2"/><text x="24" y="43" text-anchor="middle" font-family="monospace" font-weight="700" font-size="7" fill="#3fe0a4">&lt;/&gt;</text>',
+      hat: '<path d="M10 20a14 13 0 0 1 28 0" fill="none" stroke="#26282c" stroke-width="3"/><rect x="7" y="17" width="6" height="9" rx="2.5" fill="#00b06f"' + K + '1.5"/><rect x="35" y="17" width="6" height="9" rx="2.5" fill="#00b06f"' + K + '1.5"/>',
+      prop: '<rect x="35" y="37" width="11" height="7.5" rx="1" fill="#c9cacc"' + K + '1.5"/><rect x="33" y="44" width="15" height="2.4" rx="1" fill="#0b0c0d"/>' },
+    builder: { shirt: "#8a8c8e",
+      over: '<path d="M13 34q0-3 3-3h3l2 15h-8z" fill="#ff8a00"/><path d="M35 34q0-3-3-3h-3l-2 15h8z" fill="#ff8a00"/><rect x="13" y="39" width="7" height="2" fill="#ffe14d"/><rect x="28" y="39" width="7" height="2" fill="#ffe14d"/>',
+      hat: '<path d="M10 14a14 11 0 0 1 28 0z" fill="#ffc21a"' + K + '2"/><rect x="8" y="13" width="32" height="3" rx="1.5" fill="#0b0c0d"/><rect x="22.5" y="4" width="3" height="9" rx="1" fill="#e0a500"/>',
+      prop: '<g transform="rotate(28 41 39)"><rect x="40" y="33" width="2.6" height="13" rx="1" fill="#a0652e"' + K + '1"/><rect x="36.5" y="30.5" width="9.6" height="4" rx="1" fill="#c9cacc"' + K + '1.2"/></g>' },
+    ui: { shirt: "#ffffff",
+      over: '<rect x="13" y="34" width="22" height="2" fill="#23314f"/><rect x="13" y="38" width="22" height="2" fill="#23314f"/><rect x="13" y="42" width="22" height="2" fill="#23314f"/>',
+      hat: '<ellipse cx="22" cy="9.5" rx="13" ry="4.5" fill="#e5484d"' + K + '2"/><circle cx="20.5" cy="4.6" r="1.8" fill="#0b0c0d"/>',
+      prop: '<path d="M37 33c6-2 11 2 10 7-1 4-5 3-6 5-1 2-6 1-6-4z" fill="#f2d7a0"' + K + '1.5"/><circle cx="41" cy="36" r="1.3" fill="#e5484d"/><circle cx="44" cy="38.4" r="1.3" fill="#2f6fed"/><circle cx="40.6" cy="40.2" r="1.3" fill="#00b06f"/>' },
+    qa: { shirt: "#f2f4f5",
+      over: '<path d="M24 31h-5l3 7zM24 31h5l-3 7z" fill="#d6d7d9"' + K + '1"/><path d="M24 34v12" stroke="#0b0c0d" stroke-width="1.2"/><circle cx="30" cy="41" r="2.2" fill="#00b06f"/>',
+      hat: '<path d="M10 21a14 14 0 0 1 28 0" fill="none" stroke="#0b0c0d" stroke-width="3"/><rect x="7" y="18" width="6" height="9" rx="2" fill="#0b0c0d"/><rect x="35" y="18" width="6" height="9" rx="2" fill="#0b0c0d"/><path d="M38 27q0 4-6 4" fill="none" stroke="#0b0c0d" stroke-width="2"/>',
+      prop: '<circle cx="41" cy="36" r="4" fill="#bfe6ff" fill-opacity=".7"' + K + '2"/><path d="m43.8 39 3.2 4" stroke="#0b0c0d" stroke-width="2.5" stroke-linecap="round"/>' },
+    guard: { shirt: "#2a2c2f", eyes: "shades",
+      over: '<path d="m24 34 5 1.8v3.6c0 3-2.3 4.8-5 5.6-2.7-.8-5-2.6-5-5.6v-3.6z" fill="#e5484d"' + K + '1.2"/><path d="m21.8 39.4 1.6 1.6 3-3.2" fill="none" stroke="#fff" stroke-width="1.3"/>',
+      hat: '<path d="M12 14a12 9 0 0 1 24 0z" fill="#1b1c1e"' + K + '2"/><rect x="22" y="11.5" width="17" height="3.5" rx="1.7" fill="#1b1c1e"' + K + '1.5"/>',
+      prop: '' }
   };
   function avatar(kind) {
-    var glasses = kind === "scripter";
+    var o = OUTFIT[kind] || { shirt: "#8a8c8e", over: "", hat: "", prop: "" };
+    var eyes = o.eyes === "shades" ? '<rect x="16" y="15.5" width="16" height="5.5" rx="2" fill="#0b0c0d"/><rect x="18" y="16.5" width="4" height="1.5" rx=".7" fill="#5b5e62"/>'
+      : o.eyes === "glasses" ? '<rect x="15.5" y="15" width="8" height="7" rx="2" fill="none" stroke="#0b0c0d" stroke-width="2"/><rect x="24.5" y="15" width="8" height="7" rx="2" fill="none" stroke="#0b0c0d" stroke-width="2"/><rect x="18.5" y="17" width="2" height="3" rx="1" fill="#0b0c0d"/><rect x="27.5" y="17" width="2" height="3" rx="1" fill="#0b0c0d"/>'
+      : '<rect x="18" y="16" width="3" height="5" rx="1.5" fill="#0b0c0d"/><rect x="27" y="16" width="3" height="5" rx="1.5" fill="#0b0c0d"/>';
     return '<svg viewBox="0 0 48 48" aria-hidden="true">' +
-      '<rect x="13" y="31" width="22" height="15" rx="3" fill="#8a8c8e" stroke="#0b0c0d" stroke-width="2"/>' +
-      '<rect x="12" y="8" width="24" height="22" rx="5" fill="#fff" stroke="#0b0c0d" stroke-width="2"/>' +
-      (glasses ? "" : '<rect x="18" y="16" width="3" height="5" rx="1.5" fill="#0b0c0d"/><rect x="27" y="16" width="3" height="5" rx="1.5" fill="#0b0c0d"/>') +
-      (glasses ? '<rect x="18.5" y="17" width="2" height="3" rx="1" fill="#0b0c0d"/><rect x="27.5" y="17" width="2" height="3" rx="1" fill="#0b0c0d"/>' : "") +
+      '<rect x="13" y="31" width="22" height="15" rx="3" fill="' + o.shirt + '"/>' + o.over +
+      '<rect x="13" y="31" width="22" height="15" rx="3" fill="none"' + K + '2"/>' +
+      '<rect x="12" y="8" width="24" height="22" rx="5" fill="#fff"' + K + '2"/>' + eyes +
       '<path d="M19 25q5 3.5 10 0" fill="none" stroke="#0b0c0d" stroke-width="2" stroke-linecap="round"/>' +
-      (HATS[kind] || "") + "</svg>";
+      o.hat + o.prop + "</svg>";
   }
   $$("[data-avatar]").forEach(function (el) { el.innerHTML = avatar(el.dataset.avatar); });
   window.JB.placeBlocks = placeBlocks;
@@ -302,20 +391,80 @@
   window.JB.onVisible = onVisible;
   window.JB.reduced = reduced;
 
-  /* ---------------- multiplayer race ---------------- */
-  $$("[data-demo=race], [data-demo=race2]").forEach(function (race) {
-    onVisible(race, function () {
-      race.classList.add("run");
-      $$("[data-count]", race).forEach(function (el) {
-        var end = parseFloat(el.dataset.count), dur = parseFloat(el.dataset.dur || 3) * 1000, start = performance.now();
-        var unit = el.dataset.unit || "";
-        (function step(now) {
-          var p = reduced ? 1 : Math.min(1, (now - start) / dur);
-          el.textContent = (end * p).toFixed(end % 1 ? 1 : 0) + unit;
-          if (p < 1) requestAnimationFrame(step);
-        })(start);
-      });
-    });
+  /* ---------------- multiplayer squad board: parallel lanes + revision rounds ---------------- */
+  var ROUNDS = [
+    { you: ["Build a Sniper Arena from an empty baseplate.", "Buat Sniper Arena dari baseplate kosong."], all: true,
+      lanes: { architect: ["12 steps, split across the squad", "12 tahap, dibagi ke squad"], builder: ["Arena: 4 zones, tower, bridges", "Arena: 4 zona, menara, jembatan"],
+        scripter: ["Scope, headshots, bounty", "Scope, headshot, bounty"], ui: ["Lobby, Shop, Missions", "Lobby, Shop, Misi"],
+        qa: ["Plays each merge", "Main tiap merge"], guard: ["Server checks on every remote", "Cek server di semua remote"] },
+      img: "t-lobby", res: ["First playable at 11:42", "Bisa dimainkan di 11:42"] },
+    { you: ["Make the bridges glow neon.", "Bikin jembatannya neon."], lanes: { builder: ["Neon on 4 bridges", "Neon di 4 jembatan"] },
+      img: "t-map", res: ["Bridges updated", "Jembatan diperbarui"] },
+    { you: ["Bots kill me every 25 seconds. Tone them down.", "Bot bunuh aku tiap 25 detik. Kurangi."],
+      lanes: { scripter: ["Bot aim and reaction tuned", "Bidikan & reaksi bot disetel"], qa: ["Re-plays 3 rounds", "Main ulang 3 ronde"] },
+      img: "t-play", res: ["Bots tuned, QA rechecked", "Bot disetel, dicek ulang QA"] },
+    { you: ["Try a night mode.", "Coba mode malam."], lanes: { builder: ["Night lighting", "Lighting malam"] },
+      img: "rev-night", res: ["Night mode on", "Mode malam aktif"] },
+    { you: ["Nah, undo that.", "Nggak cocok, undo."], undo: true, img: "t-map", res: ["Back to the version before", "Kembali ke versi sebelumnya"] },
+    { you: ["The jump pad doesn’t launch me.", "Jump pad-nya nggak melempar."],
+      lanes: { qa: ["Reproduces it in Play mode", "Reproduksi di mode Play"], builder: ["Moves pads off the ramp", "Pindah pad dari ramp"] },
+      img: "inside", res: ["Fixed and re-tested", "Diperbaiki & dites ulang"] },
+    { you: ["Add a killcam when I die.", "Tambah killcam waktu aku mati."],
+      lanes: { scripter: ["Orbit camera on the shooter", "Kamera orbit ke penembak"], ui: ["Killcam overlay", "Overlay killcam"], guard: ["Checks the new remote", "Cek remote baru"] },
+      img: "t-review", res: ["Killcam added", "Killcam ditambahkan"] }
+  ];
+  $$("[data-board]").forEach(function (board) {
+    var lanes = {}, thread = $("[data-bd-thread]", board), verEl = $("[data-bd-ver]", board), countEl = $("[data-bd-count]", board);
+    $$("[data-lane]", board).forEach(function (li) { lanes[li.dataset.lane] = li; });
+    var pickL = function (p) { return p[lang() === "id" ? 1 : 0]; };
+    var wait = function (ms) { return new Promise(function (r) { setTimeout(r, reduced ? 0 : ms); }); };
+    var stack = [], top = 0, revs = 0, undos = 0;  // version history: undo pops, a revision pushes a new number
+    function setLane(key, text, state) {
+      var li = lanes[key]; if (!li) return;
+      li.className = state;
+      if (text != null) $(".ln-t", li).textContent = text;
+      var bar = $(".ln-bar b", li);
+      bar.style.transition = "none"; bar.style.width = state === "work" ? "0%" : state === "done" ? "100%" : bar.style.width;
+      if (state === "work") { void bar.offsetWidth; bar.style.transition = ""; bar.style.width = "100%"; }
+    }
+    function counter() {
+      countEl.textContent = t("1 prompt · " + revs + " revisions · " + undos + " undo", "1 prompt · " + revs + " revisi · " + undos + " undo");
+    }
+    function bump(v) { verEl.textContent = "v" + v; verEl.classList.remove("pop"); void verEl.offsetWidth; verEl.classList.add("pop"); }
+    async function play() {
+      stack = []; top = 0; revs = 0; undos = 0; thread.innerHTML = ""; counter(); verEl.textContent = "v0";
+      Object.keys(lanes).forEach(function (k) { setLane(k, "—", "idle"); $(".ln-bar b", lanes[k]).style.width = "0%"; });
+      for (var r = 0; r < ROUNDS.length; r++) {
+        var R = ROUNDS[r];
+        $$(".bd-x", thread).forEach(function (x, i, all) { if (i < all.length - 1) x.remove(); else x.classList.add("old"); });
+        var x = document.createElement("div"); x.className = "bd-x";
+        var you = document.createElement("p"); you.className = "bd-you"; x.appendChild(you); thread.appendChild(x);
+        await JB.typeInto(you, pickL(R.you), 18);
+        you.classList.remove("caret");
+        var keys = R.undo ? [] : Object.keys(R.lanes);
+        if (!R.undo) {
+          var to = document.createElement("span"); to.className = "bd-to";
+          to.textContent = R.all ? t("→ whole squad, in parallel", "→ seluruh squad, paralel") : "→ " + keys.map(function (k) { return $(".ln-n", lanes[k]).textContent; }).join(" + ");
+          x.appendChild(to);
+          Object.keys(lanes).forEach(function (k) { if (keys.indexOf(k) === -1 && lanes[k].className !== "idle") setLane(k, null, "idle"); });
+          keys.forEach(function (k, i) { lanes[k].style.setProperty("--d", (R.all ? 1.4 + i * .35 : 1.5) + "s"); setLane(k, pickL(R.lanes[k]), "work"); });
+          await wait(R.all ? 3400 : 2000);
+          keys.forEach(function (k) { setLane(k, null, "done"); });
+        } else await wait(700);
+        if (R.undo) { undos++; stack.pop(); } else { if (r) revs++; stack.push(++top); }
+        var ver = stack[stack.length - 1];
+        var res = document.createElement("div"); res.className = "bd-res" + (R.undo ? " undo" : "");
+        res.innerHTML = '<img src="assets/clips/' + R.img + '.jpg" alt=""><span><b>' + pickL(R.res) + "</b><small>" +
+          (R.undo ? t("one click, nothing lost", "sekali klik, tidak ada yang hilang") : t("saved as a version", "tersimpan sebagai versi")) +
+          '</small></span><span class="v">' + (R.undo ? "↶ v" + ver : "v" + ver) + "</span>";
+        x.appendChild(res);
+        bump(ver); counter();
+        await wait(2000);
+      }
+      await wait(2600);
+      if (!reduced) play();
+    }
+    onVisible(board, function () { play(); });
   });
 
   /* ---------------- phone notifications ---------------- */
