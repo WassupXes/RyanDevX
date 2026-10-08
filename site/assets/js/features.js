@@ -273,6 +273,42 @@
       q(".fx-chip", s).classList.add("ok");
       await nap(2600);
     },
+
+    antiexploit: async function (s, nap) {
+      s.innerHTML = '<div class="fx fx-ax"><div class="ax-top"><span class="ax-live">● LIVE · MyTycoon · 23 ' + t("players", "pemain") + '</span><span>' + t("Blocked", "Diblokir") + ' <b data-blocked>0</b></span></div>' +
+        '<div class="ax-main"><div class="fx-vp ax-vp"><div class="iso"></div><span class="ax-bad" data-bad>' + JB.avatar("qa") + '</span><span class="ax-ring" data-ring></span></div><ul class="ax-log" data-log></ul></div>' +
+        '<div class="ax-foot">🛡 ' + t("Checks run on the server · nothing on the client for exploiters to switch off", "Cek berjalan di server · tidak ada yang bisa dimatikan exploiter di client") + "</div></div>";
+      var plat = [];
+      for (var x = 0; x < 4; x++) for (var y = 0; y < 4; y++) plat.push([x, y, 0, (x + y) % 2 ? "base" : "grey"]);
+      JB.placeBlocks(q(".iso", s), plat, 110, 40).forEach(function (b) { b.classList.add("on"); });
+      var bad = q("[data-bad]", s), ring = q("[data-ring]", s), log = q("[data-log]", s), blocked = q("[data-blocked]", s), n = 0;
+      var hits = [
+        ["speed", t("Speed 94 studs/s (limit 32)", "Kecepatan 94 stud/dtk (batas 32)"), t("rubber-banded", "ditarik balik")],
+        ["teleport", t("Teleport 480 studs in 0.1 s", "Teleport 480 stud dalam 0,1 dtk"), t("kicked + logged", "di-kick + dicatat")],
+        ["fly", t("Flying 6 s with no ground contact", "Terbang 6 dtk tanpa menyentuh tanah"), t("flagged", "ditandai")],
+        ["spam", t("RemoteEvent spam 300/s", "Spam RemoteEvent 300/dtk"), t("throttled", "dibatasi")],
+      ];
+      await nap(700);
+      for (var i = 0; i < hits.length; i++) {
+        bad.className = "ax-bad " + hits[i][0];
+        await nap(900);
+        ring.className = "ax-ring on";
+        bad.classList.add("caught");
+        var li = document.createElement("li");
+        li.innerHTML = '<b>⚠ ' + hits[i][1] + '</b><span>→ ' + hits[i][2] + "</span>";
+        log.appendChild(li);
+        blocked.textContent = ++n;
+        await nap(900);
+        ring.className = "ax-ring";
+        bad.className = "ax-bad";
+        await nap(300);
+      }
+      var d = document.createElement("li");
+      d.className = "dc";
+      d.innerHTML = "<b>🔔 Discord</b><span>" + t("4 exploit attempts blocked in MyTycoon", "4 percobaan exploit diblokir di MyTycoon") + "</span>";
+      log.appendChild(d);
+      await nap(2600);
+    },
   };
   JB.scenes = SCENES;
 

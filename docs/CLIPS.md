@@ -32,12 +32,13 @@ Follow `docs/STUDIO-TEST-PLAN.md` (Claude connected via **Enable Studio as MCP s
 | `usp-approve` | Plan approved → diff shown → Undo restores instantly. | 8–12 s |
 | `usp-qa` | Multi-client playtest; bug found → fixed → recheck passes. | 10–15 s |
 | `usp-secure` | Remote handler gets validation lines; free-model backdoor flagged. | 8–12 s |
+| `usp-antiexploit` | A test account speed-hacks/teleports/flies in a playtest → server check snaps it back or kicks → log + Discord alert. Use your own test place only. | 10–15 s |
 | `usp-squad` | One prompt → agents working in parallel → playable, clock running. | 10–15 s |
 | `usp-precheck` | Design fails pre-check → fixed → passes → upload. | 8–12 s |
 | `usp-migrate` | Output full of deprecation warnings → one pass → clean Output. | 8–12 s |
 
 ### Products (`/products.html`)
-One clip per feature row: `fx-create`, `fx-clone`, `fx-migrate`, `fx-assets`, `fx-clothing`, `fx-discord`, `fx-qa` (same specs, 8–15 s).
+One clip per feature row: `fx-create`, `fx-clone`, `fx-migrate`, `fx-assets`, `fx-clothing`, `fx-discord`, `fx-qa`, `fx-antiexploit` (same specs, 8–15 s).
 
 ### Studio tour (`/studio.html`)
 | Slot | Show | Length |
