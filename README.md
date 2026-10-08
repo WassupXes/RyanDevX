@@ -35,7 +35,7 @@ Language: auto-detected from the browser (`id-*` → Indonesian), switchable wit
 
 1. **Waitlist backend** — follow `apps-script/README.md`, paste the `/exec` URL into `site/assets/js/config.js` → `WAITLIST_ENDPOINT`. Until then the form shows "not connected yet".
 2. **Deploy** (pick one):
-   - **VPS (nginx)** — in the server console: `curl -fsSLO https://raw.githubusercontent.com/WassupXes/RyanDevX/claude/dazzling-galileo-xznxdg/deploy/setup-vps.sh && bash setup-vps.sh` (private repo: clone manually with a GitHub token, then run `deploy/setup-vps.sh`). Updates: `bash /opt/jokiblox-src/deploy/update.sh`.
+   - **VPS (nginx)** — in the server console: `curl -fsSLO https://raw.githubusercontent.com/WassupXes/RyanDevX/claude/dazzling-galileo-xznxdg/deploy/setup-vps.sh && bash setup-vps.sh` (private repo: clone manually with a GitHub token, then run `deploy/setup-vps.sh`). Updates: `bash /opt/jokiblox-src/deploy/update.sh`, or once `bash /opt/jokiblox-src/deploy/enable-autodeploy.sh` to update automatically every 5 minutes.
    - **Cloudflare Pages / Netlify / Vercel** — connect the repo, no build command, output directory `site`.
    - **GitHub Pages** — publish the `site/` folder (`site/CNAME` already set to `jokiblox.com`).
 3. **DNS** — `A jokiblox.com → server IP` and `A www → server IP` (or the CNAME your host gives).
