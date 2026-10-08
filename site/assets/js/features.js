@@ -217,7 +217,7 @@
       function msg(who, html, bot) {
         var d = document.createElement("div");
         d.className = "dc-msg";
-        d.innerHTML = '<span class="dc-av' + (bot ? " bot" : "") + '">' + (bot ? '<img src="assets/img/logo.svg" alt="">' : "R") + '</span><div><b>' + who + (bot ? ' <i class="tag">BOT</i>' : "") + "</b>" + html + "</div>";
+        d.innerHTML = '<span class="dc-av' + (bot ? " bot" : "") + '">' + (bot ? '<img src="assets/img/mark.svg" alt="">' : "R") + '</span><div><b>' + who + (bot ? ' <i class="tag">BOT</i>' : "") + "</b>" + html + "</div>";
         box.appendChild(d);
         box.scrollTop = box.scrollHeight;
         return d;

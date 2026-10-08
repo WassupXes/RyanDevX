@@ -1710,3 +1710,22 @@ html { -webkit-tap-highlight-color: transparent; }
 .pp-hero .kick-box p { font-size: .84rem; }
 .pp-hero .kick-leave { padding: 8px; font-size: .88rem; }
 @media (max-width: 440px) { .kick-box { width: 86%; padding: 9px 10px; } .kick-box h4 { font-size: .82rem; margin-bottom: 6px; padding-bottom: 6px; } .kick-box p { font-size: .62rem; margin-bottom: 7px; } .kick-leave { padding: 4px; font-size: .7rem; } .kick-guard { width: 28px; } }
+
+/* =====================================================================
+   v12 — JokiBlox mark: J of blocks + AI spark (the next block being placed)
+   ===================================================================== */
+.jb-mark { display: block; overflow: visible; }
+.jb-mark .bm-spark { transform-box: fill-box; transform-origin: center; }
+.brand .jb-mark .bm-j { animation: bmJ .7s cubic-bezier(.2,1.3,.4,1) both; }
+.brand .jb-mark .bm-spark { animation: bmIn .8s cubic-bezier(.2,1.5,.4,1) .25s both, bmTwinkle 7s ease-in-out 2s infinite; }
+.brand:hover .jb-mark .bm-spark { animation: bmSpin .6s cubic-bezier(.3,1.4,.5,1); }
+@keyframes bmJ { from { transform: translateY(14px); opacity: 0; } }
+@keyframes bmIn { from { transform: scale(0) rotate(-90deg); } }
+@keyframes bmTwinkle { 0%, 88%, 100% { transform: none; } 92% { transform: scale(1.3) rotate(45deg); } 96% { transform: scale(.85) rotate(90deg); } }
+@keyframes bmSpin { to { transform: rotate(180deg) scale(1.15); } }
+.pp-logo { padding: 4px; }
+.pp-logo .jb-mark { width: 100%; height: 100%; }
+.notif .ic { background: none; }
+.notif .ic img { width: 30px; height: 30px; border-radius: 8px; }
+.site-header .brand, .site-footer .brand { gap: 9px; }
+@media (prefers-reduced-motion: reduce) { .jb-mark * { animation: none !important; } }

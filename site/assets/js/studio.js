@@ -119,7 +119,7 @@
     install: async function (nap) {
       el.body.innerHTML = '<div class="jp-empty">' + t("Install the plugin, then click <b>JokiBlox</b> in the Plugins tab.", "Pasang plugin, lalu klik <b>JokiBlox</b> di tab Plugins.") + "</div>";
       el.overlay.innerHTML =
-        '<div class="store-card"><div class="sc-top"><div class="sc-icon"><img src="assets/img/logo.svg" alt=""></div><div><b>JokiBlox Agent</b><small>' + t("Plugin · Creator Store", "Plugin · Creator Store") + "</small></div></div>" +
+        '<div class="store-card"><div class="sc-top"><div class="sc-icon"><img src="assets/img/mark.svg" alt=""></div><div><b>JokiBlox Agent</b><small>' + t("Plugin · Creator Store", "Plugin · Creator Store") + "</small></div></div>" +
         "<p>" + t("AI squad that builds, fixes and upgrades your game in Studio.", "Squad AI yang membangun, memperbaiki, dan upgrade game kamu di Studio.") + "</p>" +
         '<button class="sc-btn" type="button" tabindex="-1">' + t("Install", "Pasang") + "</button></div>";
       log(t("Toolbox › Creator Store › “JokiBlox”", "Toolbox › Creator Store › “JokiBlox”"));

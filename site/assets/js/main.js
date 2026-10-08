@@ -230,10 +230,10 @@
       '<div class="pp-done"><b>✓</b><span></span></div><span class="pp-load" aria-hidden="true"></span>' +
       '<div class="pp-kick" aria-hidden="true"><div class="kick-box"><h4></h4><p></p><span class="kick-leave"></span>' +
       '<span class="kick-guard" data-char="guard" data-act="block"></span></div></div>' +
-      (hero ? "" : '<div class="pp-bar"><span class="pp-logo">J</span><span class="pp-text"></span><span class="pp-send">↑</span></div>') + "</div>";
+      (hero ? "" : '<div class="pp-bar"><span class="pp-logo"><svg class="jb-mark" viewBox="0 0 100 100" aria-hidden="true"><path class="bm-j" d="M55.5 11H75.5V89H26.5V69H55.5Z" fill="currentColor" stroke="currentColor" stroke-width="9" stroke-linejoin="round"/><path class="bm-spark" d="M33.6 8.82Q34.32 26.08 51.58 26.8Q34.32 27.52 33.6 44.78Q32.88 27.52 15.62 26.8Q32.88 26.08 33.6 8.82Z" fill="currentColor"/></svg></span><span class="pp-text"></span><span class="pp-send">↑</span></div>') + "</div>";
     box.innerHTML = hero
       ? '<div class="pp pp-hero"><div class="pp-title"><i></i><i></i><i></i><span>Place1 — Roblox Studio</span></div><div class="pp-body">' + screen +
-        '<aside class="pp-side"><div class="pp-side-h"><span class="pp-logo">J</span>JokiBlox<small>' + t("connected", "terhubung") + '</small></div>' +
+        '<aside class="pp-side"><div class="pp-side-h"><span class="pp-logo"><svg class="jb-mark" viewBox="0 0 100 100" aria-hidden="true"><path class="bm-j" d="M55.5 11H75.5V89H26.5V69H55.5Z" fill="currentColor" stroke="currentColor" stroke-width="9" stroke-linejoin="round"/><path class="bm-spark" d="M33.6 8.82Q34.32 26.08 51.58 26.8Q34.32 27.52 33.6 44.78Q32.88 27.52 15.62 26.8Q32.88 26.08 33.6 8.82Z" fill="currentColor"/></svg></span>JokiBlox<small>' + t("connected", "terhubung") + '</small></div>' +
         '<div class="pp-feed"><p class="pp-me"></p><ol class="pp-steps"></ol></div>' +
         '<div class="pp-bar"><span class="pp-text"></span><span class="pp-send">↑</span></div>' +
         '<div class="pp-clock">' + t("Real session time", "Waktu nyata sesi") + ' <b class="pp-time">0:00:00</b></div></aside></div>' +
