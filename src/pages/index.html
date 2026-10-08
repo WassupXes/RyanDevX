@@ -26,30 +26,17 @@ path: /
       </div>
     </div>
 
-    <div class="reveal">
-    <div class="window" data-demo="studio" aria-label="Animated demo of JokiBlox Agent building a game in Roblox Studio">
-      <div class="window-bar"><i></i><i></i><i></i><span class="title">Roblox Studio <span class="mz">Home · Avatar · UI · Script · Model · <u>Plugins</u></span></span><span class="live">[[4 agents live||4 agent aktif]]</span></div>
-      <div class="studio">
-        <div class="stage">
-          <div class="viewport"><div class="iso"></div></div>
-          <div class="chat"></div>
+    <div class="hero-visual reveal" data-video-slot>
+      <div class="gallery" data-gallery>
+        <div class="gal-prompt">
+          <span class="pb-icon">✦</span>
+          <span class="gal-field" data-gal-input aria-hidden="true"></span>
+          <span class="btn btn-primary" data-gal-go aria-hidden="true">[[Build||Bangun]] ▶</span>
         </div>
-        <div class="explorer"><div class="h">Explorer</div><div class="items"></div></div>
+        <p class="gal-status" data-gal-status aria-live="polite">[[Watch the squad build.||Lihat squad bekerja.]]</p>
+        <div class="gal-grid" data-gal-grid></div>
+        <p class="gal-note">[[Example builds, illustration only. Build times are pre-launch targets.||Contoh build, hanya ilustrasi. Waktu build adalah target pra-rilis.]]</p>
       </div>
-    </div>
-    <div class="promptbar">
-      <p class="hero-try">[[Try it — type a game idea||Coba — ketik ide game]]</p>
-      <div class="pb-input">
-        <span class="pb-icon">✦</span>
-        <input type="text" id="hero-idea" data-hero-input maxlength="140" aria-label="Describe your game" data-ph-en="e.g. a horror obby with 10 stages" data-ph-id="cth. obby horor 10 stage" placeholder="e.g. a horror obby with 10 stages">
-        <button type="button" class="btn btn-primary" data-hero-go>[[Build||Bangun]] ▶</button>
-      </div>
-      <div class="chips">
-        <button type="button" class="chip" data-scene="0">🏭 Tycoon</button>
-        <button type="button" class="chip" data-scene="1">🧗 Obby</button>
-        <button type="button" class="chip" data-scene="2">🥚 Pet Sim</button>
-      </div>
-    </div>
     </div>
   </div>
 </section>
@@ -228,3 +215,4 @@ path: /
   </div>
 </section>
 <script src="assets/js/features.js" defer></script>
+<script src="assets/js/gallery.js" defer></script>

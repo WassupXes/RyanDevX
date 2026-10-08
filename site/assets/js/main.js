@@ -68,6 +68,22 @@
   }
   if (cds.length) { tick(); setInterval(tick, 1000); }
 
+  /* ---------------- demo video (replaces the hero animation when configured) ---------------- */
+  var slot = $("[data-video-slot]");
+  if (slot && (CFG.DEMO_VIDEO || CFG.DEMO_YOUTUBE)) {
+    if (CFG.DEMO_YOUTUBE) {
+      var id = encodeURIComponent(CFG.DEMO_YOUTUBE);
+      slot.innerHTML = '<div class="demo-video"><iframe src="https://www.youtube-nocookie.com/embed/' + id + "?autoplay=1&mute=1&loop=1&playlist=" + id +
+        '&controls=0&rel=0&playsinline=1&modestbranding=1" title="JokiBlox demo" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
+    } else {
+      var type = /\.webm($|\?)/i.test(CFG.DEMO_VIDEO) ? "video/webm" : "video/mp4";
+      slot.innerHTML = '<div class="demo-video"><video autoplay muted loop playsinline preload="metadata"' + (CFG.DEMO_POSTER ? ' poster="' + CFG.DEMO_POSTER + '"' : "") +
+        '><source src="' + CFG.DEMO_VIDEO + '" type="' + type + '"></video></div>';
+    }
+    var cap = CFG.DEMO_CAPTION && (CFG.DEMO_CAPTION[lang()] || CFG.DEMO_CAPTION.en);
+    if (cap) { var p = document.createElement("p"); p.className = "dv-cap"; p.textContent = cap; slot.appendChild(p); }
+  }
+
   /* ---------------- visibility helper ---------------- */
   function onVisible(el, fn, once) {
     if (!el) return;
@@ -141,116 +157,6 @@
   window.JB.typeInto = typeInto;
   window.JB.onVisible = onVisible;
   window.JB.reduced = reduced;
-
-  /* ---------------- hero: Studio demo + prompt bar ---------------- */
-  var studio = $("[data-demo=studio]");
-  if (studio) {
-    var SCENES = [
-      {
-        prompt: ["Build a tycoon: 3 droppers, conveyor, rebirth system and daily rewards. Mobile-friendly UI.",
-                 "Bikin tycoon: 3 dropper, conveyor, sistem rebirth dan daily reward. UI ramah HP."],
-        tree: ["Workspace/Tycoon", "Workspace/Tycoon/Droppers", "Workspace/Tycoon/Conveyor", "ServerScriptService/TycoonService", "ServerScriptService/RebirthService", "ReplicatedStorage/Remotes", "StarterGui/TycoonHUD", "ServerScriptService/DailyRewards"],
-        log: [["Scripter", "TycoonService.lua ✓"], ["Builder", "12 parts placed ✓"], ["UI", "TycoonHUD scaled for mobile ✓"], ["QA", "Playtest 0 errors ✓"]],
-        blocks: function () {
-          var b = [];
-          for (var x = 0; x < 4; x++) for (var y = 0; y < 4; y++) b.push([x, y, 0, "base"]);
-          b.push([0, 0, 1, "grey"], [0, 0, 2, "white"], [1, 0, 1, "grey"], [2, 0, 1, "grey"], [3, 0, 1, "white"]);
-          b.push([0, 3, 1, "dark"], [1, 3, 1, "dark"], [2, 3, 1, "dark"], [3, 3, 1, "dark"], [3, 2, 1, "ok"]);
-          return b;
-        },
-      },
-      {
-        prompt: ["Make a 20-stage obby with checkpoints, a timer leaderboard and a skip-stage gamepass.",
-                 "Buat obby 20 stage dengan checkpoint, leaderboard waktu dan gamepass skip stage."],
-        tree: ["Workspace/Stages", "Workspace/Stages/Checkpoints", "ServerScriptService/StageService", "ServerScriptService/Leaderboard", "ServerScriptService/MarketplaceHandler", "StarterGui/TimerUI", "ReplicatedStorage/Config"],
-        log: [["Builder", "20 stages generated ✓"], ["Scripter", "Checkpoints + DataStore ✓"], ["Monetize", "Skip-stage gamepass wired ✓"], ["QA", "Fall-reset tested ✓"]],
-        blocks: function () {
-          var b = [];
-          var path = [[0, 3], [0, 2], [1, 2], [1, 1], [2, 1], [3, 1], [3, 0]];
-          path.forEach(function (p, i) { var z = Math.min(i, 3); b.push([p[0], p[1], 0, "base"]); for (var k = 1; k <= z; k++) b.push([p[0], p[1], k, k === z ? (i === path.length - 1 ? "ok" : "white") : "grey"]); });
-          return b;
-        },
-      },
-      {
-        prompt: ["Make a pet simulator with 3 zones, egg hatching, pet inventory and a 2× luck gamepass.",
-                 "Bikin pet simulator dengan 3 zona, buka telur, inventori pet dan gamepass 2× luck."],
-        tree: ["Workspace/Zones", "Workspace/Eggs", "ServerScriptService/CurrencyService", "ServerScriptService/EggHatch", "ReplicatedStorage/PetData", "StarterGui/PetInventory", "StarterGui/ShopUI"],
-        log: [["Builder", "3 zones + portals ✓"], ["Scripter", "EggHatch rarity table ✓"], ["UI", "PetInventory (mobile) ✓"], ["QA", "8-player playtest ✓"]],
-        blocks: function () {
-          var b = [];
-          for (var x = 0; x < 4; x++) for (var y = 0; y < 4; y++) b.push([x, y, 0, x < 2 ? "base" : "grey"]);
-          b.push([0, 0, 1, "white"], [0, 0, 2, "white"], [3, 3, 1, "dark"], [3, 3, 2, "dark"], [3, 3, 3, "ok"], [1, 2, 1, "white"], [2, 1, 1, "ok"]);
-          return b;
-        },
-      },
-    ];
-    var iso = $(".iso", studio), tree = $(".explorer .items", studio), chat = $(".chat", studio);
-    var heroRun = 0, sceneIdx = 0, userDriven = false;
-    function pickScene(text) {
-      var s = (text || "").toLowerCase();
-      if (/obby|parkour|stage|lompat/.test(s)) return 1;
-      if (/pet|egg|telur|hatch|simulator/.test(s)) return 2;
-      return 0;
-    }
-    async function runScene(idx, customPrompt) {
-      var my = ++heroRun;
-      var alive = function () { if (my !== heroRun) throw "cancel"; };
-      var nap = function (ms) { return sleep(ms).then(alive); };
-      try {
-        var s = SCENES[idx];
-        chat.innerHTML = '<div class="msg"><div class="av">YOU</div><div class="txt" data-p></div></div>';
-        tree.innerHTML = "";
-        var blocks = placeBlocks(iso, s.blocks());
-        await typeInto($("[data-p]", chat), customPrompt || s.prompt[lang() === "id" ? 1 : 0], 18);
-        alive();
-        await nap(350);
-        var ai = document.createElement("div");
-        ai.className = "msg";
-        ai.innerHTML = '<div class="av ai">JB</div><div class="txt"><b>JokiBlox Agent</b> · ' + t("Spawning 4 agents in parallel…", "Menjalankan 4 agent paralel…") + '<div class="log"></div></div>';
-        chat.appendChild(ai);
-        var log = $(".log", ai);
-        var treeEls = s.tree.map(function (n) { var d = document.createElement("div"); d.textContent = n; tree.appendChild(d); return d; });
-        var total = Math.max(blocks.length, treeEls.length);
-        for (var i = 0; i < total; i++) {
-          if (blocks[i]) blocks[i].classList.add("on");
-          if (treeEls[i]) treeEls[i].classList.add("on", "new");
-          var li = Math.floor(i / total * s.log.length);
-          if (i % Math.ceil(total / s.log.length) === 0 && s.log[li]) {
-            var row = document.createElement("div");
-            row.innerHTML = "[" + s.log[li][0] + "] <span class=ok>" + s.log[li][1] + "</span>";
-            log.appendChild(row);
-          }
-          await nap(110);
-        }
-        var done = document.createElement("div");
-        done.innerHTML = "<span class=ok>" + t("Done in 3m 42s · ready to review", "Selesai 3m 42d · siap direview") + "</span>";
-        log.appendChild(done);
-        await nap(userDriven ? 9000 : 3800);
-        userDriven = false;
-        sceneIdx = (idx + 1) % SCENES.length;
-        runScene(sceneIdx);
-      } catch (e) { if (e !== "cancel") throw e; }
-    }
-    var input = $("[data-hero-input]"), go = $("[data-hero-go]");
-    function userBuild(idx, text) {
-      userDriven = true;
-      $$("[data-scene]").forEach(function (c) { c.classList.toggle("on", +c.dataset.scene === idx); });
-      runScene(idx, text);
-    }
-    $$("[data-scene]").forEach(function (c) {
-      c.addEventListener("click", function () { if (input) input.value = ""; userBuild(+c.dataset.scene); });
-    });
-    if (input && go) {
-      var submit = function () {
-        var v = input.value.trim().slice(0, 140);
-        if (!v) { input.focus(); return; }
-        userBuild(pickScene(v), v);
-      };
-      go.addEventListener("click", submit);
-      input.addEventListener("keydown", function (e) { if (e.key === "Enter") submit(); });
-    }
-    onVisible(studio, function () { runScene(0); });
-  }
 
   /* ---------------- multiplayer race ---------------- */
   $$("[data-demo=race], [data-demo=race2]").forEach(function (race) {

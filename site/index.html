@@ -74,30 +74,17 @@
       </div>
     </div>
 
-    <div class="reveal">
-    <div class="window" data-demo="studio" aria-label="Animated demo of JokiBlox Agent building a game in Roblox Studio">
-      <div class="window-bar"><i></i><i></i><i></i><span class="title">Roblox Studio <span class="mz">Home · Avatar · UI · Script · Model · <u>Plugins</u></span></span><span class="live"><span lang="en">4 agents live</span><span lang="id">4 agent aktif</span></span></div>
-      <div class="studio">
-        <div class="stage">
-          <div class="viewport"><div class="iso"></div></div>
-          <div class="chat"></div>
+    <div class="hero-visual reveal" data-video-slot>
+      <div class="gallery" data-gallery>
+        <div class="gal-prompt">
+          <span class="pb-icon">✦</span>
+          <span class="gal-field" data-gal-input aria-hidden="true"></span>
+          <span class="btn btn-primary" data-gal-go aria-hidden="true"><span lang="en">Build</span><span lang="id">Bangun</span> ▶</span>
         </div>
-        <div class="explorer"><div class="h">Explorer</div><div class="items"></div></div>
+        <p class="gal-status" data-gal-status aria-live="polite"><span lang="en">Watch the squad build.</span><span lang="id">Lihat squad bekerja.</span></p>
+        <div class="gal-grid" data-gal-grid></div>
+        <p class="gal-note"><span lang="en">Example builds, illustration only. Build times are pre-launch targets.</span><span lang="id">Contoh build, hanya ilustrasi. Waktu build adalah target pra-rilis.</span></p>
       </div>
-    </div>
-    <div class="promptbar">
-      <p class="hero-try"><span lang="en">Try it — type a game idea</span><span lang="id">Coba — ketik ide game</span></p>
-      <div class="pb-input">
-        <span class="pb-icon">✦</span>
-        <input type="text" id="hero-idea" data-hero-input maxlength="140" aria-label="Describe your game" data-ph-en="e.g. a horror obby with 10 stages" data-ph-id="cth. obby horor 10 stage" placeholder="e.g. a horror obby with 10 stages">
-        <button type="button" class="btn btn-primary" data-hero-go><span lang="en">Build</span><span lang="id">Bangun</span> ▶</button>
-      </div>
-      <div class="chips">
-        <button type="button" class="chip" data-scene="0">🏭 Tycoon</button>
-        <button type="button" class="chip" data-scene="1">🧗 Obby</button>
-        <button type="button" class="chip" data-scene="2">🥚 Pet Sim</button>
-      </div>
-    </div>
     </div>
   </div>
 </section>
@@ -276,6 +263,7 @@
   </div>
 </section>
 <script src="assets/js/features.js" defer></script>
+<script src="assets/js/gallery.js" defer></script>
 </main>
 <footer class="site-footer">
   <div class="container">
