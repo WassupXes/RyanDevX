@@ -1191,3 +1191,46 @@ td.hl { font-weight: 800; }
 .gal-field.typing::after { content: "▍"; animation: blink 1s steps(1) infinite; }
 .gal-prompt .btn { cursor: default; }
 .gal-prompt .btn:hover { transform: none; }
+
+/* =====================================================================
+   v6 — clip slots + "how it works" (user POV)
+   ===================================================================== */
+.slot { position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 16px; overflow: hidden; background: #1b1c1e; border: 1px solid var(--line); }
+.slot.slot-free { aspect-ratio: auto; border: 0; background: none; overflow: visible; border-radius: 0; }
+.slot.has-clip, .slot-free.has-clip { aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: #000; box-shadow: var(--shadow); }
+.slot-free.has-clip { overflow: visible; border: 0; box-shadow: none; background: none; aspect-ratio: auto; }
+.slot-free.has-clip > .clip { position: relative; aspect-ratio: 16 / 9; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: #000; }
+.clip, .has-clip.th-stage, .has-clip[data-fx-mount], .tour-clip { position: relative; }
+.clip-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
+.slot > .clip { position: absolute; inset: 0; }
+.th-stage.has-clip, [data-fx-mount].has-clip { padding: 0; min-height: 0; aspect-ratio: 16 / 9; }
+.slot-tag { position: absolute; left: 10px; top: 10px; z-index: 5; font: 800 .72rem var(--mono); background: #ffd84d; color: #000; padding: 5px 9px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.4); pointer-events: none; }
+.slot-tag.ok { background: var(--ok); color: #fff; }
+.tour-stage { position: relative; }
+.tour-clip { position: absolute; inset: 0; z-index: 4; border-radius: 12px; overflow: hidden; background: #000; }
+.tour-clip:not([hidden]) ~ .rs { visibility: hidden; }
+
+.how-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 40px; }
+@media (max-width: 760px) { .how-grid { grid-template-columns: 1fr; } }
+.how-card { display: grid; gap: 14px; min-width: 0; }
+.how-text { display: flex; gap: 14px; align-items: flex-start; }
+.how-n { flex: 0 0 36px; height: 36px; border-radius: 10px; background: var(--white); color: var(--black); display: grid; place-items: center; font: 900 1rem var(--display); transform: rotate(-6deg); }
+.how-text h3 { margin: 4px 0 4px; font-size: 1.2rem; }
+.how-text p { margin: 0; color: var(--soft); font-size: .95rem; }
+.mini { position: absolute; inset: 0; padding: 16px; display: flex; flex-direction: column; gap: 10px; justify-content: center; font-size: .82rem; color: #d6d7d9; --rs-line: #37383c; --rs-dim: #8c8e92; --rs-txt: #d6d7d9; }
+.mini .jp-ask { margin: 0; }
+.mini .jp-field { color: #fff; }
+.mini-plan { justify-content: flex-start; }
+.mini-plan .plan-rows { margin: 0; }
+.mini-plan .plan-rows li { padding: 4px 8px; }
+.mini-plan .av-mini, .mini-plan .av-mini svg { width: 24px; height: 24px; }
+.mini.rs-vp { padding: 0; }
+.mini-build .rs-hud { padding: 10px 26px; font-size: .74rem; }
+.mini-build .rs-timer { font-size: 1.05rem; padding: 6px 11px; }
+.mini-build .coin { width: 22px; }
+.mini-publish .toast { align-self: center; margin-top: 4px; }
+.mini-publish .changes { font-size: .7rem; }
+@media (max-width: 440px) { .mini { padding: 10px; gap: 6px; font-size: .72rem; } .mini-plan .plan-rows li:nth-child(n+4) { display: none; } .mini-publish .changes li:nth-child(n+3) { display: none; } }
+.mini.rs-vp { min-height: 0; }
+.tour-clip .clip-video { object-fit: contain; }
+.tour-grid > *, .tour-stage { min-width: 0; }

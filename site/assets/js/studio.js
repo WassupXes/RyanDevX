@@ -14,7 +14,7 @@
     tabs: $$("[data-rtab]"), toolsHome: $("[data-tools=home]"), toolsPlugins: $("[data-tools=plugins]"), jbTool: $("[data-jb-tool]"),
     docs: $("[data-docs]"), tree: $("[data-tree]"), vp: $("[data-vp]"), world: $("[data-world]"), overlay: $("[data-overlay]"),
     timer: $("[data-timer]"), hud: $("[data-hud]"), log: $("[data-log]"), body: $("[data-dock-body]"), input: $("[data-input]"),
-    conv: $("[data-conv]"), tokens: $("[data-tokens]"), panel: $("[data-panel]"), conn: $("[data-conn]"),
+    conv: $("[data-conv]"), tokens: $("[data-tokens]"), panel: $("[data-panel]"), conn: $("[data-conn]"), clipBox: $("[data-tour-clip]"),
   };
 
   /* ---------- game content (matches a real Studio coin-collector place) ---------- */
@@ -300,6 +300,19 @@
     var nap = function (ms) { return raw(ms).then(function () { if (my !== state.run) throw "cancel"; }); };
     caption(i);
     base(i);
+    var key = "tour-" + STEPS[i][0], src = JB.clip && JB.clip(key);
+    if (JB.slotLabel) JB.slotLabel(el.clipBox, key);
+    if (src) {
+      el.clipBox.hidden = false;
+      var done = new Promise(function (res) { JB.mountClip(el.clipBox, src, !state.playing, res); });
+      if (JB.slotLabel) JB.slotLabel(el.clipBox, key);
+      try {
+        if (state.playing) { await done; await nap(800); go((i + 1) % STEPS.length); }
+      } catch (e) { if (e !== "cancel") throw e; }
+      return;
+    }
+    el.clipBox.hidden = true;
+    el.clipBox.innerHTML = "";
     try {
       await SCENES[STEPS[i][0]](nap);
       if (state.playing) { await nap(2600); go((i + 1) % STEPS.length); }

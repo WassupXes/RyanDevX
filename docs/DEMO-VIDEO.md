@@ -1,6 +1,6 @@
 # Demo video: record in Roblox Studio and embed
 
-The homepage hero has a video slot. Until a video is set, it shows the animated "prompt → games appear" gallery.
+The site has named clip slots (see `docs/CLIPS.md`). Until a clip is set, each slot keeps its animation or illustration.
 
 ## 1. Record (follow `docs/STUDIO-TEST-PLAN.md`, benchmark B1)
 - Roblox Studio + Claude connected through **Enable Studio as MCP server** (Claude Desktop or Claude Code CLI).
@@ -26,14 +26,7 @@ The homepage hero has a video slot. Until a video is set, it shows the animated 
 2. Upload to **Google Drive** and tell Claude the file names (Claude can fetch them via the Drive connector).
 3. Upload to **YouTube as Unlisted** and send the video ID (the part after `v=`).
 
-## 5. Embed (Claude does this)
-In `site/assets/js/config.js`:
-```js
-DEMO_VIDEO: "assets/video/jokiblox-demo.mp4",   // or leave empty and set DEMO_YOUTUBE: "<id>"
-DEMO_POSTER: "assets/video/jokiblox-demo.jpg",
-DEMO_CAPTION: { en: "Real recording · Claude + Roblox Studio MCP · sped up 10×",
-                id: "Rekaman asli · Claude + Roblox Studio MCP · dipercepat 10×" },
-```
-Then on the VPS: `bash /opt/jokiblox-src/deploy/update.sh`.
+## 5. Embed
+The hero is the slot `hero`; other spots on the site are listed in `docs/CLIPS.md`. Register files in `site/assets/js/config.js` → `CLIPS`, e.g. `"hero": "assets/clips/hero.mp4"`, then push (the VPS auto-updates within 5 minutes).
 
 **Label it honestly.** The recording shows Claude working through Studio's MCP server, the engine JokiBlox is built on, not the finished JokiBlox panel. Keep the caption so viewers know what they're watching. Once the JokiBlox plugin exists, re-record with it.

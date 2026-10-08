@@ -307,7 +307,17 @@
       if (byUser) auto = false;
       tabs.forEach(function (b, k) { b.setAttribute("aria-selected", String(k === i)); b.classList.toggle("on", k === i); });
       qa("[data-fx-cap]", theater).forEach(function (c) { c.hidden = c.getAttribute("data-fx-cap") !== tabs[i].dataset.fx; });
-      runner.play(tabs[i].dataset.fx, !auto, auto ? function () { if (auto) select((idx + 1) % tabs.length); } : null);
+      var key = tabs[i].dataset.fx, src = JB.clip && JB.clip("fx-" + key);
+      var next = function () { if (auto) select((idx + 1) % tabs.length); };
+      if (src) {
+        runner.stop();
+        stage.classList.add("has-clip");
+        JB.mountClip(stage, src, !auto, auto ? next : null);
+      } else {
+        stage.classList.remove("has-clip");
+        runner.play(key, !auto, auto ? next : null);
+      }
+      if (JB.slotLabel) JB.slotLabel(stage, "fx-" + key);
     };
     tabs.forEach(function (b, k) { b.addEventListener("click", function () { select(k, true); }); });
     theater.addEventListener("keydown", function (e) {
@@ -327,7 +337,10 @@
   /* ---------- products: one looping stage per feature ---------- */
   qa("[data-fx-mount]", document).forEach(function (el) {
     var r = Runner(el), key = el.getAttribute("data-fx-mount"), on = false;
-    JB.onVisible(el, function () { on = true; r.play(key, true); });
+    var src = JB.clip && JB.clip("fx-" + key);
+    if (JB.slotLabel) JB.slotLabel(el, "fx-" + key);
+    if (src) { el.classList.add("has-clip"); JB.mountClip(el, src, true); return; }
+    JB.onVisible(el, function () { on = true; r.play(key, true); if (JB.slotLabel) JB.slotLabel(el, "fx-" + key); });
     document.addEventListener("jb:lang", function () { if (on) r.play(key, true); });
   });
 })();

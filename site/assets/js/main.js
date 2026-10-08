@@ -68,22 +68,6 @@
   }
   if (cds.length) { tick(); setInterval(tick, 1000); }
 
-  /* ---------------- demo video (replaces the hero animation when configured) ---------------- */
-  var slot = $("[data-video-slot]");
-  if (slot && (CFG.DEMO_VIDEO || CFG.DEMO_YOUTUBE)) {
-    if (CFG.DEMO_YOUTUBE) {
-      var id = encodeURIComponent(CFG.DEMO_YOUTUBE);
-      slot.innerHTML = '<div class="demo-video"><iframe src="https://www.youtube-nocookie.com/embed/' + id + "?autoplay=1&mute=1&loop=1&playlist=" + id +
-        '&controls=0&rel=0&playsinline=1&modestbranding=1" title="JokiBlox demo" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
-    } else {
-      var type = /\.webm($|\?)/i.test(CFG.DEMO_VIDEO) ? "video/webm" : "video/mp4";
-      slot.innerHTML = '<div class="demo-video"><video autoplay muted loop playsinline preload="metadata"' + (CFG.DEMO_POSTER ? ' poster="' + CFG.DEMO_POSTER + '"' : "") +
-        '><source src="' + CFG.DEMO_VIDEO + '" type="' + type + '"></video></div>';
-    }
-    var cap = CFG.DEMO_CAPTION && (CFG.DEMO_CAPTION[lang()] || CFG.DEMO_CAPTION.en);
-    if (cap) { var p = document.createElement("p"); p.className = "dv-cap"; p.textContent = cap; slot.appendChild(p); }
-  }
-
   /* ---------------- visibility helper ---------------- */
   function onVisible(el, fn, once) {
     if (!el) return;
@@ -96,6 +80,45 @@
     io.observe(el);
   }
   $$(".reveal").forEach(function (el) { onVisible(el, function () { el.classList.add("in"); }); });
+
+  /* ---------------- clip slots (videos cut from the Studio recording) ---------------- */
+  var CLIPS = CFG.CLIPS || {};
+  var SHOW_SLOTS = /[?&]slots\b/.test(location.search);
+  JB.clip = function (key) { return CLIPS[key] || null; };
+  // Mounts a muted video that only plays while on screen. onEnd → called when a non-looping clip finishes.
+  JB.mountClip = function (box, src, loop, onEnd) {
+    box.innerHTML = '<video class="clip-video" muted playsinline preload="none"' + (loop ? " loop" : "") + "></video>";
+    var v = box.querySelector("video");
+    v.src = src;
+    if (onEnd) v.addEventListener("ended", onEnd);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) v.play().catch(function () {}); else v.pause(); }); }, { threshold: 0.2 }).observe(v);
+    } else v.play().catch(function () {});
+    return v;
+  };
+  JB.slotLabel = function (box, key) {
+    if (!SHOW_SLOTS) return;
+    var old = box.querySelector(":scope > .slot-tag");
+    if (old) old.remove();
+    var tag = document.createElement("span");
+    tag.className = "slot-tag" + (JB.clip(key) ? " ok" : "");
+    tag.textContent = "clip: " + key + (JB.clip(key) ? " ✓" : " · empty");
+    box.appendChild(tag);
+  };
+  $$("[data-slot]").forEach(function (slot) {
+    var key = slot.dataset.slot, src = JB.clip(key);
+    if (src) {
+      slot.classList.add("has-clip");
+      var inner = document.createElement("div");
+      inner.className = "clip";
+      slot.innerHTML = "";
+      slot.appendChild(inner);
+      JB.mountClip(inner, src, true);
+      var note = CFG.CLIP_NOTE && (CFG.CLIP_NOTE[lang()] || CFG.CLIP_NOTE.en);
+      if (note && slot.hasAttribute("data-slot-note")) { var p = document.createElement("p"); p.className = "dv-cap"; p.textContent = note; slot.appendChild(p); }
+    }
+    JB.slotLabel(slot, key);
+  });
 
   var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, reduced ? 0 : ms); }); };
   async function typeInto(el, text, speed) {
