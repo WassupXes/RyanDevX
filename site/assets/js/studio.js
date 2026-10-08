@@ -1,4 +1,5 @@
-/* Interactive Roblox Studio tour: install → connect → describe → plan → build → review. */
+/* Studio tour: a Roblox Studio–style workspace with the JokiBlox panel.
+   Steps: install → connect (MCP) → prompt → plan → build (live timer) → assets → review & publish. */
 (function () {
   "use strict";
   var root = document.querySelector("[data-studio-tour]");
@@ -6,90 +7,48 @@
   var JB = window.JB, t = JB.t;
   var $ = function (s, el) { return (el || root).querySelector(s); };
   var $$ = function (s, el) { return Array.prototype.slice.call((el || root).querySelectorAll(s)); };
+  var raw = function (ms) { return new Promise(function (r) { setTimeout(r, JB.reduced ? 0 : ms); }); };
 
   var el = {
     steps: $$("[data-step]"), caption: $("[data-caption]"), prev: $("[data-prev]"), next: $("[data-next]"), play: $("[data-play]"),
-    tool: $("[data-jb-tool]"), pill: $("[data-conn]"), tree: $("[data-tree]"), iso: $(".iso"), overlay: $("[data-overlay]"),
-    log: $("[data-log]"), dockBody: $("[data-dock-body]"), tabs: $$("[data-tab]"), tokens: $("[data-tokens]"), meter: $("[data-meter] b"),
-    place: $("[data-place]"), props: $("[data-props]"),
+    tabs: $$("[data-rtab]"), toolsHome: $("[data-tools=home]"), toolsPlugins: $("[data-tools=plugins]"), jbTool: $("[data-jb-tool]"),
+    docs: $("[data-docs]"), tree: $("[data-tree]"), vp: $("[data-vp]"), world: $("[data-world]"), overlay: $("[data-overlay]"),
+    timer: $("[data-timer]"), hud: $("[data-hud]"), log: $("[data-log]"), body: $("[data-dock-body]"), input: $("[data-input]"),
+    conv: $("[data-conv]"), tokens: $("[data-tokens]"), panel: $("[data-panel]"), conn: $("[data-conn]"),
   };
 
-  var TOKENS = 10000, SPEND = 258;
-  var BASE_TREE = ["Workspace", "Players", "Lighting", "ReplicatedStorage", "ServerScriptService", "StarterGui", "SoundService"];
-  var NEW_TREE = [["Workspace", "Zones"], ["Workspace", "Eggs"], ["ServerScriptService", "CurrencyService"], ["ServerScriptService", "EggHatch"], ["ReplicatedStorage", "PetData"], ["StarterGui", "PetInventory"], ["StarterGui", "ShopUI"]];
-  var CELLS = (function () {
-    var b = [];
-    for (var x = 0; x < 5; x++) for (var y = 0; y < 5; y++) b.push([x, y, 0, x < 2 ? "base" : x < 4 ? "grey" : "dark"]);
-    b.push([0, 0, 1, "white"], [0, 0, 2, "white"], [0, 1, 1, "white"], [4, 4, 1, "dark"], [4, 4, 2, "dark"], [4, 4, 3, "ok"],
-           [2, 2, 1, "white"], [2, 3, 1, "ok"], [3, 1, 1, "white"], [1, 4, 1, "grey"], [4, 0, 1, "grey"]);
-    return b;
-  })();
-
-  var STEPS = [
-    { key: "install",
-      title: ["Install the plugin", "Pasang plugin"],
-      text: ["Find <b>JokiBlox Agent</b> in the Creator Store and click Install. A JokiBlox button appears in Studio’s <b>Plugins</b> tab — that’s it.",
-             "Cari <b>JokiBlox Agent</b> di Creator Store lalu klik Install. Tombol JokiBlox muncul di tab <b>Plugins</b> Studio — selesai."],
-      you: ["Click Install", "Klik Install"], jb: ["Adds a toolbar button", "Menambah tombol toolbar"] },
-    { key: "connect",
-      title: ["Connect your account", "Hubungkan akun"],
-      text: ["Open the panel and pair Studio with your JokiBlox account using a one-time code. JokiBlox talks to Studio through Roblox’s official Studio MCP server and takes a snapshot before touching anything. We never ask for your Roblox password.",
-             "Buka panel dan pasangkan Studio dengan akun JokiBlox memakai kode sekali pakai. JokiBlox terhubung ke Studio lewat Studio MCP server resmi Roblox dan membuat snapshot sebelum mengubah apa pun. Kami tidak pernah meminta password Roblox kamu."],
-      you: ["Enter a 6-digit code", "Masukkan kode 6 digit"], jb: ["Links Studio, makes a snapshot", "Menghubungkan Studio, membuat snapshot"] },
-    { key: "describe",
-      title: ["Describe your game", "Ceritakan game kamu"],
-      text: ["Type what you want in English or Bahasa Indonesia — or tap a starter. JokiBlox first reads your whole place so it knows what already exists.",
-             "Ketik keinginanmu dalam bahasa Inggris atau Indonesia — atau pilih starter. JokiBlox membaca seluruh place dulu supaya tahu apa yang sudah ada."],
-      you: ["Write one prompt", "Tulis satu prompt"], jb: ["Reads the whole place", "Membaca seluruh place"] },
-    { key: "plan",
-      title: ["Approve the plan", "Setujui rencana"],
-      text: ["The Architect agent turns your idea into a plan: every system, which agent and model handles it, and the token estimate — before a single token is spent. Edit anything, then start the squad.",
-             "Agent Architect mengubah idemu menjadi rencana: semua sistem, agent dan model yang mengerjakan, serta estimasi token — sebelum satu token pun terpakai. Ubah apa saja, lalu jalankan squad."],
-      you: ["Edit or approve", "Ubah atau setujui"], jb: ["Splits work across agents", "Membagi kerja ke para agent"] },
-    { key: "build",
-      title: ["Watch the squad build", "Lihat squad bekerja"],
-      text: ["Multiplayer Mode: four specialist agents work <b>at the same time</b> on separate parts of the DataModel, so they never overwrite each other. Parts, scripts and UI appear live in your Studio.",
-             "Mode Multiplayer: empat agent spesialis bekerja <b>bersamaan</b> di bagian DataModel yang berbeda, jadi tidak saling menimpa. Part, script, dan UI muncul langsung di Studio kamu."],
-      you: ["Grab a snack", "Ngemil dulu"], jb: ["Builds in parallel, playtests", "Membangun paralel, playtest"] },
-    { key: "assets",
-      title: ["Generate & insert assets", "Generate & masukkan aset"],
-      text: ["Need props? Describe them, pick the variants you like and click Insert. They’re uploaded through Open Cloud and placed straight into your Workspace.",
-             "Butuh properti? Deskripsikan, pilih varian yang kamu suka, lalu klik Insert. Aset diunggah lewat Open Cloud dan langsung ditaruh di Workspace."],
-      you: ["Pick and insert", "Pilih dan masukkan"], jb: ["Generates, uploads, places", "Generate, unggah, taruh"] },
-    { key: "review",
-      title: ["Review & publish", "Review & publish"],
-      text: ["Every change arrives as a diff with QA results. Accept, tweak or undo with one click — snapshots make everything reversible. Publish when you’re happy.",
-             "Semua perubahan datang sebagai diff lengkap dengan hasil QA. Terima, ubah, atau undo dengan satu klik — snapshot membuat semuanya bisa dibatalkan. Publish kalau sudah puas."],
-      you: ["Accept & publish", "Terima & publish"], jb: ["Applies changes, keeps a snapshot", "Menerapkan perubahan, menyimpan snapshot"] },
+  /* ---------- game content (matches a real Studio coin-collector place) ---------- */
+  var TREE = [
+    ["Workspace", "ws", [["Camera", "cam"], ["Terrain", "ter"], ["SpawnLocation", "spawn"], ["Baseplate", "part"], ["Coins", "folder", 1]]],
+    ["Players", "plr"], ["Lighting", "light"], ["MaterialService", "mat"], ["ReplicatedFirst", "rep"],
+    ["ReplicatedStorage", "rep", [["CoinCollected", "remote", 2], ["Config", "module", 3]]],
+    ["ServerScriptService", "sss", [["Leaderstats", "script", 1], ["CoinSpawner", "script", 2]]],
+    ["ServerStorage", "sss"], ["StarterGui", "gui", [["HUD", "screen", 2]]], ["StarterPack", "folder"], ["StarterPlayer", "folder"],
+    ["SoundService", "sound", [["CoinPickup", "sound", 3]]], ["TextChatService", "chat"],
   ];
+  var COINS = [[22, 70], [34, 62], [47, 74], [60, 64], [72, 72], [28, 82], [55, 84], [78, 82], [40, 90], [66, 92], [18, 88], [84, 66]];
+  var EVENTS = [
+    [3, "Architect", ["Plan locked · 6 tasks · 4 agents", "Rencana dikunci · 6 tugas · 4 agent"], null],
+    [18, "Builder", ["Map + 24 coin spawns", "Map + 24 titik koin"], "coins"],
+    [47, "Scripter", ["ServerScriptService/Leaderstats", "ServerScriptService/Leaderstats"], 1],
+    [80, "Scripter", ["CoinCollected RemoteEvent + server check", "RemoteEvent CoinCollected + cek server"], 2],
+    [125, "UI", ["StarterGui/HUD · “Coins: 0”", "StarterGui/HUD · “Coins: 0”"], "hud"],
+    [170, "Scripter", ["Config module · coin value, respawn", "Modul Config · nilai koin, respawn"], 3],
+    [220, "Audio", ["CoinPickup sound", "Suara CoinPickup"], null],
+    [270, "QA", ["Playtest · 4 bots collecting coins", "Playtest · 4 bot mengumpulkan koin"], "qa"],
+    [320, "QA", ["Bug: coin counted twice → sent to Scripter", "Bug: koin terhitung dua kali → dikirim ke Scripter"], "bug"],
+    [345, "Scripter", ["Fixed debounce · QA recheck ✓", "Debounce diperbaiki · recheck QA ✓"], "fix"],
+    [372, "JokiBlox", ["Playable ✓ · 118 tokens", "Siap main ✓ · 118 token"], "done"],
+  ];
+  var TOTAL = 372;
+  var TOKENS = 10000;
 
-  function egg(fill, spot) {
-    return '<svg viewBox="0 0 60 74" aria-hidden="true"><ellipse cx="30" cy="70" rx="18" ry="4" fill="rgba(0,0,0,.25)"/><path d="M30 4C16 4 6 26 6 44c0 14 11 24 24 24s24-10 24-24C54 26 44 4 30 4z" fill="' + fill + '" stroke="#0b0c0d" stroke-width="3"/><circle cx="22" cy="30" r="5" fill="' + spot + '"/><circle cx="38" cy="44" r="6" fill="' + spot + '"/><circle cx="24" cy="52" r="3.5" fill="' + spot + '"/></svg>';
+  function coinSVG(style) {
+    if (style === "new") return '<svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="15" ry="17" fill="#ffd84d" stroke="#b8860b" stroke-width="3"/><path d="m20 9 3 7h7l-5.5 4.5 2 7.5-6.5-4.5-6.5 4.5 2-7.5L10 16h7z" fill="#fff3b0"/></svg>';
+    return '<svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="13" ry="16" fill="#f5c542" stroke="#b8860b" stroke-width="3"/><ellipse cx="16" cy="15" rx="3" ry="5" fill="#fff3b0"/></svg>';
   }
-  var EGGS = [egg("#f2f4f5", "#bdbebe"), egg("#2fe0a0", "#00895a"), egg("#ffd84d", "#c79a00")];
-  function placeEggs(animate) {
-    el.props.innerHTML = EGGS.map(function (e, i) { return '<span class="egg' + (animate ? " drop" : "") + '" style="--i:' + i + '">' + e + "</span>"; }).join("");
-  }
-  var state = { step: 0, run: 0, playing: true, started: false };
-  var L = function (pair) { return JB.lang() === "id" ? pair[1] : pair[0]; };
-  var sleepRaw = function (ms) { return new Promise(function (r) { setTimeout(r, JB.reduced ? 0 : ms); }); };
-
-  /* ---------- persistent Studio state for a given step ---------- */
-  function renderTree(withNew) {
-    var html = "";
-    BASE_TREE.forEach(function (svc) {
-      html += '<li class="svc"><span class="ic"></span>' + svc + "</li>";
-      NEW_TREE.forEach(function (n, i) {
-        if (n[0] === svc) html += '<li class="child' + (withNew ? " on" : "") + '" data-new="' + i + '"><span class="ic s"></span>' + n[1] + "</li>";
-      });
-    });
-    el.tree.innerHTML = html;
-  }
-  function setTokens(n) {
-    el.tokens.textContent = n.toLocaleString("en-US");
-    el.meter.style.width = (n / TOKENS * 100) + "%";
-  }
-  function setTab(name) { el.tabs.forEach(function (b) { b.classList.toggle("on", b.dataset.tab === name); }); }
+  function fmt(s) { s = Math.round(s); return s < 60 ? s + "s" : Math.floor(s / 60) + "m " + (s % 60) + "s"; }
+  function setTokens(n) { el.tokens.textContent = n.toLocaleString("en-US"); }
   function log(line, cls) {
     var d = document.createElement("div");
     if (cls) d.className = cls;
@@ -97,243 +56,253 @@
     el.log.appendChild(d);
     el.log.scrollTop = el.log.scrollHeight;
   }
+
+  /* ---------- Studio state ---------- */
+  function renderTree(level) {
+    var html = "";
+    TREE.forEach(function (svc) {
+      var kids = (svc[2] || []).filter(function (k) { return !k[2] || k[2] <= level; });
+      html += '<li><span class="tw">' + (kids.length ? "▾" : "") + '</span><i class="ri ri-' + svc[1] + '"></i>' + svc[0] + "</li>";
+      kids.forEach(function (k) { html += '<li class="kid' + (k[2] && k[2] === level ? " fresh" : "") + '" data-node="' + k[0] + '"><span class="tw"></span><i class="ri ri-' + k[1] + '"></i>' + k[0] + "</li>"; });
+    });
+    el.tree.innerHTML = html;
+  }
+  function setTab(name) {
+    el.tabs.forEach(function (b) { b.classList.toggle("on", b.dataset.rtab === name); });
+    el.toolsHome.hidden = name !== "Home";
+    el.toolsPlugins.hidden = name !== "Plugins";
+  }
+  function setDocs(withScript) {
+    el.docs.innerHTML = '<span class="on"><i class="ri ri-place"></i>Place1 ×</span>' + (withScript ? '<span><i class="ri ri-script"></i>Leaderstats ×</span>' : "");
+  }
+  function world(state) {
+    // state: {coins: "none"|"old"|"new", count: n collected, bots: bool}
+    var html = '<span class="spawn"></span>';
+    if (state.coins !== "none") {
+      COINS.forEach(function (c, i) {
+        var gone = i < (state.count || 0);
+        html += '<span class="coin' + (gone ? " gone" : "") + '" style="left:' + c[0] + "%;top:" + c[1] + "%;--d:" + (i % 4) * 0.2 + 's">' + coinSVG(state.coins) + "</span>";
+      });
+    }
+    if (state.bots) {
+      ["builder", "scripter", "ui", "qa"].forEach(function (k, i) {
+        html += '<span class="bot" style="--i:' + i + '">' + JB.avatar(k) + "</span>";
+      });
+    }
+    el.world.innerHTML = html;
+  }
+  function hud(on, n) { el.hud.hidden = !on; el.hud.textContent = "Coins: " + (n || 0); }
+  function timer(on, s) { el.timer.hidden = !on; el.timer.textContent = "⏱ " + fmt(s || 0); }
+
   function base(i) {
-    el.tool.classList.toggle("show", i >= 1);
-    el.tool.classList.toggle("hot", i === 1);
-    el.pill.classList.toggle("on", i >= 2);
-    el.pill.textContent = i >= 2 ? t("JokiBlox connected", "JokiBlox terhubung") : t("Not connected", "Belum terhubung");
-    el.place.textContent = i >= 5 ? "PetSim.rbxl" : "Baseplate.rbxl";
+    setTab(i === 0 ? "Plugins" : "Home");
+    el.jbTool.classList.toggle("show", i >= 1);
+    root.classList.toggle("panel-open", i >= 1);
+    el.conn.classList.toggle("on", i >= 2);
+    el.conn.textContent = i >= 2 ? "● MCP · JokiBlox" : "● MCP off";
+    setDocs(i >= 4);
+    renderTree(i >= 4 ? 3 : 0);
     el.overlay.innerHTML = "";
     el.log.innerHTML = "";
-    renderTree(i >= 5);
-    var blocks = JB.placeBlocks(el.iso, CELLS, 130, 26);
-    if (i >= 5) blocks.forEach(function (b) { b.classList.add("on"); });
-    setTokens(i >= 6 ? TOKENS - SPEND - 42 : i >= 5 ? TOKENS - SPEND : TOKENS);
-    el.props.innerHTML = "";
-    if (i >= 6) placeEggs(false);
-    root.classList.toggle("dock-open", i >= 1);
-    return blocks;
+    var built = i >= 5;
+    world({ coins: i >= 6 ? "new" : built ? "old" : "none", count: 0 });
+    hud(built, 0);
+    timer(built, built ? TOTAL : 0);
+    setTokens(i >= 6 ? TOKENS - 140 : built ? TOKENS - 118 : TOKENS);
+    el.conv.textContent = i >= 2 ? t("Coin Rush", "Coin Rush") : t("New chat", "Chat baru");
+    el.input.textContent = t("Ask JokiBlox", "Tanya JokiBlox");
+    el.input.classList.remove("typing");
   }
 
-  /* ---------- step scenes ---------- */
+  /* ---------- scenes ---------- */
   var SCENES = {
     install: async function (nap) {
-      setTab("chat");
-      el.dockBody.innerHTML = '<div class="dk-empty">' + t("Open <b>Plugins → JokiBlox</b> to start.", "Buka <b>Plugins → JokiBlox</b> untuk mulai.") + "</div>";
+      el.body.innerHTML = '<div class="jp-empty">' + t("Install the plugin, then click <b>JokiBlox</b> in the Plugins tab.", "Pasang plugin, lalu klik <b>JokiBlox</b> di tab Plugins.") + "</div>";
       el.overlay.innerHTML =
-        '<div class="store-card">' +
-        '<div class="sc-top"><div class="sc-icon"><img src="assets/img/logo.svg" alt=""></div><div><b>JokiBlox Agent</b><small>' + t("Plugin · Free to install", "Plugin · Gratis dipasang") + "</small></div></div>" +
-        "<p>" + t("AI squad that builds, migrates and upgrades your game inside Studio.", "Squad AI yang membangun, migrasi, dan upgrade game kamu di dalam Studio.") + "</p>" +
-        '<button class="sc-btn" type="button">' + t("Install", "Pasang") + "</button></div>";
-      log(t("Creator Store: JokiBlox Agent", "Creator Store: JokiBlox Agent"));
-      await nap(1400);
-      var btn = $(".sc-btn", el.overlay);
-      btn.classList.add("press");
-      btn.textContent = t("Installing…", "Memasang…");
-      await nap(1100);
-      btn.classList.remove("press");
-      btn.classList.add("done");
-      btn.textContent = t("Installed ✓", "Terpasang ✓");
-      log(t("Plugin installed: JokiBlox Agent", "Plugin terpasang: JokiBlox Agent"), "ok");
-      await nap(700);
-      el.tool.classList.add("show", "hot");
-      log(t("Toolbar button added under Plugins", "Tombol toolbar ditambahkan di Plugins"));
-    },
-    connect: async function (nap) {
-      setTab("chat");
-      el.dockBody.innerHTML =
-        '<div class="dk-card"><h5>' + t("Link this Studio", "Hubungkan Studio ini") + "</h5>" +
-        "<p>" + t("Go to <b>jokiblox.com/pair</b> and enter:", "Buka <b>jokiblox.com/pair</b> lalu masukkan:") + "</p>" +
-        '<div class="pair">482 913</div>' +
-        '<ul class="checklist">' +
-        "<li>" + t("Account linked — @builderman · Pro", "Akun terhubung — @builderman · Pro") + "</li>" +
-        "<li>" + t("Studio MCP server detected", "Studio MCP server terdeteksi") + "</li>" +
-        "<li>" + t("Snapshot of Baseplate.rbxl saved", "Snapshot Baseplate.rbxl tersimpan") + "</li>" +
-        "<li>" + t("Ready — 10,000 tokens available", "Siap — 10.000 token tersedia") + "</li></ul></div>";
-      var items = $$(".checklist li", el.dockBody);
-      await nap(1200);
-      for (var i = 0; i < items.length; i++) { items[i].classList.add("on"); log(items[i].textContent, "ok"); await nap(650); }
-      el.pill.classList.add("on");
-      el.pill.textContent = t("JokiBlox connected", "JokiBlox terhubung");
-    },
-    describe: async function (nap) {
-      setTab("chat");
-      el.dockBody.innerHTML =
-        '<div class="dk-chat">' +
-        '<div class="bubble ai">' + t("Hi! What are we building today?", "Halo! Mau bikin apa hari ini?") + "</div>" +
-        '<div class="starter-chips"><span>Tycoon</span><span>Obby</span><span class="on">Pet Sim</span><span>' + t("Fix my game", "Perbaiki game") + "</span></div>" +
-        '<div class="bubble you" data-typed></div>' +
-        '<div class="bubble ai sys" data-read hidden></div>' +
-        "</div>" +
-        '<div class="dk-input"><span data-input-ph>' + t("Describe your game…", "Ceritakan game kamu…") + '</span><button type="button" aria-label="Send">➤</button></div>';
-      await nap(700);
-      var typed = $("[data-typed]", el.dockBody);
-      await JB.typeInto(typed, t("Make a pet simulator with 3 zones, egg hatching, a pet inventory and a 2× luck gamepass. Mobile-friendly.",
-                                 "Bikin pet simulator dengan 3 zona, buka telur, inventori pet dan gamepass 2× luck. Ramah HP."), 16);
-      await nap(500);
-      var read = $("[data-read]", el.dockBody);
-      read.hidden = false;
-      read.textContent = t("Reading your place… (Kimi · long context)", "Membaca place kamu… (Kimi · konteks panjang)");
-      log(t("[Router] Whole-place read → Kimi", "[Router] Baca seluruh place → Kimi"));
+        '<div class="store-card"><div class="sc-top"><div class="sc-icon"><img src="assets/img/logo.svg" alt=""></div><div><b>JokiBlox Agent</b><small>' + t("Plugin · Creator Store", "Plugin · Creator Store") + "</small></div></div>" +
+        "<p>" + t("AI squad that builds, fixes and upgrades your game in Studio.", "Squad AI yang membangun, memperbaiki, dan upgrade game kamu di Studio.") + "</p>" +
+        '<button class="sc-btn" type="button" tabindex="-1">' + t("Install", "Pasang") + "</button></div>";
+      log(t("Toolbox › Creator Store › “JokiBlox”", "Toolbox › Creator Store › “JokiBlox”"));
       await nap(1300);
-      read.textContent = t("Empty baseplate found. Drafting a plan…", "Baseplate kosong. Menyusun rencana…");
-      log(t("[Architect] 0 scripts, 1 part — starting fresh", "[Architect] 0 script, 1 part — mulai dari awal"), "ok");
-    },
-    plan: async function (nap) {
-      setTab("plan");
-      var rows = [
-        ["CurrencyService + DataStore", "scripter", "Scripter", "Claude"],
-        [t("Egg hatching + rarity table", "Buka telur + tabel rarity"), "scripter", "Scripter", "Claude"],
-        [t("3 zones + portals", "3 zona + portal"), "builder", "Builder", "DeepSeek"],
-        [t("Pet inventory & shop UI (mobile)", "UI inventori & toko pet (mobile)"), "ui", "UI", "GPT"],
-        [t("2× luck gamepass", "Gamepass 2× luck"), "scripter", "Scripter", "Claude"],
-        [t("Playtest with 8 players", "Playtest 8 pemain"), "qa", "QA", "DeepSeek"],
-      ];
-      el.dockBody.innerHTML =
-        '<div class="dk-card"><h5>' + t("Game plan · Pet Simulator", "Rencana game · Pet Simulator") + "</h5>" +
-        '<ul class="plan-rows">' + rows.map(function (r) {
-          return '<li><span class="av-mini">' + JB.avatar(r[1]) + "</span><span class=\"pr-t\">" + r[0] + "<small>" + r[2] + " · " + r[3] + "</small></span></li>";
-        }).join("") + "</ul>" +
-        '<div class="estimate"><span>' + t("Estimate", "Estimasi") + "</span><b>≈ 260 " + t("tokens · ~6 min", "token · ~6 mnt") + "</b></div>" +
-        '<div class="dk-actions"><button type="button" class="ghost">' + t("Edit plan", "Ubah rencana") + '</button><button type="button" class="primary" data-start>▶ ' + t("Start squad", "Jalankan squad") + "</button></div></div>";
-      var lis = $$(".plan-rows li", el.dockBody);
-      for (var i = 0; i < lis.length; i++) { await nap(320); lis[i].classList.add("on"); }
-      log(t("[Architect] Plan ready: 6 tasks, 4 agents", "[Architect] Rencana siap: 6 tugas, 4 agent"), "ok");
+      var btn = $(".sc-btn", el.overlay);
+      btn.classList.add("press"); btn.textContent = t("Installing…", "Memasang…");
+      await nap(1000);
+      btn.classList.remove("press"); btn.classList.add("done"); btn.textContent = t("Installed ✓", "Terpasang ✓");
+      log(t("Plugin installed: JokiBlox Agent", "Plugin terpasang: JokiBlox Agent"), "ok");
       await nap(600);
-      $("[data-start]", el.dockBody).classList.add("pulse");
+      el.jbTool.classList.add("show", "hot");
+      await nap(900);
+      el.jbTool.classList.remove("hot");
+      root.classList.add("panel-open");
     },
-    build: async function (nap, blocks) {
-      setTab("squad");
-      var agents = [
-        ["scripter", "Scripter", [t("Writing CurrencyService…", "Menulis CurrencyService…"), t("Rarity table for EggHatch…", "Tabel rarity EggHatch…"), t("Wiring 2× luck gamepass…", "Menyambung gamepass 2× luck…")]],
-        ["builder", "Builder", [t("Laying out zone 1…", "Membuat zona 1…"), t("Portals + barriers…", "Portal + pembatas…"), t("Egg stands…", "Stand telur…")]],
-        ["ui", "UI/UX", [t("Inventory grid…", "Grid inventori…"), t("Shop buttons (mobile)…", "Tombol toko (mobile)…"), t("Scaling for phones…", "Skala untuk HP…")]],
-        ["qa", "QA", [t("Waiting for first merge…", "Menunggu merge pertama…"), t("Spawning 8 test players…", "Menyiapkan 8 pemain uji…"), t("0 errors so far ✓", "Sejauh ini 0 error ✓")]],
+
+    connect: async function (nap) {
+      el.overlay.innerHTML =
+        '<div class="rs-modal"><div class="rs-mbar"><i></i><i></i><i></i><b>Assistant Settings</b></div><div class="rs-mbody">' +
+        '<nav><span>Usage</span><span>API Keys</span><span class="on">MCP Servers</span><span>Skills</span></nav>' +
+        '<div class="rs-mmain"><p class="rs-note">ⓘ ' + t("Connecting an outside AI shares your data with that provider.", "Menghubungkan AI luar membagikan datamu ke penyedia itu.") + "</p>" +
+        '<div class="rs-trow"><b>Enable Studio as MCP server</b><i class="rs-tg" data-tg></i></div>' +
+        '<div class="rs-status" data-st><i></i>No clients connected</div></div></div></div>';
+      el.body.innerHTML = '<div class="jp-card"><h5>' + t("Connect Studio", "Hubungkan Studio") + "</h5><p>" +
+        t("Turn on <b>Enable Studio as MCP server</b> in Assistant Settings → MCP Servers.", "Nyalakan <b>Enable Studio as MCP server</b> di Assistant Settings → MCP Servers.") + "</p></div>";
+      log(t("Assistant › Settings › MCP Servers", "Assistant › Settings › MCP Servers"));
+      await nap(1300);
+      $("[data-tg]", el.overlay).classList.add("on");
+      log("Studio MCP server: on", "ok");
+      await nap(1100);
+      var st = $("[data-st]", el.overlay);
+      st.classList.add("on");
+      st.lastChild.textContent = "1 client connected";
+      log(t("MCP client connected: JokiBlox Bridge", "Klien MCP terhubung: JokiBlox Bridge"), "ok");
+      el.conn.classList.add("on");
+      el.conn.textContent = "● MCP · JokiBlox";
+      await nap(900);
+      el.overlay.innerHTML = "";
+      el.body.innerHTML = '<div class="jp-card"><h5>' + t("Link your account", "Hubungkan akun") + "</h5><p>" + t("Enter this code at <b>jokiblox.com/pair</b>", "Masukkan kode ini di <b>jokiblox.com/pair</b>") + '</p><div class="pair">482 913</div>' +
+        '<ul class="checklist"><li>' + t("Account @builderman · Pro", "Akun @builderman · Pro") + "</li><li>" + t("Snapshot of Place1 saved", "Snapshot Place1 tersimpan") + "</li><li>" + t("Ready · 10,000 tokens", "Siap · 10.000 token") + "</li></ul></div>";
+      var items = $$(".checklist li", el.body);
+      for (var i = 0; i < items.length; i++) { await nap(600); items[i].classList.add("on"); }
+    },
+
+    prompt: async function (nap) {
+      el.conv.textContent = t("New chat", "Chat baru");
+      el.body.innerHTML = '<div class="jp-starters"><span>Tycoon</span><span>Obby</span><span class="on">' + t("Coin collector", "Kumpul koin") + "</span><span>" + t("Fix my game", "Perbaiki game") + "</span></div>";
+      el.input.textContent = "";
+      el.input.classList.add("typing");
+      await JB.typeInto(el.input, t("Make a coin-collecting game: 24 coins around the map, leaderstats, a HUD that shows my coins, and a sound when I pick one up.",
+                                     "Bikin game kumpul koin: 24 koin di map, leaderstats, HUD yang menampilkan koin, dan suara saat koin diambil."), 15);
+      await nap(500);
+      var msg = el.input.textContent;
+      el.input.classList.remove("typing");
+      el.input.textContent = t("Ask JokiBlox", "Tanya JokiBlox");
+      el.conv.textContent = "Coin Rush";
+      el.body.innerHTML = '<div class="jp-you">' + msg.replace(/</g, "&lt;") + '</div><div class="jp-thought" data-th>› ' + t("Thinking", "Berpikir") + " 0.0s</div>";
+      var th = $("[data-th]", el.body);
+      for (var k = 1; k <= 12; k++) { th.textContent = "› " + t("Thinking", "Berpikir") + " " + (k * 0.2).toFixed(1) + "s"; await nap(110); }
+      th.textContent = "› " + t("Thought for 2.4 seconds", "Berpikir selama 2,4 detik");
+      el.body.insertAdjacentHTML("beforeend", '<p class="jp-say">' + t("Reading your place with Kimi (long context)… Empty baseplate. Drafting a plan.", "Membaca place dengan Kimi (konteks panjang)… Baseplate kosong. Menyusun rencana.") + "</p>");
+      log("[Router] Whole-place read → Kimi", "ok");
+    },
+
+    plan: async function (nap) {
+      var rows = [
+        ["builder", t("Map + 24 coin spawns", "Map + 24 titik koin"), "Builder · DeepSeek"],
+        ["scripter", "Leaderstats (Coins)", "Scripter · Claude"],
+        ["scripter", t("CoinCollected + server check", "CoinCollected + cek server"), "Scripter · Claude"],
+        ["ui", t("HUD “Coins: 0”", "HUD “Coins: 0”"), "UI · GPT"],
+        ["scripter", t("Pickup sound + Config", "Suara pickup + Config"), "Scripter · DeepSeek"],
+        ["qa", t("Playtest with 4 bots", "Playtest 4 bot"), "QA · DeepSeek"],
       ];
-      el.dockBody.innerHTML = '<div class="squad-lanes">' + agents.map(function (a) {
-        return '<div class="lane-row"><span class="av-mini">' + JB.avatar(a[0]) + '</span><div class="lr-main"><div class="lr-top"><b>' + a[1] + '</b><span class="lr-act"></span></div><div class="lr-bar"><b></b></div></div></div>';
-      }).join("") + '</div><div class="squad-foot"><span>' + t("Elapsed", "Waktu") + ' <b data-elapsed>0:00</b></span><span>' + t("Model calls", "Panggilan model") + ' <b data-calls>0</b></span></div>';
-      var rows = $$(".lane-row", el.dockBody), elapsed = $("[data-elapsed]", el.dockBody), calls = $("[data-calls]", el.dockBody);
-      var newItems = $$(".child", el.tree);
-      var ticks = 24;
-      var speed = [1, 0.92, 1.08, 0.7];
-      var logs = [
-        [3, "[Scripter] + ServerScriptService/CurrencyService"], [5, "[Builder] + Workspace/Zones (14 parts)"], [8, "[UI] + StarterGui/PetInventory"],
-        [11, "[Scripter] + ServerScriptService/EggHatch"], [14, "[Builder] + Workspace/Eggs"], [16, "[UI] + StarterGui/ShopUI"],
-        [19, "[Scripter] + ReplicatedStorage/PetData"], [21, "[QA] Playtest 8 players · 0 errors"],
-      ];
-      for (var k = 0; k <= ticks; k++) {
-        var p = k / ticks;
-        rows.forEach(function (r, i) {
-          var pi = Math.min(1, p * speed[i] + (i === 3 ? 0 : 0.04));
-          if (k === ticks) pi = 1;
-          $(".lr-bar b", r).style.width = (pi * 100) + "%";
-          var acts = agents[i][2];
-          $(".lr-act", r).textContent = pi >= 1 ? t("Done ✓", "Selesai ✓") : acts[Math.min(acts.length - 1, Math.floor(pi * acts.length))];
-          r.classList.toggle("done", pi >= 1);
-        });
-        var shown = Math.floor(p * blocks.length);
-        for (var b = 0; b < shown; b++) blocks[b].classList.add("on");
-        var showItems = Math.floor(p * newItems.length);
-        for (var n = 0; n < showItems; n++) newItems[n].classList.add("on", "fresh");
-        logs.forEach(function (l) { if (l[0] === k) log(l[1], "ok"); });
-        setTokens(Math.round(TOKENS - SPEND * p));
-        var secs = Math.round(p * 352);
-        elapsed.textContent = Math.floor(secs / 60) + ":" + String(secs % 60).padStart(2, "0");
-        calls.textContent = Math.round(p * 46);
-        await nap(260);
+      el.body.innerHTML = '<div class="jp-thought">› ' + t("Thought for 2.4 seconds", "Berpikir selama 2,4 detik") + '</div><div class="jp-plan"><div class="jp-plan-h">☰ <b>Coin Rush — ' + t("game plan", "rencana game") + "</b></div>" +
+        '<ul class="plan-rows">' + rows.map(function (r) { return '<li><span class="av-mini">' + JB.avatar(r[0]) + '</span><span class="pr-t">' + r[1] + "<small>" + r[2] + "</small></span></li>"; }).join("") + "</ul>" +
+        '<div class="estimate"><span>' + t("Estimate", "Estimasi") + "</span><b>≈ 120 " + t("tokens · ~6 min", "token · ~6 mnt") + "</b></div></div>" +
+        '<div class="dk-actions"><button type="button" class="ghost" tabindex="-1">' + t("Edit plan", "Ubah rencana") + '</button><button type="button" class="primary" data-go tabindex="-1">▶ ' + t("Start squad", "Jalankan squad") + "</button></div>";
+      var lis = $$(".plan-rows li", el.body);
+      for (var i = 0; i < lis.length; i++) { await nap(300); lis[i].classList.add("on"); el.body.scrollTop = el.body.scrollHeight; }
+      await nap(500);
+      el.body.scrollTop = el.body.scrollHeight;
+      $("[data-go]", el.body).classList.add("pulse");
+      log("[Architect] Plan: 6 tasks, 4 agents", "ok");
+    },
+
+    build: async function (nap) {
+      el.body.innerHTML = '<div class="jp-thought" data-wk>› ' + t("Working", "Bekerja") + ' 0s</div><ol class="jp-events" data-ev></ol>';
+      var ev = $("[data-ev]", el.body), wk = $("[data-wk]", el.body);
+      timer(true, 0);
+      var real = 15000, steps = 150, next = 0, coins = 0;
+      for (var k = 0; k <= steps; k++) {
+        var p = k / steps, sim = TOTAL * Math.pow(p, 2.1);
+        timer(true, sim);
+        wk.textContent = "› " + t("Working", "Bekerja") + " " + fmt(sim) + " · 4 " + t("agents", "agent");
+        setTokens(Math.round(TOKENS - 118 * p));
+        while (next < EVENTS.length && EVENTS[next][0] <= sim) {
+          var e = EVENTS[next++];
+          ev.insertAdjacentHTML("beforeend", '<li class="' + (e[3] === "bug" ? "bad" : "") + '"><time>' + fmt(e[0]) + "</time><b>" + e[1] + "</b><span>" + t(e[2][0], e[2][1]) + "</span></li>");
+          ev.scrollTop = ev.scrollHeight;
+          log("[" + e[1] + "] " + e[2][0], e[3] === "bug" ? "warn" : "ok");
+          if (e[3] === "coins") world({ coins: "old" });
+          if (typeof e[3] === "number") { renderTree(e[3]); if (e[3] === 1) setDocs(true); }
+          if (e[3] === "hud") hud(true, 0);
+          if (e[3] === "qa") world({ coins: "old", bots: true });
+          if (e[3] === "done") { world({ coins: "old", count: 6 }); hud(true, 60); }
+        }
+        if (next >= 8 && next < EVENTS.length && k % 6 === 0 && coins < 6) { coins++; world({ coins: "old", count: coins, bots: true }); hud(true, coins * 10); }
+        await nap(real / steps);
       }
-      blocks.forEach(function (b) { b.classList.add("on"); });
-      newItems.forEach(function (n) { n.classList.add("on"); });
-      log(t("[Squad] Done in 5m 52s · 258 tokens", "[Squad] Selesai 5m 52d · 258 token"), "ok");
+      wk.textContent = "› " + t("Done in 6m 12s", "Selesai dalam 6m 12d");
+      el.overlay.innerHTML = '<div class="toast">✓ ' + t("Playable in 6m 12s", "Siap main dalam 6m 12d") + "</div>";
     },
+
     assets: async function (nap) {
-      setTab("assets");
-      el.dockBody.innerHTML =
-        '<div class="dk-input as-p"><span data-typed></span></div>' +
-        '<div class="dk-eggs">' + EGGS.map(function (e, i) { return '<div class="dk-egg" data-i="' + i + '"><span class="shimmer"></span><small>' + ["Common", "Rare", "Legendary"][i] + "</small></div>"; }).join("") + "</div>" +
-        '<div class="dk-actions"><button type="button" class="ghost">' + t("Regenerate", "Generate ulang") + '</button><button type="button" class="primary" data-insert>' + t("Insert 3", "Masukkan 3") + "</button></div>" +
-        '<p class="dk-hint">' + t("Uploads via Open Cloud to your account or group.", "Diunggah lewat Open Cloud ke akun atau grup kamu.") + "</p>";
-      await JB.typeInto($("[data-typed]", el.dockBody), t("Pet eggs: common, rare and legendary", "Telur pet: common, rare dan legendary"), 18);
-      var tiles = $$(".dk-egg", el.dockBody);
-      for (var i = 0; i < tiles.length; i++) {
-        await nap(450);
-        tiles[i].insertAdjacentHTML("afterbegin", EGGS[i]);
-        tiles[i].classList.add("ready", "pick");
-      }
-      log(t("[Art] 3 egg meshes generated", "[Art] 3 mesh telur dibuat"), "ok");
-      await nap(700);
-      var ins = $("[data-insert]", el.dockBody);
+      el.body.innerHTML = '<div class="jp-you">' + t("Make the coins look nicer — low-poly gold coin with a star.", "Bikin koinnya lebih bagus — koin emas low-poly dengan bintang.") + "</div>" +
+        '<div class="jp-card"><h5>✦ ' + t("Generate asset", "Generate aset") + '</h5><div class="dk-eggs">' +
+        [0, 1, 2].map(function (i) { return '<div class="dk-egg"><span class="shimmer"></span><small>v' + (i + 1) + "</small></div>"; }).join("") + "</div>" +
+        '<ul class="rs-checks"><li class="on">Upload to Roblox</li><li class="on">Add to Workspace</li><li class="on">' + t("Replace 24 coins", "Ganti 24 koin") + "</li><li>Anchored</li></ul>" +
+        '<div class="dk-actions"><button type="button" class="ghost" tabindex="-1">' + t("Regenerate", "Generate ulang") + '</button><button type="button" class="primary" data-ins tabindex="-1">' + t("Insert", "Masukkan") + "</button></div></div>";
+      var tiles = $$(".dk-egg", el.body);
+      for (var i = 0; i < tiles.length; i++) { await nap(450); tiles[i].insertAdjacentHTML("afterbegin", coinSVG(i === 1 ? "new" : "old")); tiles[i].classList.add("ready"); }
+      tiles[1].classList.add("pick");
+      log("[Art] 3 coin meshes generated", "ok");
+      await nap(800);
+      var ins = $("[data-ins]", el.body);
       ins.classList.add("pulse");
       await nap(900);
-      ins.classList.remove("pulse");
-      ins.textContent = t("Inserted ✓", "Masuk ✓");
-      ins.disabled = true;
-      placeEggs(true);
-      log(t("Open Cloud: 3 assets uploaded", "Open Cloud: 3 aset diunggah"), "ok");
-      log("+ Workspace/Eggs/Common, Rare, Legendary", "ok");
-      setTokens(TOKENS - SPEND - 42);
+      ins.classList.remove("pulse"); ins.textContent = t("Inserted ✓", "Masuk ✓"); ins.disabled = true;
+      world({ coins: "new" });
+      $$(".coin", el.world).forEach(function (c) { c.classList.add("swap"); });
+      log("Open Cloud: GoldCoin uploaded · 24 instances replaced", "ok");
+      setTokens(TOKENS - 140);
     },
+
     review: async function (nap) {
-      setTab("changes");
-      var files = [
-        ["+", "ServerScriptService/CurrencyService", "+86"], ["+", "ServerScriptService/EggHatch", "+142"],
-        ["~", "Workspace/Zones", "38 parts"], ["+", "StarterGui/PetInventory", "+61"], ["+", "ReplicatedStorage/PetData", "+40"],
-      ];
-      el.dockBody.innerHTML =
-        '<ul class="changes">' + files.map(function (f, i) {
-          return '<li class="' + (i === 1 ? "open" : "") + '"><span class="ch-k">' + f[0] + "</span><span class=\"ch-f\">" + f[1] + "</span><span class=\"ch-n\">" + f[2] + "</span></li>";
-        }).join("") + "</ul>" +
-        '<pre class="mini-diff"><span class="a">+ local RARITY = { Common = 70, Rare = 25, Legendary = 5 }</span>' +
-        '<span class="a">+ local function roll(luck)</span><span class="a">+   local r = math.random() * 100 / luck</span><span class="c">  …</span></pre>' +
-        '<div class="qa-box">✓ ' + t("Playtest · 8 players · 3 min · 0 errors", "Playtest · 8 pemain · 3 mnt · 0 error") + "</div>" +
-        '<div class="dk-actions"><button type="button" class="ghost">' + t("Undo all", "Undo semua") + '</button><button type="button" class="primary" data-accept>' + t("Accept all", "Terima semua") + "</button></div>";
-      await nap(1600);
-      var acc = $("[data-accept]", el.dockBody);
-      acc.classList.add("pulse");
-      await nap(1100);
-      acc.classList.remove("pulse");
-      acc.textContent = t("Publish ▲", "Publish ▲");
-      log(t("Changes accepted · snapshot kept", "Perubahan diterima · snapshot disimpan"), "ok");
-      await nap(1000);
-      acc.classList.add("pulse");
-      await nap(900);
-      acc.classList.remove("pulse");
-      acc.textContent = t("Published ✓", "Terbit ✓");
-      acc.disabled = true;
-      el.overlay.innerHTML = '<div class="toast">✓ ' + t("Published to Roblox · Version 1", "Terbit di Roblox · Versi 1") + "</div>";
-      log(t("Published PetSim · version 1", "PetSim terbit · versi 1"), "ok");
+      var files = [["+", "ServerScriptService/Leaderstats", "+38"], ["+", "ServerScriptService/CoinSpawner", "+54"], ["+", "ReplicatedStorage/CoinCollected", "Remote"], ["+", "ReplicatedStorage/Config", "+12"], ["+", "StarterGui/HUD", "UI"], ["~", "Workspace/Coins", "24"]];
+      el.body.innerHTML = '<ul class="changes">' + files.map(function (f, i) { return '<li class="' + (i === 0 ? "open" : "") + '"><span class="ch-k">' + f[0] + '</span><span class="ch-f">' + f[1] + '</span><span class="ch-n">' + f[2] + "</span></li>"; }).join("") + "</ul>" +
+        '<pre class="mini-diff"><span class="a">+ local stats = Instance.new("Folder")</span><span class="a">+ stats.Name = "leaderstats"</span><span class="a">+ local coins = Instance.new("IntValue", stats)</span><span class="c">  …</span></pre>' +
+        '<div class="qa-box">✓ ' + t("Playtest · 4 bots · 0 errors", "Playtest · 4 bot · 0 error") + "</div>" +
+        '<div class="dk-actions"><button type="button" class="ghost" tabindex="-1">' + t("Undo all", "Undo semua") + '</button><button type="button" class="primary" data-acc tabindex="-1">' + t("Accept all", "Terima semua") + "</button></div>";
+      await nap(1500);
+      var acc = $("[data-acc]", el.body);
+      acc.classList.add("pulse"); await nap(900); acc.classList.remove("pulse");
+      acc.textContent = "Publish ▲"; log(t("Changes accepted · snapshot kept", "Perubahan diterima · snapshot disimpan"), "ok");
+      await nap(900); acc.classList.add("pulse"); await nap(800); acc.classList.remove("pulse");
+      acc.textContent = t("Published ✓", "Terbit ✓"); acc.disabled = true;
+      el.overlay.innerHTML = '<div class="toast">✓ ' + t("Published · Coin Rush v1", "Terbit · Coin Rush v1") + "</div>";
+      log("Published Coin Rush · version 1", "ok");
       await nap(1200);
-      el.overlay.innerHTML = '<div class="toast dc">💬 ' + t("Sent to Discord #my-petsim", "Dikirim ke Discord #my-petsim") + "</div>";
-      log(t("Discord: notified #my-petsim", "Discord: notifikasi ke #my-petsim"), "ok");
+      el.overlay.innerHTML = '<div class="toast dc">💬 ' + t("Sent to Discord #coin-rush", "Dikirim ke Discord #coin-rush") + "</div>";
+      log("Discord: notified #coin-rush", "ok");
     },
   };
 
+  var STEPS = [
+    ["install", ["Install the plugin", "Pasang plugin"], ["Find JokiBlox in Toolbox → Creator Store and click Install. A JokiBlox button appears in the <b>Plugins</b> tab.", "Cari JokiBlox di Toolbox → Creator Store lalu klik Install. Tombol JokiBlox muncul di tab <b>Plugins</b>."], ["Click Install", "Klik Install"], ["Adds the panel", "Menambah panel"]],
+    ["connect", ["Connect through MCP", "Hubungkan lewat MCP"], ["In <b>Assistant Settings → MCP Servers</b>, turn on <b>Enable Studio as MCP server</b>. The JokiBlox bridge connects as a client, then you link your account with a one-time code.", "Di <b>Assistant Settings → MCP Servers</b>, nyalakan <b>Enable Studio as MCP server</b>. Bridge JokiBlox terhubung sebagai klien, lalu hubungkan akun dengan kode sekali pakai."], ["One toggle + a code", "Satu toggle + kode"], ["Connects, takes a snapshot", "Terhubung, buat snapshot"]],
+    ["prompt", ["Prompt", "Prompt"], ["Type what you want in English or Bahasa Indonesia. JokiBlox reads your whole place first so it knows what already exists.", "Ketik maumu dalam bahasa Inggris atau Indonesia. JokiBlox membaca seluruh place dulu supaya tahu apa yang sudah ada."], ["Write one prompt", "Tulis satu prompt"], ["Reads the place", "Membaca place"]],
+    ["plan", ["Approve the plan", "Setujui rencana"], ["Every task, agent, model and the token estimate — before anything is spent.", "Semua tugas, agent, model, dan estimasi token — sebelum ada yang terpakai."], ["Edit or approve", "Ubah atau setujui"], ["Splits work across agents", "Membagi kerja ke agent"]],
+    ["build", ["Watch it build", "Lihat proses build"], ["Four agents work in parallel. The clock shows every step, from the first part to a QA-checked playable game.", "Empat agent bekerja paralel. Timer menunjukkan setiap langkah, dari part pertama sampai game siap main yang sudah dicek QA."], ["Grab a snack", "Ngemil dulu"], ["Builds, tests, fixes", "Bangun, tes, perbaiki"]],
+    ["assets", ["Generate & insert assets", "Generate & masukkan aset"], ["Describe a prop, pick a variant, and it’s uploaded and placed in your Workspace — the same options you know from Import.", "Deskripsikan properti, pilih varian, lalu diunggah dan ditaruh di Workspace — opsi yang sama seperti di Import."], ["Pick and insert", "Pilih dan masukkan"], ["Uploads, replaces", "Unggah, ganti"]],
+    ["review", ["Review & publish", "Review & publish"], ["Every change is a diff with QA results. Accept, undo or publish — and get a ping on Discord.", "Setiap perubahan berupa diff dengan hasil QA. Terima, undo, atau publish — lalu dapat notifikasi di Discord."], ["Accept & publish", "Terima & publish"], ["Applies, keeps a snapshot", "Terapkan, simpan snapshot"]],
+  ];
+
   /* ---------- controller ---------- */
+  var state = { step: 0, run: 0, playing: true, started: false };
+  var L = function (pair) { return JB.lang() === "id" ? pair[1] : pair[0]; };
   function caption(i) {
     var s = STEPS[i];
-    el.caption.innerHTML =
-      '<span class="cap-n">' + (i + 1) + "/" + STEPS.length + "</span><h3>" + L(s.title) + "</h3><p>" + L(s.text) + "</p>" +
-      '<div class="cap-split"><div><small>' + t("You", "Kamu") + "</small>" + L(s.you) + "</div><div><small>JokiBlox</small>" + L(s.jb) + "</div></div>";
-    el.steps.forEach(function (b, k) {
-      b.classList.toggle("on", k === i);
-      b.classList.toggle("done", k < i);
-      b.setAttribute("aria-current", k === i ? "step" : "false");
-    });
+    el.caption.innerHTML = '<span class="cap-n">' + (i + 1) + "/" + STEPS.length + "</span><h3>" + L(s[1]) + "</h3><p>" + L(s[2]) + "</p>" +
+      '<div class="cap-split"><div><small>' + t("You", "Kamu") + "</small>" + L(s[3]) + "</div><div><small>JokiBlox</small>" + L(s[4]) + "</div></div>";
+    el.steps.forEach(function (b, k) { b.classList.toggle("on", k === i); b.classList.toggle("done", k < i); b.setAttribute("aria-current", k === i ? "step" : "false"); });
     el.prev.disabled = i === 0;
   }
   async function go(i) {
     state.step = i;
     var my = ++state.run;
-    var nap = function (ms) { return sleepRaw(ms).then(function () { if (my !== state.run) throw "cancel"; }); };
+    var nap = function (ms) { return raw(ms).then(function () { if (my !== state.run) throw "cancel"; }); };
     caption(i);
-    var blocks = base(i);
+    base(i);
     try {
-      await SCENES[STEPS[i].key](nap, blocks);
-      if (state.playing) {
-        await nap(2600);
-        go((i + 1) % STEPS.length);
-      }
+      await SCENES[STEPS[i][0]](nap);
+      if (state.playing) { await nap(2600); go((i + 1) % STEPS.length); }
     } catch (e) { if (e !== "cancel") throw e; }
   }
   function setPlaying(p) {
@@ -354,5 +323,6 @@
   setPlaying(true);
   caption(0);
   base(0);
-  JB.onVisible(root, function () { state.started = true; go(0); });
+  var startAt = Math.max(0, STEPS.findIndex(function (s) { return s[0] === location.hash.replace("#", ""); }));
+  JB.onVisible(root, function () { state.started = true; if (startAt) setPlaying(false); go(startAt); });
 })();

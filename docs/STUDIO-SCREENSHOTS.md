@@ -11,6 +11,9 @@ Goal: real Studio references so the website's Studio mockups (hero, feature demo
 
 ## Shot list
 
+**Received 8 Oct 2026 (in chat):** overview + Assistant panel (#1, #3), Avatar tab (#14), Explorer (#4), Import Preview (#8), Assistant Settings → MCP Servers (#12). The Studio tour now follows these.
+**Still useful:** #2, #5, #6, #7, #9, #10, #11, #13.
+
 | # | File name | What to capture | Used for |
 |---|---|---|---|
 | 1 | `studio-overview.png` | New **Baseplate** place, default layout: top bar (playtest buttons, tabs Home · Model · Avatar · UI · Script · Plugins, Assistant on the right), Toolbox left, Explorer + Properties right, Output bottom. Full window. | Studio frame accuracy (tour + hero) |
