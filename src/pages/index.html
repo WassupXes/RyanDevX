@@ -22,16 +22,28 @@ path: /
           <a class="btn btn-ghost" href="studio.html">🎬 [[Studio tour||Tur Studio]]</a>
         </div>
         <div class="countdown" data-countdown aria-label="Countdown to launch">
-          <div><b>00</b><span>[[days||hari]]</span></div>
-          <div><b>00</b><span>[[hours||jam]]</span></div>
-          <div><b>00</b><span>[[min||menit]]</span></div>
-          <div><b>00</b><span>[[sec||detik]]</span></div>
+          <div><b>--</b><span>[[days||hari]]</span></div>
+          <div><b>--</b><span>[[hours||jam]]</span></div>
+          <div><b>--</b><span>[[min||menit]]</span></div>
+          <div><b>--</b><span>[[sec||detik]]</span></div>
         </div>
       </div>
     </div>
 
-    <div class="hero-visual reveal slot slot-free" data-slot="hero">
-      <img class="hero-poster" src="assets/clips/hero.jpg" alt="Sniper Arena, built in Roblox Studio from one prompt" width="960" height="684">
+    <div class="hero-visual slot slot-free" data-slot="hero">
+      <!-- same layout as the hero player, so nothing jumps when the script swaps it in -->
+      <div class="pp pp-hero ready" data-state="idle">
+        <div class="pp-title"><i></i><i></i><i></i><span>Place1 — Roblox Studio</span></div>
+        <div class="pp-body">
+          <div class="pp-screen"><img class="pp-v" src="assets/clips/hero.jpg" alt="Sniper Arena, built in Roblox Studio from one prompt" width="960" height="684" fetchpriority="high"></div>
+          <aside class="pp-side">
+            <div class="pp-side-h"><span class="pp-logo">J</span>JokiBlox<small>[[connected||terhubung]]</small></div>
+            <div class="pp-feed"></div>
+            <div class="pp-bar"><span class="pp-text"></span><span class="pp-send">↑</span></div>
+            <div class="pp-clock">[[Real session time||Waktu nyata sesi]] <b class="pp-time">0:00:00</b></div>
+          </aside>
+        </div>
+      </div>
     </div>
     <div class="hero-chips" data-hero-chips role="group" aria-label="Demos">
       <button type="button" data-clip="hero">🏗️ [[Build a game||Bikin game]]</button>

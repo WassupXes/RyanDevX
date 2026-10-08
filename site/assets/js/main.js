@@ -56,6 +56,47 @@
   });
   $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
+  /* ---------------- loading feedback ---------------- */
+  // Thin top bar: finishes when the page has loaded, starts again the moment an internal link is tapped.
+  var bar = document.createElement("div");
+  bar.className = "jb-bar";
+  document.body.appendChild(bar);
+  function barGo() { bar.className = "jb-bar"; void bar.offsetWidth; bar.className = "jb-bar go"; }
+  function barDone() { bar.className = "jb-bar go done"; }
+  if (document.readyState === "complete") barDone(); else { barGo(); window.addEventListener("load", barDone); }
+  window.addEventListener("pageshow", function (e) { if (e.persisted) barDone(); });  // back/forward cache
+  function internal(a) {
+    if (!a || a.target === "_blank" || a.hasAttribute("download")) return false;
+    var u = new URL(a.href, location.href);
+    return u.origin === location.origin && !(u.pathname === location.pathname && u.hash);
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!e.defaultPrevented && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0 && internal(a)) barGo();
+  });
+  // Browsers without speculation rules: prefetch a page as soon as its link is hovered or touched.
+  if (!(HTMLScriptElement.supports && HTMLScriptElement.supports("speculationrules"))) {
+    var fetched = {};
+    var warm = function (e) {
+      var a = e.target.closest && e.target.closest("a[href]");
+      if (!internal(a)) return;
+      var href = a.href.split("#")[0];
+      if (fetched[href] || href === location.href.split("#")[0]) return;
+      fetched[href] = 1;
+      var l = document.createElement("link"); l.rel = "prefetch"; l.href = href; document.head.appendChild(l);
+    };
+    document.addEventListener("pointerover", warm, { passive: true });
+    document.addEventListener("touchstart", warm, { passive: true });
+  }
+  // Lazy images fade in instead of popping.
+  $$('img[loading="lazy"]').forEach(function (img) {
+    if (img.complete && img.naturalWidth) return;
+    img.classList.add("lazy");
+    var show = function () { img.classList.add("in"); };
+    img.addEventListener("load", show, { once: true });
+    img.addEventListener("error", show, { once: true });
+  });
+
   /* ---------------- countdown ---------------- */
   var launch = new Date(CFG.LAUNCH_DATE || "2026-11-01T00:00:00+07:00").getTime();
   var cds = $$("[data-countdown]");
@@ -185,7 +226,7 @@
     var screen = '<div class="pp-screen"><video class="pp-v" muted playsinline preload="none" poster="' + c.src.replace(/\.mp4$/, ".jpg") + '">' + sources(c.src) + "</video>" +
       '<span class="pp-tag"><i></i><span data-pp-tag></span></span>' +
       (hero ? "" : '<div class="pp-chip"><i class="pp-dot"></i><span class="pp-step"></span><b class="pp-time">0:00</b></div>') +
-      '<div class="pp-done"><b>✓</b><span></span></div>' +
+      '<div class="pp-done"><b>✓</b><span></span></div><span class="pp-load" aria-hidden="true"></span>' +
       (hero ? "" : '<div class="pp-bar"><span class="pp-logo">J</span><span class="pp-text"></span><span class="pp-send">↑</span></div>') + "</div>";
     box.innerHTML = hero
       ? '<div class="pp pp-hero"><div class="pp-title"><i></i><i></i><i></i><span>Place1 — Roblox Studio</span></div><div class="pp-body">' + screen +
@@ -199,11 +240,21 @@
     var cursor = $(".pp-cursor", box), stepEl = $(".pp-step", box), timeEl = $(".pp-time", box);
     var list = $(".pp-steps", box), me = $(".pp-me", box), doneEl = $(".pp-done span", box);
     function setState(s) { pp.setAttribute("data-state", s); }
+    function warmPoster() {  // keep the skeleton until the first frame image is ready, then fade it in
+      var img = new Image(), ok = function () { pp.classList.add("ready"); };
+      img.onload = ok; img.onerror = ok; img.src = c.src.replace(/\.mp4$/, ".jpg");
+      if (img.complete) ok();
+    }
+    warmPoster();
+    v.addEventListener("loadeddata", function () { pp.classList.add("ready"); });
+    v.addEventListener("waiting", function () { pp.classList.add("buffering"); });
+    ["playing", "pause", "ended", "error"].forEach(function (ev) { v.addEventListener(ev, function () { pp.classList.remove("buffering"); }); });
     function load(nc) {  // swap to another clip in the same player (hero scenario chips)
       c = nc;
       v.poster = c.src.replace(/\.mp4$/, ".jpg");
       v.innerHTML = sources(c.src);
       v.load();
+      warmPoster();
     }
     if (opts) opts.swap = function (nc) { load(nc); if (visible) cycle(); };
     var steps = [];
@@ -260,6 +311,7 @@
         point(send); await nap(my, 500); click(); await nap(my, 220);
         if (me) { me.textContent = prompt; text.textContent = ""; }
         setState("run");
+        if (v.readyState < 3) pp.classList.add("buffering");
         var ok = await v.play().then(function () { return true; }, function () { return false; });
         // if the video can't play here, hold the poster for a moment instead of hanging on "run"
         await (ok ? new Promise(function (res) { v.onended = res; }) : nap(my, 4000));
@@ -304,6 +356,7 @@
   $$("[data-slot]").forEach(function (slot) {
     var key = slot.dataset.slot, c = JB.clipInfo(key);
     if (c) JB.player(slot, c, key === "hero" ? heroOpts() : null);
+    slot.classList.add("slot-ready");
     JB.slotLabel(slot, key);
   });
 

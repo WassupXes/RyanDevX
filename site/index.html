@@ -17,14 +17,15 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <script>
-(function(){var l;try{l=localStorage.getItem("jb-lang")}catch(e){}var q=new URLSearchParams(location.search).get("lang");if(q==="id"||q==="en")l=q;if(!l)l=(navigator.language||"").toLowerCase().indexOf("id")===0?"id":"en";document.documentElement.setAttribute("data-lang",l);document.documentElement.lang=l;})();
+(function(){var l;try{l=localStorage.getItem("jb-lang")}catch(e){}var q=new URLSearchParams(location.search).get("lang");if(q==="id"||q==="en")l=q;if(!l)l=(navigator.language||"").toLowerCase().indexOf("id")===0?"id":"en";var d=document.documentElement;d.className+=" js";d.setAttribute("data-lang",l);d.lang=l;})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=129ad6bb">
+<link rel="stylesheet" href="assets/css/style.css?v=d4f93714">
+<script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 <script src="assets/js/config.js?v=52c677b8" defer></script>
-<script src="assets/js/main.js?v=aec55363" defer></script>
+<script src="assets/js/main.js?v=9b1baa1f" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -70,16 +71,28 @@
           <a class="btn btn-ghost" href="studio.html">🎬 <span lang="en">Studio tour</span><span lang="id">Tur Studio</span></a>
         </div>
         <div class="countdown" data-countdown aria-label="Countdown to launch">
-          <div><b>00</b><span><span lang="en">days</span><span lang="id">hari</span></span></div>
-          <div><b>00</b><span><span lang="en">hours</span><span lang="id">jam</span></span></div>
-          <div><b>00</b><span><span lang="en">min</span><span lang="id">menit</span></span></div>
-          <div><b>00</b><span><span lang="en">sec</span><span lang="id">detik</span></span></div>
+          <div><b>--</b><span><span lang="en">days</span><span lang="id">hari</span></span></div>
+          <div><b>--</b><span><span lang="en">hours</span><span lang="id">jam</span></span></div>
+          <div><b>--</b><span><span lang="en">min</span><span lang="id">menit</span></span></div>
+          <div><b>--</b><span><span lang="en">sec</span><span lang="id">detik</span></span></div>
         </div>
       </div>
     </div>
 
-    <div class="hero-visual reveal slot slot-free" data-slot="hero">
-      <img class="hero-poster" src="assets/clips/hero.jpg" alt="Sniper Arena, built in Roblox Studio from one prompt" width="960" height="684">
+    <div class="hero-visual slot slot-free" data-slot="hero">
+      <!-- same layout as the hero player, so nothing jumps when the script swaps it in -->
+      <div class="pp pp-hero ready" data-state="idle">
+        <div class="pp-title"><i></i><i></i><i></i><span>Place1 — Roblox Studio</span></div>
+        <div class="pp-body">
+          <div class="pp-screen"><img class="pp-v" src="assets/clips/hero.jpg" alt="Sniper Arena, built in Roblox Studio from one prompt" width="960" height="684" fetchpriority="high"></div>
+          <aside class="pp-side">
+            <div class="pp-side-h"><span class="pp-logo">J</span>JokiBlox<small><span lang="en">connected</span><span lang="id">terhubung</span></small></div>
+            <div class="pp-feed"></div>
+            <div class="pp-bar"><span class="pp-text"></span><span class="pp-send">↑</span></div>
+            <div class="pp-clock"><span lang="en">Real session time</span><span lang="id">Waktu nyata sesi</span> <b class="pp-time">0:00:00</b></div>
+          </aside>
+        </div>
+      </div>
     </div>
     <div class="hero-chips" data-hero-chips role="group" aria-label="Demos">
       <button type="button" data-clip="hero">🏗️ <span lang="en">Build a game</span><span lang="id">Bikin game</span></button>
