@@ -1,0 +1,141 @@
+---
+title_en: Join the waitlist — JokiBlox Agent
+title_id: Gabung waitlist — JokiBlox Agent
+desc: Join the JokiBlox Agent waitlist with your email and Roblox username, tell us what you want solved, and lock 20% off for 12 months. Launching November 2026.
+path: /waitlist.html
+---
+<section class="page-hero" style="padding-bottom:96px">
+  <div class="container">
+    <div class="grid g2" style="gap:48px;align-items:start">
+      <div>
+        <span class="badge"><span class="dot"></span>[[Launching November 2026||Rilis November 2026]]</span>
+        <h1 style="margin-top:20px">[[Join the waitlist.<br>Lock 20% off.||Gabung waitlist.<br>Kunci diskon 20%.]]</h1>
+        <p class="lead">[[Tell us what you want to build or fix in Roblox. Your answers decide what we ship first — and you get in before everyone else.||Ceritakan apa yang ingin kamu bangun atau perbaiki di Roblox. Jawabanmu menentukan apa yang kami rilis duluan — dan kamu masuk lebih dulu dari yang lain.]]</p>
+        <div class="countdown" data-countdown style="margin-bottom:34px">
+          <div><b>00</b><span>[[days||hari]]</span></div><div><b>00</b><span>[[hours||jam]]</span></div><div><b>00</b><span>[[min||menit]]</span></div><div><b>00</b><span>[[sec||detik]]</span></div>
+        </div>
+        <div class="perks">
+          <div class="perk"><span class="n">1</span><p><b>[[20% off for 12 months||Diskon 20% selama 12 bulan]]</b>[[On any paid plan, locked to your email.||Di paket berbayar mana pun, dikunci ke email kamu.]]</p></div>
+          <div class="perk"><span class="n">2</span><p><b>[[Early access before launch||Akses awal sebelum rilis]]</b>[[Beta invites go out in batches — the most detailed answers get in first.||Undangan beta dikirim bertahap — jawaban paling detail masuk duluan.]]</p></div>
+          <div class="perk"><span class="n">3</span><p><b>[[500 bonus tokens||Bonus 500 token]]</b>[[Added to your account on day one.||Ditambahkan ke akunmu di hari pertama.]]</p></div>
+          <div class="perk"><span class="n">4</span><p><b>[[Shape the roadmap||Ikut menentukan roadmap]]</b>[[We read every answer. Seriously.||Kami baca setiap jawaban. Serius.]]</p></div>
+        </div>
+      </div>
+
+      <div class="form-card" id="form">
+        <form id="waitlist-form" novalidate>
+          <div class="field" data-field="email">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" autocomplete="email" required data-ph-en="you@example.com" data-ph-id="kamu@contoh.com" placeholder="you@example.com">
+            <div class="err">[[Please enter a valid email.||Masukkan email yang valid.]]</div>
+          </div>
+          <div class="field" data-field="roblox_username">
+            <label for="roblox_username">[[Roblox username||Username Roblox]] *</label>
+            <input id="roblox_username" name="roblox_username" type="text" autocomplete="off" required maxlength="20" data-ph-en="e.g. Builderman" data-ph-id="cth. Builderman" placeholder="e.g. Builderman">
+            <div class="err">[[3–20 characters: letters, numbers, one underscore.||3–20 karakter: huruf, angka, satu underscore.]]</div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="role">[[I am a…||Saya adalah…]]</label>
+              <select id="role" name="role">
+                <option value="player">[[Player who wants to create||Pemain yang ingin bikin game]]</option>
+                <option value="solo_dev">[[Solo developer||Developer solo]]</option>
+                <option value="team">[[Studio / group / team||Studio / grup / tim]]</option>
+                <option value="ugc_creator">[[UGC / clothing creator||Kreator UGC / baju]]</option>
+                <option value="parent">[[Parent / teacher||Orang tua / guru]]</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="experience">[[Roblox Studio experience||Pengalaman Roblox Studio]]</label>
+              <select id="experience" name="experience">
+                <option value="none">[[Never used it||Belum pernah]]</option>
+                <option value="beginner">[[Beginner||Pemula]]</option>
+                <option value="intermediate">[[Intermediate||Menengah]]</option>
+                <option value="pro">[[Pro / published games||Pro / sudah publish game]]</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" data-field="goals">
+            <span class="label">[[What do you want JokiBlox to solve?||Apa yang ingin kamu selesaikan dengan JokiBlox?]] * <span class="hint">[[(pick all that apply)||(pilih semua yang sesuai)]]</span></span>
+            <div class="opts">
+              <label class="opt"><input type="checkbox" name="goals" value="create_new_game">[[Build a new game||Bikin game baru]]</label>
+              <label class="opt"><input type="checkbox" name="goals" value="migrate_fix">[[Migrate / fix a broken game||Migrasi / perbaiki game rusak]]</label>
+              <label class="opt"><input type="checkbox" name="goals" value="remix_upgrade">[[Clone, remix &amp; upgrade my game||Clone, remix &amp; upgrade game saya]]</label>
+              <label class="opt"><input type="checkbox" name="goals" value="assets">[[Create game assets||Buat aset game]]</label>
+              <label class="opt"><input type="checkbox" name="goals" value="clothing_ugc">[[Create clothing / UGC||Buat baju / UGC]]</label>
+              <label class="opt"><input type="checkbox" name="goals" value="scripting_help">[[Learn / get help with scripting||Belajar / dibantu scripting]]</label>
+            </div>
+            <div class="err">[[Pick at least one.||Pilih minimal satu.]]</div>
+          </div>
+          <div class="field" data-field="problem">
+            <label for="problem">[[What’s your biggest Roblox problem right now?||Apa masalah terbesar kamu di Roblox sekarang?]] *</label>
+            <textarea id="problem" name="problem" required maxlength="2000" data-ph-en="e.g. My tycoon broke after the chat update and I can't find which script…" data-ph-id="cth. Tycoon aku rusak setelah update chat dan aku nggak tahu script mana…"></textarea>
+            <div class="err">[[Tell us a little (at least 10 characters).||Ceritakan sedikit (minimal 10 karakter).]]</div>
+          </div>
+          <div class="field">
+            <label for="expectations">[[What do you expect JokiBlox to help you with?||Apa harapanmu terhadap JokiBlox?]] <span class="hint">[[(features, speed, price, anything)||(fitur, kecepatan, harga, apa saja)]]</span></label>
+            <textarea id="expectations" name="expectations" maxlength="2000" data-ph-en="e.g. Build a full simulator in a weekend, Indonesian language support, under $15/month…" data-ph-id="cth. Bikin simulator lengkap dalam seminggu, dukungan Bahasa Indonesia, di bawah $15/bulan…"></textarea>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="plan">[[Plan you’re interested in||Paket yang diminati]]</label>
+              <select id="plan" name="plan">
+                <option value="not_sure">[[Not sure yet||Belum tahu]]</option>
+                <option value="free">Free</option>
+                <option value="starter">Starter ($12)</option>
+                <option value="pro">Pro ($29)</option>
+                <option value="studio">Studio ($79)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="model">[[Favourite AI model||Model AI favorit]]</label>
+              <select id="model" name="model">
+                <option value="no_preference">[[No preference||Tidak ada]]</option>
+                <option value="claude">Claude</option>
+                <option value="chatgpt">ChatGPT</option>
+                <option value="deepseek">DeepSeek</option>
+                <option value="kimi">Kimi</option>
+              </select>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="country">[[Country||Negara]]</label>
+              <input id="country" name="country" type="text" maxlength="60" autocomplete="country-name" data-ph-en="Indonesia" data-ph-id="Indonesia" placeholder="Indonesia">
+            </div>
+            <div class="field">
+              <label for="source">[[How did you hear about us?||Tahu kami dari mana?]]</label>
+              <select id="source" name="source">
+                <option value="">—</option>
+                <option value="tiktok">TikTok</option>
+                <option value="youtube">YouTube</option>
+                <option value="instagram">Instagram</option>
+                <option value="discord">Discord</option>
+                <option value="x">X / Twitter</option>
+                <option value="friend">[[Friend||Teman]]</option>
+                <option value="golrox_gobux">Golrox / Gobux</option>
+                <option value="other">[[Other||Lainnya]]</option>
+              </select>
+            </div>
+          </div>
+          <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <div class="field" data-field="consent">
+            <label class="consent"><input type="checkbox" name="consent" value="yes" required><span>[[I agree to the <a href="privacy.html">Privacy Policy</a> and to receive launch emails from JokiBlox. I can unsubscribe anytime. If I’m under 18, a parent/guardian agrees too.||Saya setuju dengan <a href="privacy.html">Kebijakan Privasi</a> dan menerima email peluncuran dari JokiBlox. Saya bisa berhenti berlangganan kapan saja. Jika saya di bawah 18 tahun, orang tua/wali juga setuju.]]</span></label>
+            <div class="err">[[Please agree to continue.||Centang untuk melanjutkan.]]</div>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit" style="background:var(--black);color:var(--white)">[[Join waitlist &amp; lock 20% off||Gabung waitlist &amp; kunci diskon 20%]] →</button>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+        <div class="success" hidden>
+          <div class="big">✓</div>
+          <h2>[[You’re on the list!||Kamu sudah terdaftar!]]</h2>
+          <p>[[Your 20% early-bird discount is reserved for||Diskon early-bird 20% sudah dikunci untuk]] <b data-success-email></b>.</p>
+          <div class="code-chip" data-success-code>JOKI20</div>
+          <p style="color:#55585b;font-size:.9rem">[[We’ll email your beta invite before launch in November 2026. Share JokiBlox with a friend who builds on Roblox!||Kami akan mengirim undangan beta lewat email sebelum rilis November 2026. Ajak teman yang suka bikin game Roblox!]]</p>
+          <a class="btn btn-ghost" href="index.html" style="color:var(--ink);border-color:#c7c9cb">[[Back to home||Kembali ke beranda]]</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="assets/js/waitlist.js" defer></script>
