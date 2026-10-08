@@ -84,12 +84,21 @@
   /* ---------------- clip slots (videos cut from the Studio recording) ---------------- */
   var CLIPS = CFG.CLIPS || {};
   var SHOW_SLOTS = /[?&]slots\b/.test(location.search);
-  JB.clip = function (key) { return CLIPS[key] || null; };
+  // A clip entry is {src, kind, speed, prompt, steps, done}, a plain path, or the name of another slot.
+  JB.clipInfo = function (key) {
+    var c = CLIPS[key], n = 0;
+    while (typeof c === "string" && CLIPS[c] && n++ < 5) c = CLIPS[c];
+    return typeof c === "string" ? { src: c } : c || null;
+  };
+  JB.clip = function (key) { var c = JB.clipInfo(key); return c ? c.src : null; };
   // Mounts a muted video that only plays while on screen. onEnd → called when a non-looping clip finishes.
+  // mp4 (H.264) first, WebM copy as fallback for browsers without H.264
+  function sources(src) {
+    return '<source src="' + src + '" type="video/mp4">' + (/\.mp4$/.test(src) ? '<source src="' + src.replace(/\.mp4$/, ".webm") + '" type="video/webm">' : "");
+  }
   JB.mountClip = function (box, src, loop, onEnd) {
-    box.innerHTML = '<video class="clip-video" muted playsinline preload="none"' + (loop ? " loop" : "") + "></video>";
+    box.innerHTML = '<video class="clip-video" muted playsinline preload="none"' + (loop ? " loop" : "") + ">" + sources(src) + "</video>";
     var v = box.querySelector("video");
-    v.src = src;
     if (onEnd) v.addEventListener("ended", onEnd);
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) v.play().catch(function () {}); else v.pause(); }); }, { threshold: 0.2 }).observe(v);
@@ -105,18 +114,130 @@
     tag.textContent = "clip: " + key + (JB.clip(key) ? " ✓" : " · empty");
     box.appendChild(tag);
   };
-  $$("[data-slot]").forEach(function (slot) {
-    var key = slot.dataset.slot, src = JB.clip(key);
-    if (src) {
-      slot.classList.add("has-clip");
-      var inner = document.createElement("div");
-      inner.className = "clip";
-      slot.innerHTML = "";
-      slot.appendChild(inner);
-      JB.mountClip(inner, src, true);
-      var note = CFG.CLIP_NOTE && (CFG.CLIP_NOTE[lang()] || CFG.CLIP_NOTE.en);
-      if (note && slot.hasAttribute("data-slot-note")) { var p = document.createElement("p"); p.className = "dv-cap"; p.textContent = note; slot.appendChild(p); }
+
+  /* Prompt player: the cursor clicks the JokiBlox prompt, types it, sends it, then the Studio clip runs
+     with the agent's steps and a running clock. Hero variant adds the JokiBlox side panel. */
+  var pick = function (pair) { return pair ? pair[lang() === "id" ? 1 : 0] : ""; };
+  function clock(s, long) {
+    s = Math.max(0, Math.floor(s));
+    var h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, x = String(s % 60).padStart(2, "0");
+    return long || h ? h + ":" + String(m).padStart(2, "0") + ":" + x : m + ":" + x;
+  }
+  function stepsOf(c) {  // normalise to {t, real, text}
+    return (c.steps || []).map(function (st) {
+      return st.length === 4 ? { t: st[0], real: st[1], text: pick([st[2], st[3]]) } : { t: st[0], real: null, text: pick([st[1], st[2]]) };
+    });
+  }
+  function tagText(c, sec) {
+    var sp = c.speed && c.speed !== 1 ? " · " + c.speed + "×" : "";
+    if (c.kind === "replay" || (c.replayUntil && (sec || 0) < c.replayUntil)) return t("Replay of the real build", "Replay dari build asli") + sp;
+    if (c.kind === "concept") return t("Concept on real game assets", "Konsep di aset game asli");
+    return t("Studio recording", "Rekaman Studio") + sp;
+  }
+  JB.player = function (box, c) {
+    var hero = box.getAttribute("data-slot") === "hero";
+    var run = 0, visible = false, warmed = false, raf = 0;
+    box.classList.add("has-clip");
+    var screen = '<div class="pp-screen"><video class="pp-v" muted playsinline preload="none" poster="' + c.src.replace(/\.mp4$/, ".jpg") + '">' + sources(c.src) + "</video>" +
+      '<span class="pp-tag"><i></i><span data-pp-tag></span></span>' +
+      (hero ? "" : '<div class="pp-chip"><i class="pp-dot"></i><span class="pp-step"></span><b class="pp-time">0:00</b></div>') +
+      '<div class="pp-done"><b>✓</b><span></span></div>' +
+      (hero ? "" : '<div class="pp-bar"><span class="pp-logo">J</span><span class="pp-text"></span><span class="pp-send">↑</span></div>') + "</div>";
+    box.innerHTML = hero
+      ? '<div class="pp pp-hero"><div class="pp-title"><i></i><i></i><i></i><span>Place1 — Roblox Studio</span></div><div class="pp-body">' + screen +
+        '<aside class="pp-side"><div class="pp-side-h"><span class="pp-logo">J</span>JokiBlox<small>' + t("connected", "terhubung") + '</small></div>' +
+        '<div class="pp-feed"><p class="pp-me"></p><ol class="pp-steps"></ol></div>' +
+        '<div class="pp-bar"><span class="pp-text"></span><span class="pp-send">↑</span></div>' +
+        '<div class="pp-clock">' + t("Real session time", "Waktu nyata sesi") + ' <b class="pp-time">0:00:00</b></div></aside></div>' +
+        '<span class="pp-cursor" aria-hidden="true"></span></div>'
+      : '<div class="pp">' + screen + '<span class="pp-cursor" aria-hidden="true"></span></div>';
+    var pp = $(".pp", box), v = $("video", box), text = $(".pp-text", box), send = $(".pp-send", box);
+    var cursor = $(".pp-cursor", box), stepEl = $(".pp-step", box), timeEl = $(".pp-time", box);
+    var list = $(".pp-steps", box), me = $(".pp-me", box), doneEl = $(".pp-done span", box);
+    function setState(s) { pp.setAttribute("data-state", s); }
+    var steps = [];
+    function paintText() {
+      steps = stepsOf(c);
+      $("[data-pp-tag]", box).textContent = tagText(c);
+      doneEl.textContent = pick(c.done);
+      if (list) list.innerHTML = steps.map(function (st) {
+        return "<li>" + (st.real != null ? "<time>" + clock(st.real, true) + "</time>" : "") + "<span>" + st.text + "</span></li>";
+      }).join("");
     }
+    function realAt(sec) {  // interpolate the real session clock between known stamps
+      var pts = steps.filter(function (s) { return s.real != null; }).map(function (s) { return [s.t, s.real]; });
+      if (!pts.length) return sec * (c.speed || 1);
+      pts.push([v.duration || pts[pts.length - 1][0] + 1, c.end || pts[pts.length - 1][1]]);
+      for (var i = pts.length - 1; i >= 0; i--) {
+        if (sec >= pts[i][0]) {
+          var b = pts[Math.min(i + 1, pts.length - 1)], a = pts[i];
+          return b[0] === a[0] ? a[1] : a[1] + (b[1] - a[1]) * (sec - a[0]) / (b[0] - a[0]);
+        }
+      }
+      return pts[0][1];
+    }
+    function paintTime() {
+      var sec = v.currentTime || 0, idx = 0;
+      steps.forEach(function (st, i) { if (sec >= st.t) idx = i; });
+      if (stepEl && steps[idx] && stepEl.textContent !== steps[idx].text) stepEl.textContent = steps[idx].text;
+      if (list) $$("li", list).forEach(function (li, i) { li.className = i < idx ? "done" : i === idx ? "on" : ""; });
+      timeEl.textContent = clock(realAt(sec), hero);
+      if (c.replayUntil) { var tg = $("[data-pp-tag]", box), tx = tagText(c, sec); if (tg.textContent !== tx) tg.textContent = tx; }
+    }
+    function loop() { paintTime(); if (!v.paused) raf = requestAnimationFrame(loop); }
+    v.addEventListener("play", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); });
+    var nap = function (my, ms) { return new Promise(function (res, rej) { setTimeout(function () { my === run ? res() : rej("cancel"); }, ms); }); };
+    function point(el) {  // move the fake cursor onto an element (coordinates relative to the player)
+      var a = pp.getBoundingClientRect(), b = el.getBoundingClientRect();
+      cursor.style.transform = "translate(" + (b.left - a.left + b.width * .6) + "px," + (b.top - a.top + b.height * .55) + "px)";
+    }
+    function click() { cursor.classList.remove("click"); void cursor.offsetWidth; cursor.classList.add("click"); }
+    async function cycle() {
+      var my = ++run;
+      try {
+        v.pause(); try { v.currentTime = 0; } catch (e) {}
+        paintText(); paintTime();
+        text.textContent = ""; if (me) me.textContent = "";
+        setState("idle");
+        var prompt = pick(c.prompt);
+        if (reduced) { text.textContent = prompt; if (me) me.textContent = prompt; setState("run"); v.controls = true; return; }
+        cursor.style.transform = "translate(" + (pp.clientWidth * .78) + "px," + (pp.clientHeight * .35) + "px)";
+        await nap(my, 600);
+        point(text); await nap(my, 650); click(); setState("typing");
+        var per = Math.max(14, Math.min(38, (hero ? 2600 : 1700) / prompt.length));
+        for (var i = 1; i <= prompt.length; i++) { text.textContent = prompt.slice(0, i); await nap(my, per); }
+        point(send); await nap(my, 500); click(); await nap(my, 220);
+        if (me) { me.textContent = prompt; text.textContent = ""; }
+        setState("run");
+        var ok = await v.play().then(function () { return true; }, function () { return false; });
+        // if the video can't play here, hold the poster for a moment instead of hanging on "run"
+        await (ok ? new Promise(function (res) { v.onended = res; }) : nap(my, 4000));
+        if (my !== run) return;
+        setState("done");
+        await nap(my, hero ? 3200 : 2200);
+        if (visible) cycle();
+      } catch (e) { if (e !== "cancel") throw e; }
+    }
+    function stop() { run++; v.pause(); }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          visible = e.isIntersecting;
+          if (visible && !warmed) { warmed = true; v.preload = "auto"; v.load(); }
+          if (visible) cycle(); else stop();
+        });
+      }, { threshold: 0.35 }).observe(pp);
+    } else { visible = true; cycle(); }
+    document.addEventListener("jb:lang", function () { if (visible) cycle(); else paintText(); });
+    return pp;
+  };
+
+  // Plain looping clips used as decoration (e.g. the drone shot in the CTA)
+  $$("[data-bgclip]").forEach(function (el) { JB.mountClip(el, el.getAttribute("data-bgclip"), true); });
+
+  $$("[data-slot]").forEach(function (slot) {
+    var key = slot.dataset.slot, c = JB.clipInfo(key);
+    if (c) JB.player(slot, c);
     JB.slotLabel(slot, key);
   });
 

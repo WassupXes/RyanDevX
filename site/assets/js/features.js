@@ -374,9 +374,9 @@
   qa("[data-fx-mount]", document).forEach(function (el) {
     var r = Runner(el), key = el.getAttribute("data-fx-mount"), on = false;
     var inSlot = !!el.closest("[data-slot]");   // the surrounding slot already handles clips + labels
-    var src = !inSlot && JB.clip && JB.clip("fx-" + key);
+    var clip = !inSlot && JB.clipInfo && JB.clipInfo("fx-" + key);
+    if (clip) { JB.player(el, clip); if (JB.slotLabel) JB.slotLabel(el, "fx-" + key); return; }
     if (!inSlot && JB.slotLabel) JB.slotLabel(el, "fx-" + key);
-    if (src) { el.classList.add("has-clip"); JB.mountClip(el, src, true); return; }
     JB.onVisible(el, function () { on = true; r.play(key, true); if (!inSlot && JB.slotLabel) JB.slotLabel(el, "fx-" + key); });
     document.addEventListener("jb:lang", function () { if (on) r.play(key, true); });
   });
