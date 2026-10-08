@@ -228,6 +228,8 @@
       '<span class="pp-tag"><i></i><span data-pp-tag></span></span>' +
       (hero ? "" : '<div class="pp-chip"><i class="pp-dot"></i><span class="pp-step"></span><b class="pp-time">0:00</b></div>') +
       '<div class="pp-done"><b>✓</b><span></span></div><span class="pp-load" aria-hidden="true"></span>' +
+      '<div class="pp-kick" aria-hidden="true"><div class="kick-box"><h4></h4><p></p><span class="kick-leave"></span>' +
+      '<span class="kick-guard" data-char="guard" data-act="block"></span></div></div>' +
       (hero ? "" : '<div class="pp-bar"><span class="pp-logo">J</span><span class="pp-text"></span><span class="pp-send">↑</span></div>') + "</div>";
     box.innerHTML = hero
       ? '<div class="pp pp-hero"><div class="pp-title"><i></i><i></i><i></i><span>Place1 — Roblox Studio</span></div><div class="pp-body">' + screen +
@@ -258,11 +260,17 @@
       warmPoster();
     }
     if (opts) opts.swap = function (nc) { load(nc); if (visible) cycle(); };
+    if (JB.mountChars) JB.mountChars(box);
     var steps = [];
     function paintText() {
       steps = stepsOf(c);
       $("[data-pp-tag]", box).textContent = tagText(c);
       doneEl.textContent = pick(c.done);
+      if (c.kick) {
+        $(".kick-box h4", box).textContent = pick(c.kick.title);
+        $(".kick-box p", box).textContent = pick(c.kick.msg) + " (" + t("Error Code", "Kode Error") + ": " + c.kick.code + ")";
+        $(".kick-leave", box).textContent = t("Leave", "Keluar");
+      }
       if (list) list.innerHTML = steps.map(function (st) {
         return "<li>" + (st.real != null ? "<time>" + clock(st.real, true) + "</time>" : "") + "<span>" + st.text + "</span></li>";
       }).join("");
@@ -285,10 +293,18 @@
       if (stepEl && steps[idx] && stepEl.textContent !== steps[idx].text) stepEl.textContent = steps[idx].text;
       if (list) $$("li", list).forEach(function (li, i) { li.className = i < idx ? "done" : i === idx ? "on" : ""; });
       timeEl.textContent = clock(realAt(sec), hero);
+      if (c.kick && !kicked && pp.getAttribute("data-state") === "run" && sec >= c.kick.at) {
+        kicked = true;
+        pp.classList.add("kicked");
+        v.pause();
+        var mine = run;
+        setTimeout(function () { if (mine === run && v.onended) v.onended(); }, 2800);
+      }
       if (c.replayUntil) { var tg = $("[data-pp-tag]", box), tx = tagText(c, sec); if (tg.textContent !== tx) tg.textContent = tx; }
     }
     function loop() { paintTime(); if (!v.paused) raf = requestAnimationFrame(loop); }
     v.addEventListener("play", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); });
+    var kicked = false;
     var nap = function (my, ms) { return new Promise(function (res, rej) { setTimeout(function () { my === run ? res() : rej("cancel"); }, ms); }); };
     function point(el) {  // move the fake cursor onto an element (coordinates relative to the player)
       var a = pp.getBoundingClientRect(), b = el.getBoundingClientRect();
@@ -299,6 +315,7 @@
       var my = ++run;
       try {
         v.pause(); try { v.currentTime = 0; } catch (e) {}
+        kicked = false; pp.classList.remove("kicked");
         paintText(); paintTime();
         text.textContent = ""; if (me) me.textContent = "";
         setState("idle");

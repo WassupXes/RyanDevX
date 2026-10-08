@@ -62,8 +62,13 @@ window.JOKIBLOX_CONFIG = {
     "usp-antiexploit": {
       src: "assets/clips/shield.mp4", kind: "real", speed: 4,
       prompt: ["Run the exploit test: speed, teleport, remote spam.", "Jalankan tes exploit: speed, teleport, spam remote."],
-      steps: [[0, "Speed hack: WalkSpeed 150", "Speed hack: WalkSpeed 150"], [7.4, "Teleport hack: 200 studs", "Teleport hack: 200 studs"], [12, "CFrame stepping", "CFrame stepping"]],
-      done: ["18 attacks blocked and logged by the server", "18 serangan diblokir & dicatat server"]
+      steps: [[0, "Speed hack: WalkSpeed 150", "Speed hack: WalkSpeed 150"], [7.4, "Teleport hack: 200 studs", "Teleport hack: 200 studs"], [12, "CFrame stepping", "CFrame stepping"], [12.9, "Caught → banned and logged", "Ketahuan → di-ban & dicatat"]],
+      // Roblox-style "Disconnected" dialog shown when the exploiter gets caught (the game freezes, like a real kick)
+      kick: { at: 13, title: ["Disconnected", "Terputus"],
+        msg: ["You were kicked from this game: You’ve been banned. Reason: Exploiting (speed hack, WalkSpeed 150). Logged by JokiBlox Guard.",
+              "Kamu dikeluarkan dari game ini: Akunmu di-ban. Alasan: Exploit (speed hack, WalkSpeed 150). Dicatat oleh JokiBlox Guard."],
+        code: 267 },
+      done: ["18 attacks blocked · exploiter banned", "18 serangan diblokir · exploiter di-ban"]
     },
     "usp-squad": {
       src: "assets/clips/review.mp4", kind: "real", speed: 2,

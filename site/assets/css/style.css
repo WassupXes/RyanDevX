@@ -1693,3 +1693,20 @@ html { -webkit-tap-highlight-color: transparent; }
 }
 @media (prefers-reduced-motion: reduce) { .jbc *, .jbc svg, .lost .jbc { animation: none !important; } }
 .eyebrow:has(.jbc)::before { display: none; }
+
+/* Roblox-style "Disconnected" kick/ban dialog over a frozen game (anti-exploit clip) */
+.pp-kick { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; background: rgba(0,0,0,.32); opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+.pp.kicked .pp-kick { opacity: 1; }
+.pp.kicked .pp-v { filter: grayscale(.5) brightness(.65); transition: filter .3s ease; }
+.pp.kicked .pp-chip { opacity: 0; }
+.kick-box { position: relative; width: min(80%, 360px); background: #393b3d; border-radius: 8px; padding: 12px 14px; text-align: center; color: #fff; box-shadow: 0 14px 40px rgba(0,0,0,.55); transform: scale(.88); transition: transform .35s cubic-bezier(.2,1.5,.4,1); }
+.pp.kicked .kick-box { transform: none; }
+.kick-box h4 { margin: 0 0 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,.35); font: 700 .92rem/1.2 var(--font); letter-spacing: 0; }
+.kick-box p { margin: 0 0 10px; font: 500 .7rem/1.4 var(--font); color: #e3e5e7; }
+.kick-leave { display: block; background: #fff; color: #111; border-radius: 6px; padding: 6px; font: 600 .78rem var(--font); }
+.kick-guard { position: absolute; right: -16px; bottom: -14px; width: 34px; }
+.pp-hero .kick-box { width: min(62%, 420px); padding: 16px 18px; }
+.pp-hero .kick-box h4 { font-size: 1.1rem; }
+.pp-hero .kick-box p { font-size: .84rem; }
+.pp-hero .kick-leave { padding: 8px; font-size: .88rem; }
+@media (max-width: 440px) { .kick-box { width: 86%; padding: 9px 10px; } .kick-box h4 { font-size: .82rem; margin-bottom: 6px; padding-bottom: 6px; } .kick-box p { font-size: .62rem; margin-bottom: 7px; } .kick-leave { padding: 4px; font-size: .7rem; } .kick-guard { width: 28px; } }
