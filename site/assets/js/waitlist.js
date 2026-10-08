@@ -68,6 +68,7 @@
     // Honeypot filled → silently pretend success.
     if (form.website.value) return done(email);
 
+    if (!CFG.WAITLIST_ENDPOINT && CFG.PREVIEW) return done(email); // preview build: show the success state, send nothing
     if (!CFG.WAITLIST_ENDPOINT) {
       status.className = "form-status error";
       status.textContent = t("The waitlist isn't connected yet. Please email hello@jokiblox.com.", "Waitlist belum tersambung. Silakan email hello@jokiblox.com.");
