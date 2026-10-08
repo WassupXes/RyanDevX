@@ -10,8 +10,9 @@ Each page starts with a front-matter block:
   desc: ...
   path: /pricing
   ---
-Run: python3 build.py
+Run: python3 build.py   (re-run after editing anything in site/assets too: URLs are versioned)
 """
+import hashlib
 import pathlib
 import re
 
@@ -30,6 +31,14 @@ def i18n(text: str) -> str:
     # <option> can't hold spans: keep both labels as attributes, main.js swaps the text.
     text = OPTION.sub(lambda m: f'<option{m[1]} data-en="{m[2]}" data-id="{m[3]}">{m[2]}</option>', text)
     return I18N.sub(lambda m: f'<span lang="en">{m[1]}</span><span lang="id">{m[2]}</span>', text)
+
+
+def bust(html: str) -> str:
+    """Append ?v=<content hash> to local CSS/JS URLs so browsers never mix a new page with an old cached file."""
+    def ver(m):
+        f = OUT / m[1]
+        return m[0] if not f.exists() else f'{m[1]}?v={hashlib.md5(f.read_bytes()).hexdigest()[:8]}"'
+    return re.sub(r'(assets/(?:css|js)/[\w.-]+\.(?:css|js))"', ver, html)
 
 
 def parse(page: str):
@@ -53,7 +62,7 @@ def main():
         if f.stem == "404":  # served from any path, so resolve relative links from the root
             html = html.replace("<head>", '<head>\n<base href="/">', 1)
         out = OUT / f.name
-        out.write_text(i18n(html))
+        out.write_text(bust(i18n(html)))
         if f.stem != "404" and not meta.get("noindex"):
             pages.append(meta["path"])
         print("built", out.relative_to(ROOT))

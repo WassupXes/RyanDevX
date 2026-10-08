@@ -26,7 +26,7 @@ docs/STRATEGY.md  USP data & sources, AI integration, pricing logic, open assump
 ## Edit → build
 1. Edit text in `src/pages/*.html` or `src/partials/*.html`. Bilingual text: `[[English||Bahasa Indonesia]]`.
 2. `python3 build.py` → writes `site/*.html` + `sitemap.xml` (fails if a marker is left unexpanded).
-3. CSS/JS live directly in `site/assets/` — edit there, no build needed.
+3. CSS/JS live directly in `site/assets/` — edit there, then run `python3 build.py` again: it stamps `?v=<hash>` on asset URLs so browsers never mix new pages with old cached CSS/JS.
 
 Language: auto-detected from the browser (`id-*` → Indonesian), switchable with EN/ID, remembered in localStorage, or forced with `?lang=id`.
 

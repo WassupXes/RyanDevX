@@ -23,16 +23,21 @@ Follow `docs/STUDIO-TEST-PLAN.md` (Claude connected via **Enable Studio as MCP s
 | `how-plan` | The plan appearing (tasks list), user scrolling/approving it. | 6–8 s |
 | `how-build` | Viewport filling up: coins/parts appear, Explorer gets new scripts, clock running. | 10–15 s |
 | `how-publish` | Playtest with the character collecting coins, HUD counting up, then Publish. | 8–12 s |
-| `fx-create` | A different game built from one prompt (e.g. obby or tycoon), sped up. | 10–15 s |
-| `fx-clone` | File → Save a copy of an existing place you own, then the AI upgrading the copy (lighting, UI). | 10–15 s |
-| `fx-migrate` | Output with deprecation warnings → AI fixes → clean Output. | 8–12 s |
-| `fx-assets` | Generating/importing a model (Import Preview → Add to Workspace) and it landing in the scene. | 8–12 s |
-| `fx-clothing` | A shirt template being applied on a character/dummy. | 6–10 s |
-| `fx-discord` | Phone or Discord window: command sent, "done" message arriving. | 6–10 s |
-| `fx-qa` | Playtest with multiple clients, an error found and fixed, re-test clean. | 10–15 s |
+**USP cards ("Why JokiBlox")** — each clip proves one promise; see `docs/USER-RESEARCH.md` for the complaint it answers.
+
+| Slot | Show (user POV) | Length |
+|---|---|---|
+| `usp-inside` | Error appears in Output → agent fixes it and re-runs. No copy-paste. | 8–12 s |
+| `usp-runs` | Script generated → API/type checks pass → playtest runs clean. | 8–12 s |
+| `usp-approve` | Plan approved → diff shown → Undo restores instantly. | 8–12 s |
+| `usp-qa` | Multi-client playtest; bug found → fixed → recheck passes. | 10–15 s |
+| `usp-secure` | Remote handler gets validation lines; free-model backdoor flagged. | 8–12 s |
+| `usp-squad` | One prompt → agents working in parallel → playable, clock running. | 10–15 s |
+| `usp-precheck` | Design fails pre-check → fixed → passes → upload. | 8–12 s |
+| `usp-migrate` | Output full of deprecation warnings → one pass → clean Output. | 8–12 s |
 
 ### Products (`/products.html`)
-Uses the same `fx-*` clips as the homepage (one per feature row).
+One clip per feature row: `fx-create`, `fx-clone`, `fx-migrate`, `fx-assets`, `fx-clothing`, `fx-discord`, `fx-qa` (same specs, 8–15 s).
 
 ### Studio tour (`/studio.html`)
 | Slot | Show | Length |

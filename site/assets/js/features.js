@@ -337,10 +337,18 @@
   /* ---------- products: one looping stage per feature ---------- */
   qa("[data-fx-mount]", document).forEach(function (el) {
     var r = Runner(el), key = el.getAttribute("data-fx-mount"), on = false;
-    var src = JB.clip && JB.clip("fx-" + key);
-    if (JB.slotLabel) JB.slotLabel(el, "fx-" + key);
+    var inSlot = !!el.closest("[data-slot]");   // the surrounding slot already handles clips + labels
+    var src = !inSlot && JB.clip && JB.clip("fx-" + key);
+    if (!inSlot && JB.slotLabel) JB.slotLabel(el, "fx-" + key);
     if (src) { el.classList.add("has-clip"); JB.mountClip(el, src, true); return; }
-    JB.onVisible(el, function () { on = true; r.play(key, true); if (JB.slotLabel) JB.slotLabel(el, "fx-" + key); });
+    JB.onVisible(el, function () { on = true; r.play(key, true); if (!inSlot && JB.slotLabel) JB.slotLabel(el, "fx-" + key); });
     document.addEventListener("jb:lang", function () { if (on) r.play(key, true); });
+  });
+  /* ---------- fixed-size demos scaled to fit their card (720×405 design size) ---------- */
+  qa("[data-scale]", document).forEach(function (wrap) {
+    var fit = function () { wrap.style.setProperty("--s", (wrap.clientWidth / 720).toFixed(4)); };
+    fit();
+    if ("ResizeObserver" in window) new ResizeObserver(fit).observe(wrap);
+    else window.addEventListener("resize", fit);
   });
 })();

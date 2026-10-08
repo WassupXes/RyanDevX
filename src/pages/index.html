@@ -43,6 +43,105 @@ path: /
 
 <div class="marquee" aria-hidden="true"><div class="track"><span>Tycoon</span><span>Obby</span><span>Pet Simulator</span><span>Tower Defense</span><span>Horror</span><span>RPG</span><span>Racing</span><span>Roleplay</span><span>[[Clone &amp; upgrade||Clone &amp; upgrade]]</span><span>[[Fix legacy chat||Perbaiki legacy chat]]</span><span>[[AI assets||Aset AI]]</span><span>[[Batik clothing||Baju batik]]</span><span>Discord</span><span>[[QA bots||Bot QA]]</span><span>Tycoon</span><span>Obby</span><span>Pet Simulator</span><span>Tower Defense</span><span>Horror</span><span>RPG</span><span>Racing</span><span>Roleplay</span><span>[[Clone &amp; upgrade||Clone &amp; upgrade]]</span><span>[[Fix legacy chat||Perbaiki legacy chat]]</span><span>[[AI assets||Aset AI]]</span><span>[[Batik clothing||Baju batik]]</span><span>Discord</span><span>[[QA bots||Bot QA]]</span></div></div>
 
+<!-- ============ USP: pain → answer (clip slots) ============ -->
+<section class="section black" id="features">
+  <div class="container">
+    <div class="center reveal">
+      <span class="eyebrow">[[Why JokiBlox||Kenapa JokiBlox]]</span>
+      <h2>[[Built for what Roblox creators actually complain about.||Dibuat untuk keluhan nyata para kreator Roblox.]]</h2>
+      <p class="lead">[[Real quotes from the Roblox DevForum and docs, and what JokiBlox does about each one.||Kutipan asli dari DevForum dan dokumentasi Roblox, dan apa yang JokiBlox lakukan untuk masing-masing.]]</p>
+    </div>
+    <div class="usp-grid">
+      <article class="usp-card reveal">
+        <div class="slot usp-media" data-slot="usp-inside"><div class="scale-wrap" data-scale><div class="scale-box">
+          <div class="usp-mini m-inside">
+            <div class="mi-tree"><b>Explorer</b><span>Workspace</span><span class="k">Coins (24)</span><span>ServerScriptService</span><span class="k hot">Leaderstats</span><span class="k">CoinSpawner</span><span>StarterGui</span><span class="k">HUD</span><i class="mi-scan"></i></div>
+            <div class="mi-right"><div class="mi-read">[[Reading 214 scripts · 38 remotes…||Membaca 214 script · 38 remote…]]</div><div class="mi-out"><b>Output</b><span class="e">✗ Leaderstats:12: attempt to index nil with 'Coins'</span><span class="f">🔧 JokiBlox: [[added WaitForChild, re-ran the test||menambah WaitForChild, tes ulang]]</span><span class="o">✓ [[0 errors||0 error]]</span></div><div class="mi-no">[[No copy · no paste · no “here’s the error”||Tanpa copy · tanpa paste · tanpa “ini errornya”]]</div></div>
+          </div>
+          </div></div></div>
+        <div class="usp-body">
+          <blockquote class="usp-pain">“AI can write Luau, but it can’t see your game, so you end up being the middleman, copying code back and forth.” <a href="https://devforum.roblox.com/t/we-built-a-full-game-with-2-people-using-ai-in-studio-heres-the-tool/4308613" target="_blank" rel="noopener">— DevForum</a></blockquote>
+          <h3>[[It works inside your game||Bekerja di dalam game kamu]]</h3>
+          <p>[[Connected to Studio, it reads your whole place, writes the scripts, reads the Output and fixes its own errors.||Terhubung ke Studio: membaca seluruh place, menulis script, membaca Output, dan memperbaiki error-nya sendiri.]]</p>
+        </div>
+      </article>
+      <article class="usp-card reveal">
+        <div class="slot usp-media" data-slot="usp-runs"><div class="scale-wrap" data-scale><div class="scale-box">
+          <div class="usp-mini m-runs">
+            <div class="mr-col bad"><span class="mr-h">[[Generic AI chat||Chat AI biasa]]</span><pre><span>local svc = game:GetService(<u>"CoinService"</u>)</span><span>svc:<u>AwardCoins</u>(player, 10)</span></pre><span class="mr-x">✗ [[That service doesn’t exist||Service itu tidak ada]]</span></div>
+            <div class="mr-col good"><span class="mr-h">JokiBlox</span><pre><span>local stats = player:WaitForChild("leaderstats")</span><span>stats.Coins.Value += 10</span></pre><ul><li>✓ [[API exists in Roblox docs||API ada di dokumentasi Roblox]]</li><li>✓ [[Luau type-check passed||Lolos type-check Luau]]</li><li>✓ [[Playtest: 0 errors||Playtest: 0 error]]</li></ul></div>
+          </div>
+          </div></div></div>
+        <div class="usp-body">
+          <blockquote class="usp-pain">“Code Assist always suggests functions that don’t exist.” <a href="https://devforum.roblox.com/t/code-assist-always-suggests-functions-that-dont-exist/4159687" target="_blank" rel="noopener">— DevForum</a></blockquote>
+          <h3>[[Code that actually runs||Kode yang benar-benar jalan]]</h3>
+          <p>[[Every call is checked against the real Roblox API, type-checked and playtested before you see it.||Setiap pemanggilan dicek ke API Roblox asli, di-type-check, dan di-playtest sebelum kamu lihat.]]</p>
+        </div>
+      </article>
+      <article class="usp-card reveal">
+        <div class="slot usp-media" data-slot="usp-approve"><div class="scale-wrap" data-scale><div class="scale-box">
+          <div class="usp-mini m-approve">
+            <div class="ma-head"><b>[[Review changes||Review perubahan]]</b><span class="snap">⟲ Snapshot 14:02</span></div>
+            <pre class="ma-diff"><span class="d">- coins.Value = coins.Value + 1</span><span class="a">+ coins.Value += Config.CoinValue</span><span class="a">+ CoinCollected:FireClient(player, coins.Value)</span></pre>
+            <div class="ma-scope">🔒 [[Scope: 3 files in the plan · everything else untouched||Lingkup: 3 file di rencana · lainnya tidak disentuh]]</div>
+            <div class="dk-actions"><button type="button" class="ghost" tabindex="-1">Undo</button><button type="button" class="primary" tabindex="-1">[[Accept||Terima]]</button></div>
+          </div>
+          </div></div></div>
+        <div class="usp-body">
+          <blockquote class="usp-pain">“Assistant replaced my script with its own while trying to help, and now I can’t get it back.” <a href="https://devforum.roblox.com/t/beta-feature-assistant-replaced-my-script-to-its-own-while-trying-to-help-and-now-i-cant-get-it-back/3409010" target="_blank" rel="noopener">— DevForum</a></blockquote>
+          <h3>[[Nothing changes without your OK||Tidak ada yang berubah tanpa izinmu]]</h3>
+          <p>[[A plan first, then diffs. It only touches what’s in the plan, and every task has a one-click undo.||Rencana dulu, lalu diff. Hanya menyentuh yang ada di rencana, dan setiap tugas bisa di-undo satu klik.]]</p>
+        </div>
+      </article>
+      <article class="usp-card reveal">
+        <div class="slot usp-media" data-slot="usp-qa"><div class="scale-wrap" data-scale><div class="scale-box"><div data-fx-mount="qa"></div></div></div></div>
+        <div class="usp-body">
+          <blockquote class="usp-pain">“Studio will not open Server & Clients testing.” <a href="https://devforum.roblox.com/t/studio-will-not-open-server-clients-testing/4762571" target="_blank" rel="noopener">— DevForum</a></blockquote>
+          <h3>[[A QA agent that plays your game||Agent QA yang memainkan game kamu]]</h3>
+          <p>[[Bots playtest after every task, try purchases and saves, and recheck every fix. You get a report, not a surprise.||Bot playtest setiap tugas selesai, mencoba pembelian dan save, lalu recheck setiap perbaikan. Kamu dapat laporan, bukan kejutan.]]</p>
+        </div>
+      </article>
+      <article class="usp-card reveal">
+        <div class="slot usp-media" data-slot="usp-secure"><div class="scale-wrap" data-scale><div class="scale-box">
+          <div class="usp-mini m-secure">
+            <pre class="ma-diff"><span>CoinCollected.OnServerEvent:Connect(function(player, coin)</span><span class="a">+  if not coin:IsDescendantOf(workspace.Coins) then return end</span><span class="a">+  if distance(player, coin) &gt; 12 then return end</span><span class="a">+  if limiter:hit(player, 10) then return end</span><span>   addCoins(player, Config.CoinValue)</span><span>end)</span></pre>
+            <div class="ms-badges"><span>🛡 [[6 remotes validated||6 remote divalidasi]]</span><span>⏱ [[Rate limit 10/s||Batas 10/detik]]</span><span class="w">⚠ [[1 backdoor removed from a free model||1 backdoor dihapus dari free model]]</span></div>
+          </div>
+          </div></div></div>
+        <div class="usp-body">
+          <blockquote class="usp-pain">“Exploiters… fire unsecured RemoteEvents… to award themselves items without earning them.” <a href="https://create.roblox.com/docs/scripting/security/client-server-boundary" target="_blank" rel="noopener">— Roblox docs</a></blockquote>
+          <h3>[[Secure by default||Aman sejak awal]]</h3>
+          <p>[[Every RemoteEvent gets server-side checks and rate limits. Free models are scanned for backdoors.||Setiap RemoteEvent dapat cek di server dan batas laju. Free model dipindai dari backdoor.]]</p>
+        </div>
+      </article>
+      <article class="usp-card reveal">
+        <div class="slot usp-media" data-slot="usp-squad"><div class="scale-wrap" data-scale><div class="scale-box"><div data-fx-mount="create"></div></div></div></div>
+        <div class="usp-body">
+          <blockquote class="usp-pain">“I’m struggling because I’m making this game by myself.” <a href="https://devforum.roblox.com/t/i%E2%80%99m-struggling-because-i%E2%80%99m-making-this-game-by-myself-i-don%E2%80%99t-have-motivation-and-i%E2%80%99m-lost/826975" target="_blank" rel="noopener">— DevForum</a></blockquote>
+          <h3>[[A squad, not a solo grind||Squad, bukan kerja sendirian]]</h3>
+          <p>[[The Architect cuts your idea into a small version you can ship. Specialists cover scripts, map, UI and art.||Architect memangkas idemu jadi versi kecil yang bisa dirilis. Spesialis menangani script, map, UI, dan art.]]</p>
+        </div>
+      </article>
+      <article class="usp-card reveal">
+        <div class="slot usp-media" data-slot="usp-precheck"><div class="scale-wrap" data-scale><div class="scale-box"><div data-fx-mount="clothing"></div></div></div></div>
+        <div class="usp-body">
+          <blockquote class="usp-pain">“Get a refund if clothing item is deleted.” <a href="https://devforum.roblox.com/t/get-a-refund-if-clothing-item-is-deleted/486384" target="_blank" rel="noopener">— DevForum</a></blockquote>
+          <h3>[[Check before you pay the upload fee||Cek dulu sebelum bayar biaya upload]]</h3>
+          <p>[[Assets and clothing are checked for limits and moderation risks before you spend Robux uploading them.||Aset dan baju dicek batas teknis dan risiko moderasinya sebelum kamu keluar Robux untuk upload.]]</p>
+        </div>
+      </article>
+      <article class="usp-card reveal">
+        <div class="slot usp-media" data-slot="usp-migrate"><div class="scale-wrap" data-scale><div class="scale-box"><div data-fx-mount="migrate"></div></div></div></div>
+        <div class="usp-body">
+          <blockquote class="usp-pain">“After 30 April 2025, all creators must use the TextChatService API.” <a href="https://devforum.roblox.com/t/-/3237100" target="_blank" rel="noopener">— Roblox</a></blockquote>
+          <h3>[[Fix what Roblox updates broke||Perbaiki yang rusak karena update Roblox]]</h3>
+          <p>[[Deprecated chat, physics and audio fixed in one pass, with a report of every change.||Chat, fisika, dan audio usang diperbaiki sekaligus, lengkap dengan laporan setiap perubahan.]]</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ============ HOW IT WORKS (user POV, clip slots) ============ -->
 <section class="section" id="how">
   <div class="container">
@@ -94,37 +193,6 @@ path: /
       </article>
     </div>
     <div class="center" style="margin-top:28px"><a class="btn btn-ghost" href="studio.html">🎬 [[Full Studio tour||Tur Studio lengkap]] →</a></div>
-  </div>
-</section>
-
-<!-- ============ FEATURE THEATER ============ -->
-<section class="section black" id="features">
-  <div class="container">
-    <div class="center reveal">
-      <span class="eyebrow">[[Features||Fitur]]</span>
-      <h2>[[Don’t read about it. Watch it work.||Jangan cuma dibaca. Lihat cara kerjanya.]]</h2>
-    </div>
-    <div class="theater" data-theater>
-      <div class="th-tabs" role="tablist" aria-label="Features">
-        <button type="button" role="tab" data-fx="create"><i class="th-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></i><span><b>[[Create||Bikin game]]</b><small>[[Prompt → playable||Prompt → siap main]]</small></span></button>
-        <button type="button" role="tab" data-fx="clone"><i class="th-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg></i><span><b>[[Clone &amp; upgrade||Clone &amp; upgrade]]</b><small>[[Fork it, make it better||Salin, bikin lebih bagus]]</small></span></button>
-        <button type="button" role="tab" data-fx="migrate"><i class="th-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h14l-3-3M20 17H6l3 3"/></svg></i><span><b>[[Migrate &amp; fix||Migrasi &amp; perbaiki]]</b><small>[[Broken game → healthy||Game rusak → sehat]]</small></span></button>
-        <button type="button" role="tab" data-fx="assets"><i class="th-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 12 10 5 10-5M2 17l10 5 10-5"/></svg></i><span><b>[[AI assets||Aset AI]]</b><small>[[Generate → insert||Generate → masukkan]]</small></span></button>
-        <button type="button" role="tab" data-fx="clothing"><i class="th-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 3 3 6l2 5 3-1v11h8V10l3 1 2-5-5-3a4 4 0 0 1-8 0z"/></svg></i><span><b>[[Clothing &amp; UGC||Baju &amp; UGC]]</b><small>[[Style → wearable||Gaya → siap pakai]]</small></span></button>
-        <button type="button" role="tab" data-fx="discord"><i class="th-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></i><span><b>Discord <span class="th-new">NEW</span></b><small>[[Chat, alerts, traffic||Chat, notifikasi, trafik]]</small></span></button>
-        <button type="button" role="tab" data-fx="qa"><i class="th-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7z"/></svg></i><span><b>[[QA agent||Agent QA]]</b><small>[[Rechecks every task||Recheck tiap tugas]]</small></span></button>
-      </div>
-      <div class="th-main">
-        <div class="th-stage" data-stage aria-live="off"></div>
-        <div class="th-cap" data-fx-cap="create"><p>[[Describe a game and get a <b>playable first version</b>: systems, map, UI and gamepasses.||Ceritakan game-nya dan dapatkan <b>versi pertama yang bisa dimainkan</b>: sistem, map, UI, dan gamepass.]]</p><a href="products.html#create">[[More||Selengkapnya]]</a></div>
-        <div class="th-cap" data-fx-cap="clone" hidden><p>[[<b>Clone your own place</b>, then stack upgrades on the copy: lighting, mobile UI, performance, anti-exploit.||<b>Clone place milikmu</b>, lalu tumpuk upgrade di salinannya: pencahayaan, UI mobile, performa, anti-exploit.]]</p><a href="products.html#clone">[[More||Selengkapnya]]</a></div>
-        <div class="th-cap" data-fx-cap="migrate" hidden><p>[[Scan the whole game, fix <b>deprecated and broken parts</b> in one pass.||Scan seluruh game, perbaiki <b>bagian usang dan rusak</b> sekaligus.]]</p><a href="products.html#migrate">[[More||Selengkapnya]]</a></div>
-        <div class="th-cap" data-fx-cap="assets" hidden><p>[[Generate props and textures, pick one, and <b>insert it straight into Studio</b>.||Generate properti dan tekstur, pilih satu, lalu <b>masukkan langsung ke Studio</b>.]]</p><a href="products.html#assets">[[More||Selengkapnya]]</a></div>
-        <div class="th-cap" data-fx-cap="clothing" hidden><p>[[Type a style, see it <b>on an avatar</b>, get the 585×559 template.||Ketik gaya, lihat <b>langsung di avatar</b>, dapat template 585×559.]]</p><a href="products.html#ugc">[[More||Selengkapnya]]</a></div>
-        <div class="th-cap" data-fx-cap="discord" hidden><p>[[Give orders from <b>Discord</b>. Get pinged when tasks finish, QA passes or your game hits a traffic goal.||Kasih perintah dari <b>Discord</b>. Dapat notifikasi saat tugas selesai, QA lolos, atau game tembus target trafik.]]</p><a href="products.html#discord">[[More||Selengkapnya]]</a></div>
-        <div class="th-cap" data-fx-cap="qa" hidden><p>[[A QA agent playtests with bots and <b>rechecks after every task</b>. Bugs go back to the right agent.||Agent QA playtest pakai bot dan <b>recheck setiap tugas selesai</b>. Bug dikirim balik ke agent yang tepat.]]</p><a href="products.html#qa">[[More||Selengkapnya]]</a></div>
-      </div>
-    </div>
   </div>
 </section>
 
