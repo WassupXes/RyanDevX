@@ -26,6 +26,9 @@ rsync -a --delete "$SRC_DIR/site/" "$WEB_DIR/"
 chown -R www-data:www-data "$WEB_DIR"
 
 cp "$SRC_DIR/deploy/nginx-jokiblox.conf" /etc/nginx/sites-available/jokiblox.conf
+# Also answer on the server's public IP so the site can be previewed before DNS points here.
+PUBLIC_IP="$(curl -fsS https://api.ipify.org || hostname -I | awk '{print $1}')"
+[ -n "$PUBLIC_IP" ] && sed -i "s/server_name jokiblox.com www.jokiblox.com;/server_name jokiblox.com www.jokiblox.com $PUBLIC_IP;/" /etc/nginx/sites-available/jokiblox.conf
 ln -sf /etc/nginx/sites-available/jokiblox.conf /etc/nginx/sites-enabled/jokiblox.conf
 nginx -t
 systemctl reload nginx
